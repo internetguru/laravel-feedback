@@ -1,4 +1,4 @@
-<div>
+<div class="feedback-container">
     <!-- Feedback Link -->
     <a href="#" data-bs-toggle="modal" data-bs-target="#feedbackModal" class="feedback-link">
         {{ __('ig-feedback::layouts.modal.link_text') }}
@@ -13,7 +13,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <x-ig::form action="{{ route('feedback.send') }}" id="feedbackForm" class="editable-skip">
+                    <x-ig::form action="{{ route('feedback.send') }}" id="feedbackForm" class="editable-skip" :recaptcha="false">
                         <x-ig::input
                             type="text"
                             name="subject"
