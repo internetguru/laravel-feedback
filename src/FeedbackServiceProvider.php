@@ -3,6 +3,7 @@
 namespace InternetGuru\LaravelFeedback;
 
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class FeedbackServiceProvider extends ServiceProvider
@@ -15,7 +16,7 @@ class FeedbackServiceProvider extends ServiceProvider
     public function boot()
     {
         // Load routes
-        $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
+        Route::middleware('web')->group(__DIR__ . '/../routes/web.php');
 
         // Load translations
         $this->loadTranslationsFrom(__DIR__ . '/../lang', 'ig-feedback');

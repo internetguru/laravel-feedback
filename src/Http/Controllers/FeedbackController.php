@@ -5,6 +5,7 @@ namespace InternetGuru\LaravelFeedback\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Mail;
+use InternetGuru\LaravelCommon\Support\Helpers;
 use InternetGuru\LaravelFeedback\Mail\FeedbackMail;
 
 class FeedbackController extends Controller
@@ -20,6 +21,6 @@ class FeedbackController extends Controller
         Mail::to(config('feedback.email'))
             ->send(new FeedbackMail($validated));
 
-        return back()->with('success', config('feedback.modal.success_message'));
+        return back()->with('success', __('ig-feedback::modal.success_message') . Helpers::getEmailClientLink());
     }
 }
