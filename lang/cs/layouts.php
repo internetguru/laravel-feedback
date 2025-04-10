@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'modal.title' => 'Odeslat zpětnou vazbu',
+    'modal.title' => 'Poslat zpětnou vazbu',
     'modal.link_text' => 'Zpětná vazba',
     'modal.success_message' => 'Děkujeme za vaši zpětnou vazbu!',
 

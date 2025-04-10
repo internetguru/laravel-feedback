@@ -19,9 +19,9 @@ class FeedbackMail extends Mailable
 
     public function build()
     {
-        $sendFromUrl = url()->full();
+        $sendFromUrl = url()->previous();
 
-        return $this->subject(__('ig-feedback::email.subject', ['app_name' => config('app.name')]))
+        return $this->subject(__('ig-feedback::layouts.email.subject', ['app_name' => config('app.name')]))
             ->view([
                 'html' => 'feedback::emails.feedback-html',
                 'text' => 'feedback::emails.feedback-plain',

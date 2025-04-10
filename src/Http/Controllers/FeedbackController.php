@@ -12,9 +12,9 @@ class FeedbackController extends Controller
     public function send(Request $request)
     {
         $validated = $request->validate([
-            'subject' => config('feedback.form.subject.required') ? 'required|string|max:255' : 'nullable|string|max:255',
-            'message' => config('feedback.form.message.required') ? 'required|string' : 'nullable|string',
-            'email' => config('feedback.form.email.required') ? 'required|email' : 'nullable|email',
+            'subject' => 'required|string|max:255',
+            'message' => 'required|string',
+            'email' => 'required|email',
         ]);
 
         Mail::to(config('feedback.email'))

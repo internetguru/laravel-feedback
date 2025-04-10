@@ -17,11 +17,14 @@ class FeedbackServiceProvider extends ServiceProvider
         // Load routes
         $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
 
+        // Load translations
+        $this->loadTranslationsFrom(__DIR__ . '/../lang', 'ig-feedback');
+
         // Load views
         $this->loadViewsFrom(__DIR__ . '/../resources/views', 'feedback');
 
         // Register blade components
-        Blade::component('feedback', \InternetGuru\LaravelFeedback\View\Components\Feedback::class);
+        Blade::component('ig-feedback', \InternetGuru\LaravelFeedback\View\Components\Feedback::class);
 
         // Publish assets
         $this->publishes([

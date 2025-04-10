@@ -3,14 +3,17 @@
 @section('content')
 @lang('ig-common::messages.email.hello')
 
-@lang('ig-feedback::email.subject')
 
-@lang('ig-feedback::form.subject'): {{ $feedback['subject'] ?? __('ig-feedback::email.no_subject') }}
+@lang('ig-feedback::layouts.form.subject')
 
-@lang('ig-feedback::form.message'):
-{{ $feedback['message'] ?? __('ig-feedback::email.no_message') }}
+    {{ $feedback['subject'] ?? __('ig-feedback::layouts.email.no_subject') }}
 
-@lang('ig-feedback::form.email'): {{ $feedback['email'] ?? __('ig-feedback::email.anonymous') }}
+@lang('ig-feedback::layouts.form.message')
 
-@lang('ig-feedback::email.send_from') {{ $sendFromUrl }}
+    {{ $feedback['message'] ?? __('ig-feedback::layouts.email.no_message') }}
+
+@lang('ig-feedback::layouts.form.email')
+
+    {{ $feedback['email'] ?? __('ig-feedback::layouts.email.anonymous') }}
+
 @endsection
