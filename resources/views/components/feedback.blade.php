@@ -48,7 +48,4 @@
             </div>
         </div>
     </div>
-
-    <!-- Include feedback.js -->
-    <script src="{{ asset('vendor/feedback/feedback.js') }}"></script>
 </div>
