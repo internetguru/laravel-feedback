@@ -1,0 +1,33 @@
+{
+    "name": "internetguru/laravel-feedback",
+    "description": "Simple feedback component for Laravel applications",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Internet Guru",
+            "email": "info@internetguru.io"
+        }
+    ],
+    "require": {
+        "php": "^8.1",
+        "internetguru/laravel-common": "^0.9"
+    },
+    "autoload": {
+        "psr-4": {
+            "InternetGuru\\LaravelFeedback\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "InternetGuru\\LaravelFeedback\\FeedbackServiceProvider"
+            ],
+            "aliases": {
+                "Feedback": "InternetGuru\\LaravelFeedback\\Facades\\Feedback"
+            }
+        }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
