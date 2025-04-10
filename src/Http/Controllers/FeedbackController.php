@@ -21,6 +21,6 @@ class FeedbackController extends Controller
         Mail::to(config('feedback.email'))
             ->send(new FeedbackMail($validated));
 
-        return back()->with('success', __('ig-feedback::modal.success_message') . Helpers::getEmailClientLink());
+        return back()->with('success', __('ig-feedback::layouts.modal.success_message') . Helpers::getEmailClientLink());
     }
 }
