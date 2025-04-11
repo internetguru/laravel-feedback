@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [0.1.5] - 2025-04-11
+
+### Fixed
+
+- Update laravel-common version to `^0.10`.
+
 ## [0.1.4] - 2025-04-10
 
 ### Fixed
@@ -41,6 +47,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[0.1.5]: https://https://github.com/internetguru/laravel-feedback/compare/v0.1.4...v0.1.5
 [0.1.4]: https://https://github.com/internetguru/laravel-feedback/compare/v0.1.3...v0.1.4
 [0.1.3]: https://https://github.com/internetguru/laravel-feedback/compare/v0.1.2...v0.1.3
 [0.1.2]: https://https://github.com/internetguru/laravel-feedback/compare/v0.1.1...v0.1.2
