@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Update laravel-common version to `^0.12`.
+
 ## [0.2.0] - 2025-04-16
 
 _Stable release based on [0.2.0-rc.1]._
