@@ -6,6 +6,14 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Use `internetguru/laravel-common` recaptcha.
+
+### Changed
+
+- Change laravel-common version to `^1`.
+
 ## [0.4.1] - 2025-04-25
 
 ### Fixed
