@@ -6,6 +6,19 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Use `IgMailable` for sending feedback emails.
+
+### Changed
+
+- Update laravel-common version to `^2`.
+- Make email field optional and use it for replyto.
+
+### Removed
+
+- Remove subject field.
+
 ## [1.0.0] - 2025-05-09
 
 _Stable release based on [1.0.0-rc.1]._

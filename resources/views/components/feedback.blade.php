@@ -15,14 +15,6 @@
                 <div class="modal-body">
                     <x-ig::form action="{{ route('feedback.send') }}" id="feedbackForm" class="editable-skip">
                         <x-ig::input
-                            type="text"
-                            name="subject"
-                            required
-                        >
-                            {{ __('ig-feedback::layouts.form.subject') }}
-                        </x-ig::input>
-
-                        <x-ig::input
                             type="textarea"
                             name="message"
                             rows="5"
@@ -35,7 +27,6 @@
                             type="email"
                             name="email"
                             value="{{ auth()->check() ? auth()->user()->email : '' }}"
-                            required
                         >
                             {{ __('ig-feedback::layouts.form.email') }}
                         </x-ig::input>

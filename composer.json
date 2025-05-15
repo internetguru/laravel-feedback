@@ -11,7 +11,7 @@
     ],
     "require": {
         "php": "^8.1",
-        "internetguru/laravel-common": "^1"
+        "internetguru/laravel-common": "^2"
     },
     "autoload": {
         "psr-4": {
