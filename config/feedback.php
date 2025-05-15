@@ -10,5 +10,6 @@ return [
     |
     */
     'email' => env('FEEDBACK_EMAIL', 'info@internetguru.io'),
+    'name' => env('FEEDBACK_NAME', 'Internet Guru'),
 
 ];
