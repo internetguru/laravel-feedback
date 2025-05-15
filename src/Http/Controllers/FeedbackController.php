@@ -2,12 +2,12 @@
 
 namespace InternetGuru\LaravelFeedback\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Controller;
-use Illuminate\Support\Facades\Mail;
 use InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface;
 use InternetGuru\LaravelCommon\Support\Helpers;
-use InternetGuru\LaravelFeedback\Mail\FeedbackMail;
+use InternetGuru\LaravelFeedback\Notification\FeedbackNotification;
 
 class FeedbackController extends Controller
 {
@@ -19,8 +19,12 @@ class FeedbackController extends Controller
             'email' => 'nullable|email',
         ]);
 
-        Mail::to(config('feedback.email'))
-            ->send(new FeedbackMail($validated));
+        User::make([
+            'email' => config('feedback.email'),
+            'name' => config('feedback.name')
+        ])->notify(
+            (new FeedbackNotification($validated))->locale(app()->getLocale())
+        );
 
         return back()->with('success', __('ig-feedback::layouts.modal.success_message') . Helpers::getEmailClientLink());
     }
