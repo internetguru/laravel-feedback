@@ -2,14 +2,10 @@
 
 namespace InternetGuru\LaravelFeedback\Mail;
 
-use Illuminate\Bus\Queueable;
-use Illuminate\Mail\Mailable;
-use Illuminate\Queue\SerializesModels;
+use InternetGuru\LaravelCommon\Mail\IgMailable;
 
-class FeedbackMail extends Mailable
+class FeedbackMail extends IgMailable
 {
-    use Queueable, SerializesModels;
-
     public $feedback;
 
     public function __construct(array $feedback)
@@ -21,11 +17,17 @@ class FeedbackMail extends Mailable
     {
         $sendFromUrl = url()->previous();
 
-        return $this->subject(__('ig-feedback::layouts.email.subject', ['app_name' => config('app.name')]))
+        $email = $this->subject(__('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]))
             ->view([
                 'html' => 'feedback::emails.feedback-html',
                 'text' => 'feedback::emails.feedback-plain',
             ])
             ->with(['sendFromUrl' => $sendFromUrl]);
+
+        if (isset($this->feedback['email'])) {
+            $email->replyTo($this->feedback['email']);
+        }
+
+        return $email;
     }
 }

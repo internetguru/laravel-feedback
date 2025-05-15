@@ -4,11 +4,6 @@
 <p>@lang('ig-common::messages.email.hello')</p>
 
 <p>
-    <strong>@lang('ig-feedback::layouts.form.subject')</strong><br>
-    {{ $feedback['subject'] ?? __('ig-feedback::layouts.email.no_subject') }}
-</p>
-
-<p>
     <strong>@lang('ig-feedback::layouts.form.message')</strong><br>
     {{ $feedback['message'] ?? __('ig-feedback::layouts.email.no_message') }}
 </p>
@@ -19,3 +14,11 @@
 </p>
 
 @endsection
+
+@section('footer')
+<p>
+    @lang('ig-common::messages.email.regards'),<br />
+    {{ \InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}<br />
+    {{ url()->previous() }}
+</p>
+@stop
