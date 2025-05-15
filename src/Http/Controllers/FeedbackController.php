@@ -15,9 +15,8 @@ class FeedbackController extends Controller
     {
         $recaptcha->validate($request);
         $validated = $request->validate([
-            'subject' => 'required|string|max:255',
             'message' => 'required|string',
-            'email' => 'required|email',
+            'email' => 'nullable|email',
         ]);
 
         Mail::to(config('feedback.email'))

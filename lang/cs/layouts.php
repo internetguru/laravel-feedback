@@ -5,15 +5,14 @@ return [
     'modal.link_text' => 'Zpětná vazba',
     'modal.success_message' => 'Děkujeme za vaši zpětnou vazbu!',
 
-    'form.subject' => 'Předmět',
-    'form.message' => 'Zpráva',
-    'form.email' => 'Váš email',
+    'form.message' => 'Popište svůj problém',
+    'form.email' => 'Pro kontaktování zanechte svůj e-mail (nepovinné)',
     'form.submit' => 'Odeslat zpětnou vazbu',
 
-    'email.subject' => 'Nová zpětná vazba z :app_name',
+    'email.subject' => 'Zpětná vazba :app_www',
     'email.no_subject' => 'Bez předmětu',
     'email.no_message' => 'Bez zprávy',
     'email.from' => 'Od',
-    'email.anonymous' => 'Anonymní',
+    'email.anonymous' => '-',
     'email.send_from' => 'Odesláno z',
 ];
