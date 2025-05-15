@@ -22,7 +22,7 @@ class FeedbackNotification extends Notification
 
     public function toMail(): MailMessage
     {
-        return (new IgMailMessage())
+        $message = (new IgMailMessage())
             ->subject(__('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]))
             ->view(
                 [
@@ -33,5 +33,10 @@ class FeedbackNotification extends Notification
                     'feedback' => $this->feedback,
                 ],
             );
+        if (isset($this->feedback['email'])) {
+            $message->replyTo($this->feedback['email']);
+        }
+
+        return $message;
     }
 }
