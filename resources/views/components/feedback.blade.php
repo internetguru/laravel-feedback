@@ -17,7 +17,7 @@
                         <x-ig::input
                             type="textarea"
                             name="message"
-                            rows="5"
+                            rows="10"
                             required
                         >
                             {{ __('ig-feedback::layouts.form.message') }}
