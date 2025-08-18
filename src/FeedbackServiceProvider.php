@@ -32,6 +32,11 @@ class FeedbackServiceProvider extends ServiceProvider
             __DIR__ . '/../config/feedback.php' => config_path('feedback.php'),
             __DIR__ . '/../resources/views' => resource_path('views/vendor/feedback'),
             __DIR__ . '/../resources/js' => public_path('vendor/feedback'),
-        ]);
+        ], 'ig-feedback:assets');
+
+        // Publish translations
+        $this->publishes([
+            __DIR__ . '/../lang' => base_path('lang/vendor/ig-feedback'),
+        ], 'ig-feedback:lang');
     }
 }
