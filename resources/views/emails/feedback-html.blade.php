@@ -14,5 +14,5 @@
 
 @section('footer')
 @parent
-<p>{{ \InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}</p>
+<pre><code>{{ \InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}</code></pre>
 @endsection
