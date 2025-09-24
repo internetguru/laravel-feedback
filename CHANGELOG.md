@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [2.1.3] - 2025-09-24
+
+### Fixed
+
+- Update email templates.
+
 ## [2.1.2] - 2025-09-24
 
 ### Fixed
@@ -165,6 +171,7 @@ _Stable release based on [0.1.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
+[2.1.3]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.2...v2.1.3
 [2.1.2]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.1...v2.1.2
 [2.1.1]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.0...v2.1.1
 [2.1.0]: https://https://github.com/internetguru/laravel-feedback/compare/v2.0.4...v2.1.0
