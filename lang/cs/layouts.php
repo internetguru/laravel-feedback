@@ -5,8 +5,12 @@ return [
     'modal.link_text' => 'Zpětná vazba',
     'modal.success_message' => 'Děkujeme za vaši zpětnou vazbu!',
 
+    'form.name' => 'Jméno',
+    'form.email' => 'E-mail',
+    'form.phone' => 'Telefon',
+    'form.note' => 'Zpráva',
     'form.message' => 'Popište svůj problém',
-    'form.email' => 'Pro kontaktování zanechte svůj e-mail (nepovinné)',
+    'form.optional' => 'nepovinné',
     'form.submit' => 'Odeslat zpětnou vazbu',
 
     'email.subject' => 'Zpětná vazba :app_www',

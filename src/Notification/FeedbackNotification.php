@@ -13,7 +13,10 @@ class FeedbackNotification extends Notification
 {
     use Queueable;
 
-    public function __construct(public array $feedback) {}
+    public function __construct(
+        public array $feedback,
+        public ?string $subject = null,
+    ) {}
 
     public function via(): array
     {
@@ -23,7 +26,7 @@ class FeedbackNotification extends Notification
     public function toMail(): MailMessage
     {
         $message = (new IgMailMessage())
-            ->subject(__('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]))
+            ->subject($this->subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]))
             ->view(
                 [
                     'html' => 'feedback::emails.feedback-html',
@@ -33,7 +36,7 @@ class FeedbackNotification extends Notification
                     'feedback' => $this->feedback,
                 ],
             );
-        if (isset($this->feedback['email'])) {
+        if (isset($this->feedback['email']) && filter_var($this->feedback['email'], FILTER_VALIDATE_EMAIL)) {
             $message->replyTo($this->feedback['email']);
         }
 

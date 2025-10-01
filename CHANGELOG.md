@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Refactor feedback to configurable livewire component. E.g.
+  ```
+    <livewire:ig-feedback />
+    <livewire:ig-feedback
+        title="Feedback"
+        subject="New feedback received"
+        submit="Send feedback"
+        name="optional"
+        email="required"
+        phone="hidden"
+    />
+    ```
+
 ## [2.1.3] - 2025-09-24
 
 ### Fixed
