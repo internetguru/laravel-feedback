@@ -9,8 +9,4 @@
     <strong>@lang('ig-feedback::layouts.form.email'):</strong><br/>
     {{ $feedback['email'] ?? __('ig-feedback::layouts.email.anonymous') }}
 </p>
-<p>
-    <code>{{ \InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}</code><br/>
-    <a href="{{ url()->previous() }}">{{ url()->previous() }}</a>
-</p>
 @endsection
