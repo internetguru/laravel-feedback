@@ -1,12 +1,23 @@
 @extends('ig-common::layouts.email-plain')
 
 @section('content')
-@lang('ig-feedback::layouts.form.message'):
-{{ $feedback['message'] ?? __('ig-feedback::layouts.email.no_message') }}
+@if(isset($feedback['name']))
+@lang('ig-feedback::layouts.form.name'):
+{{ $feedback['name'] }}
 
+@endif
+@if(isset($feedback['email']))
 @lang('ig-feedback::layouts.form.email'):
-{{ $feedback['email'] ?? __('ig-feedback::layouts.email.anonymous') }}
+{{ $feedback['email'] }}
 
-{{ \InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}
-{{ url()->previous() }}
+@endif
+@if(isset($feedback['phone']))
+@lang('ig-feedback::layouts.form.phone'):
+{{ $feedback['phone'] }}
+
+@endif
+@if(isset($feedback['note']))
+@lang('ig-feedback::layouts.form.note'):
+{{ $feedback['note'] }}
+@endif
 @endsection

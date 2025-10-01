@@ -4,6 +4,27 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [3.0.0] - 2025-10-01
+
+_Stable release based on [3.0.0-rc.1]._
+
+## [3.0.0-rc.1] - 2025-10-01
+
+### Changed
+
+- Refactor feedback to configurable livewire component. E.g.
+  ```
+    <livewire:ig-feedback />
+    <livewire:ig-feedback
+        title="Feedback"
+        subject="New feedback received"
+        submit="Send feedback"
+        name="optional"
+        email="required"
+        phone="hidden"
+    />
+    ```
+
 ## [2.1.3] - 2025-09-24
 
 ### Fixed
@@ -168,6 +189,8 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[3.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.3...v3.0.0
+[3.0.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v2.1.3
 [2.1.3]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.2...v2.1.3
 [2.1.2]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.1...v2.1.2
 [2.1.1]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.0...v2.1.1

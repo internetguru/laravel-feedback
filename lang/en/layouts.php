@@ -5,8 +5,12 @@ return [
     'modal.link_text' => 'Feedback',
     'modal.success_message' => 'Thank you for your feedback!',
 
+    'form.name' => 'Name',
+    'form.email' => 'Email',
+    'form.phone' => 'Phone',
+    'form.note' => 'Message',
     'form.message' => 'Describe your issue',
-    'form.email' => 'Leave your email for contact (optional)',
+    'form.optional' => 'optional',
     'form.submit' => 'Send Feedback',
 
     'email.subject' => 'Feedback :app_www',
