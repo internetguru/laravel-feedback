@@ -1,7 +1,7 @@
 <div class="feedback-container">
     <!-- Feedback Link -->
-    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ $internalId }}Modal" class="feedback-link">
-        {{ $title ?? __('ig-feedback::layouts.modal.link_text') }}
+    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ $internalId }}Modal" class="feedback-link {{ $linkClass ?? '' }}">
+        {!! $linkHtml ?? $title ?? __('ig-feedback::layouts.modal.link_text') !!}
     </a>
 
     <!-- Modal -->
