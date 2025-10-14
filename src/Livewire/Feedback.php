@@ -15,6 +15,8 @@ class Feedback extends Component
     public $title = null;
     public $submit = null;
     public $subject = null;
+    public $linkHtml = null;
+    public $linkClass = null;
     public $formName = '';
     public $formEmail = '';
     public $formPhone = '';
@@ -30,6 +32,8 @@ class Feedback extends Component
         $title = null,
         $submit = null,
         $subject = null,
+        $linkHtml = null,
+        $linkClass = null,
         $name = 'required',
         $email = 'required',
         $phone = 'required',
@@ -38,6 +42,8 @@ class Feedback extends Component
         $this->title = $title;
         $this->submit = $submit;
         $this->subject = $subject;
+        $this->linkHtml = $linkHtml;
+        $this->linkClass = $linkClass;
         $this->nameVisibility = $name;
         $this->emailVisibility = $email;
         $this->phoneVisibility = $phone;

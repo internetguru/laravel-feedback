@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Configurable `linkHtml` and `linkClass`.
+
 ## [3.0.0] - 2025-10-01
 
 _Stable release based on [3.0.0-rc.1]._
