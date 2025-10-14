@@ -4,6 +4,8 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
 ## [3.1.0-rc.1] - 2025-10-14
 
 ### Added
@@ -195,6 +197,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
 [3.1.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v3.0.0
 [3.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v2.1.3...v3.0.0
 [3.0.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v2.1.3
