@@ -12,16 +12,17 @@ use Livewire\Component;
 
 class Feedback extends Component
 {
+    public $id;
     public $title = null;
     public $submit = null;
     public $subject = null;
     public $linkHtml = null;
     public $linkClass = null;
+
     public $formName = '';
     public $formEmail = '';
     public $formPhone = '';
     public $formNote = '';
-    public $internalId;
 
     public $nameVisibility = 'required';
     public $emailVisibility = 'required';
@@ -29,6 +30,7 @@ class Feedback extends Component
     public $noteVisibility = 'required';
 
     public function mount(
+        $id = 'feedback',
         $title = null,
         $submit = null,
         $subject = null,
@@ -39,16 +41,18 @@ class Feedback extends Component
         $phone = 'required',
         $note = 'required'
     ) {
+
+        $this->id = $id;
         $this->title = $title;
         $this->submit = $submit;
         $this->subject = $subject;
         $this->linkHtml = $linkHtml;
         $this->linkClass = $linkClass;
+
         $this->nameVisibility = $name;
         $this->emailVisibility = $email;
         $this->phoneVisibility = $phone;
         $this->noteVisibility = $note;
-        $this->internalId = 'feedback_' . uniqid();
 
         // Pre-fill email if user is authenticated
         if (auth()->check() && $this->emailVisibility !== 'hidden') {
@@ -119,7 +123,7 @@ class Feedback extends Component
             type: 'success',
             message: __('ig-feedback::layouts.modal.success_message') . Helpers::getEmailClientLink(),
         );
-        $this->js('feedbackSent', ['internalId' => $this->internalId]);
+        $this->js('feedbackSent', ['id' => $this->id]);
     }
 
     public function render()

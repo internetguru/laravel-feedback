@@ -1,15 +1,15 @@
 <div class="feedback-container">
     <!-- Feedback Link -->
-    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ $internalId }}Modal" class="feedback-link {{ $linkClass ?? '' }}">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ $id }}Modal" class="feedback-link {{ $linkClass ?? '' }}">
         {!! $linkHtml ?? $title ?? __('ig-feedback::layouts.modal.link_text') !!}
     </a>
 
     <!-- Modal -->
-    <div class="modal fade" id="{{ $internalId }}Modal" tabindex="-1" aria-labelledby="{{ $internalId }}ModalLabel" aria-hidden="true" wire:ignore.self>
+    <div class="modal fade" id="{{ $id }}Modal" tabindex="-1" aria-labelledby="{{ $id }}ModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="{{ $internalId }}ModalLabel">{{ $title ?? __('ig-feedback::layouts.modal.link_text') }}</h5>
+                    <h5 class="modal-title" id="{{ $id }}ModalLabel">{{ $title ?? __('ig-feedback::layouts.modal.link_text') }}</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -19,7 +19,7 @@
                         </div>
                     @endif
 
-                    <form wire:submit.prevent="send" id="{{ $internalId }}Form" class="editable-skip">
+                    <form wire:submit.prevent="send" id="{{ $id }}Form" class="editable-skip">
                         @if ($nameVisibility !== 'hidden')
                             <x-ig::input
                                 type="text"
@@ -79,8 +79,8 @@
 @script
 <script>
     $js('feedbackSent', (data) => {
-        let internalId = data.internalId || 'feedback';
-        let close = document.querySelector('#' + internalId + 'Modal .btn-close');
+        let id = data.id || 'feedback';
+        let close = document.querySelector('#' + id + 'Modal .btn-close');
         if (close) {
             close.click();
         }
