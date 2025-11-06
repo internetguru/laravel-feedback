@@ -8,11 +8,11 @@
     <div class="modal fade" id="{{ $internalId }}Modal" tabindex="-1" aria-labelledby="{{ $internalId }}ModalLabel" aria-hidden="true" wire:ignore.self>
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="{{ $internalId }}ModalLabel">{{ $title ?? __('ig-feedback::layouts.modal.link_text') }}</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
                 <div class="modal-body">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h5 class="modal-title" id="{{ $internalId }}ModalLabel">{{ $title ?? __('ig-feedback::layouts.modal.link_text') }}</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
                     @if ($errors->has('validation'))
                         <div class="alert alert-danger" role="alert">
                             {{ $errors->first('validation') }}
