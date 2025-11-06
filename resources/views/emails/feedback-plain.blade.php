@@ -20,4 +20,8 @@
 @lang('ig-feedback::layouts.form.note'):
 {{ $feedback['note'] }}
 @endif
+
+@lang('ig-feedback::layouts.email.send_from')
+{{ session('currentPage') ?? '-' }}
+{{ InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}
 @endsection
