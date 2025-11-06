@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [3.1.3] - 2025-11-06
+
+### Fixed
+
+- Add missing `send from` section.
+
 ## [3.1.2] - 2025-11-06
 
 ### Fixed
@@ -214,6 +220,7 @@ _Stable release based on [0.1.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
+[3.1.3]: https://https://github.com/internetguru/laravel-feedback/compare/v3.1.2...v3.1.3
 [3.1.2]: https://https://github.com/internetguru/laravel-feedback/compare/v3.1.1...v3.1.2
 [3.1.1]: https://https://github.com/internetguru/laravel-feedback/compare/v3.1.0...v3.1.1
 [3.1.0]: https://https://github.com/internetguru/laravel-feedback/compare/v3.0.0...v3.1.0
