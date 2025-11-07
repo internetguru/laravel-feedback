@@ -1,22 +1,22 @@
 <?php
 
 return [
-    'modal.title' => 'Poslat zpětnou vazbu',
+
+    'email.anonymous' => '-',
+    'email.from' => 'Od',
+    'email.no_message' => 'Bez zprávy',
+    'email.no_subject' => 'Bez předmětu',
+    'email.sent_from' => 'Odesláno z',
+    'email.subject' => 'Zpětná vazba :app_www',
+    'form.email' => 'Vaše e-mailová adresa',
+    'form.message' => 'Sem napište svou zprávu',
+    'form.name' => 'Vaše celé jméno',
+    // 'form.note' => 'Zpráva',
+    'form.optional' => 'volitelné',
+    'form.phone' => 'Vaše telefonní číslo',
+    'form.submit' => 'Odeslat',
     'modal.link_text' => 'Zpětná vazba',
     'modal.success_message' => 'Děkujeme za vaši zpětnou vazbu!',
+    'modal.title' => 'Poslat zpětnou vazbu',
 
-    'form.name' => 'Jméno',
-    'form.email' => 'E-mail',
-    'form.phone' => 'Telefon',
-    'form.note' => 'Zpráva',
-    'form.message' => 'Popište svůj problém',
-    'form.optional' => 'nepovinné',
-    'form.submit' => 'Odeslat zpětnou vazbu',
-
-    'email.subject' => 'Zpětná vazba :app_www',
-    'email.no_subject' => 'Bez předmětu',
-    'email.no_message' => 'Bez zprávy',
-    'email.from' => 'Od',
-    'email.anonymous' => '-',
-    'email.send_from' => 'Odesláno z',
 ];
