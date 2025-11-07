@@ -1,7 +1,11 @@
 <div>
     @if($isOpen)
         <!-- Modal -->
-        <div class="modal fade show" id="{{ $id }}-modal" tabindex="-1" aria-labelledby="{{ $id }}-modal-label" aria-hidden="false" style="display: block;" wire:key="{{ $id }}-modal">
+        <div class="modal fade show" id="{{ $id }}-modal" tabindex="-1"
+            aria-labelledby="{{ $id }}-modal-label" aria-hidden="false" style="display: block;"
+            wire:key="{{ $id }}-modal"
+            x-data x-on:keydown.escape.window="$wire.closeModal()"
+        >
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-body">
