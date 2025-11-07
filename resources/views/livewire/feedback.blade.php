@@ -15,7 +15,7 @@
                         </div>
 
                         @if($description)
-                            <p class="mb-3">{{ $description }}</p>
+                            <p class="me-5">{{ $description }}</p>
                         @endif
 
                         @if($showSuccess)
