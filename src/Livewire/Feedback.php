@@ -8,118 +8,184 @@ use InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface;
 use InternetGuru\LaravelCommon\Support\Helpers;
 use InternetGuru\LaravelFeedback\Notification\FeedbackNotification;
 use Livewire\Attributes\Locked;
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Feedback extends Component
 {
-    public $title = null;
-    public $submit = null;
-    public $subject = null;
-    public $linkHtml = null;
-    public $linkClass = null;
-    public $formName = '';
-    public $formEmail = '';
-    public $formPhone = '';
-    public $formNote = '';
-    public $internalId;
+    #[Locked]
+    public string $id;
 
-    public $nameVisibility = 'required';
-    public $emailVisibility = 'required';
-    public $phoneVisibility = 'required';
-    public $noteVisibility = 'required';
+    #[Locked]
+    public string $email;
+
+    #[Locked]
+    public string $name;
+
+    public ?string $subject = null;
+    public ?string $title = null;
+    public ?string $submit = null;
+    public array $fields = [];
+
+    public array $formData = [];
+    public bool $isOpen = false;
+    public bool $showSuccess = false;
+
+    protected $listeners = ['openFeedback'];
 
     public function mount(
-        $title = null,
-        $submit = null,
-        $subject = null,
-        $linkHtml = null,
-        $linkClass = null,
-        $name = 'required',
-        $email = 'required',
-        $phone = 'required',
-        $note = 'required'
+        string $id,
+        string $email,
+        string $name,
+        ?string $subject = 'Feedback',
+        ?string $title = 'Feedback',
+        ?string $submit = null,
+        ?array $fields = null
     ) {
-        $this->title = $title;
+        $this->id = $id;
+        $this->email = $email;
+        $this->name = $name;
+        $this->subject = $subject ?? __('ig-feedback::email.subject', ['app_name' => config('app.name')]);
+        $this->title = $title ?? __('ig-feedback::layouts.modal.title');
         $this->submit = $submit;
-        $this->subject = $subject;
-        $this->linkHtml = $linkHtml;
-        $this->linkClass = $linkClass;
-        $this->nameVisibility = $name;
-        $this->emailVisibility = $email;
-        $this->phoneVisibility = $phone;
-        $this->noteVisibility = $note;
-        $this->internalId = 'feedback_' . uniqid();
+
+        // Default fields if not provided
+        if ($fields === null) {
+            $this->fields = [
+                ['name' => 'message', 'label' => __('ig-feedback::fields.message'), 'required' => true],
+                ['name' => 'email', 'label' => __('ig-feedback::fields.email_contact')],
+            ];
+        } else {
+            $this->fields = $this->normalizeFields($fields);
+        }
+
+        $this->initializeFormData();
+    }
+
+    /**
+     * Normalize fields by generating labels for duplicate names
+     */
+    protected function normalizeFields(array $fields): array
+    {
+        $nameCounts = [];
+        $normalized = [];
+
+        foreach ($fields as $field) {
+            $fieldName = $field['name'] ?? '';
+
+            if (!isset($nameCounts[$fieldName])) {
+                $nameCounts[$fieldName] = 0;
+            }
+            $nameCounts[$fieldName]++;
+
+            // Generate label if not provided
+            if (!isset($field['label'])) {
+                $config = config("feedback.names.{$fieldName}", []);
+                $labelKey = $config['label_translation_key'] ?? "ig-feedback::fields.{$fieldName}";
+                $baseLabel = __($labelKey);
+
+                // Add counter for duplicates
+                if ($nameCounts[$fieldName] > 1) {
+                    $field['label'] = "{$baseLabel} {$nameCounts[$fieldName]}";
+                } else {
+                    // Check if there will be duplicates
+                    $totalCount = count(array_filter($fields, fn($f) => ($f['name'] ?? '') === $fieldName));
+                    if ($totalCount > 1) {
+                        $field['label'] = "{$baseLabel} 1";
+                    } else {
+                        $field['label'] = $baseLabel;
+                    }
+                }
+            }
+
+            $normalized[] = $field;
+        }
+
+        return $normalized;
+    }
+
+    /**
+     * Initialize form data array based on fields
+     */
+    protected function initializeFormData(): void
+    {
+        foreach ($this->fields as $index => $field) {
+            $this->formData[$index] = '';
+        }
 
         // Pre-fill email if user is authenticated
-        if (auth()->check() && $this->emailVisibility !== 'hidden') {
-            $this->formEmail = auth()->user()->email ?? '';
+        if (auth()->check()) {
+            foreach ($this->fields as $index => $field) {
+                if (($field['name'] ?? '') === 'email' && empty($this->formData[$index])) {
+                    $this->formData[$index] = auth()->user()->email ?? '';
+                    break; // Only fill the first email field
+                }
+            }
         }
+    }
+
+    #[On('openFeedback')]
+    public function openFeedback($id = null)
+    {
+        if ($id === $this->id) {
+            $this->isOpen = true;
+            $this->showSuccess = false;
+        }
+    }
+
+    public function closeModal()
+    {
+        $this->isOpen = false;
+        $this->showSuccess = false;
     }
 
     public function send(ReCaptchaInterface $recaptcha)
     {
         $recaptcha->validate(request());
 
+        // Build validation rules dynamically based on fields
         $rules = [];
-        $data = [];
+        foreach ($this->fields as $index => $field) {
+            $fieldName = $field['name'] ?? '';
+            $isRequired = $field['required'] ?? false;
 
-        // Build validation rules dynamically based on field visibility
-        if ($this->nameVisibility !== 'hidden') {
-            $rules['name'] = $this->nameVisibility === 'required' ? 'required|string|max:255' : 'nullable|string|max:255';
-            $data['name'] = $this->formName;
-        }
+            $config = config("feedback.names.{$fieldName}", []);
+            $validation = $config['validation'] ?? 'string|max:255';
 
-        if ($this->emailVisibility !== 'hidden') {
-            $rules['email'] = $this->emailVisibility === 'required' ? 'required|email|max:255' : 'nullable|email|max:255';
-            $data['email'] = $this->formEmail;
-        }
+            $fieldKey = "formData.{$index}";
 
-        if ($this->phoneVisibility !== 'hidden') {
-            $rules['phone'] = $this->phoneVisibility === 'required' ? 'required|string|max:255' : 'nullable|string|max:255';
-            $data['phone'] = $this->formPhone;
-        }
-
-        if ($this->noteVisibility !== 'hidden') {
-            $rules['note'] = $this->noteVisibility === 'required' ? 'required|string' : 'nullable|string';
-            $data['note'] = $this->formNote;
-        }
-
-        $validator = Validator::make($data, $rules);
-
-        if ($validator->fails()) {
-            $this->addError('validation', $validator->errors()->first());
-            return;
-        }
-
-        $validated = $validator->validated();
-
-        // If empty set tp '-'
-        foreach($validated as $key => $value) {
-            if (empty($value)) {
-                $validated[$key] = '-';
+            if ($isRequired) {
+                $rules[$fieldKey] = "required|{$validation}";
+            } else {
+                $rules[$fieldKey] = "nullable|{$validation}";
             }
         }
 
+        $this->validate($rules);
+
+        // Prepare data for email
+        $emailData = [];
+        foreach ($this->fields as $index => $field) {
+            $emailData[] = [
+                'label' => $field['label'] ?? '',
+                'value' => $this->formData[$index] ?? '-',
+                'name' => $field['name'] ?? '',
+            ];
+        }
+
         User::make([
-            'email' => config('feedback.email'),
-            'name' => config('feedback.name')
+            'email' => $this->email,
+            'name' => $this->name
         ])->notify(
-            (new FeedbackNotification($validated, $this->subject))->locale(app()->getLocale())
+            (new FeedbackNotification($emailData, $this->subject))->locale(app()->getLocale())
         );
 
         // Reset form
-        $this->reset(['formName', 'formEmail', 'formPhone', 'formNote']);
-
-        // Pre-fill email again if user is authenticated
-        if (auth()->check() && $this->emailVisibility !== 'hidden') {
-            $this->formEmail = auth()->user()->email ?? '';
-        }
-
+        $this->initializeFormData();
         $this->dispatch('ig-message',
             type: 'success',
-            message: __('ig-feedback::layouts.modal.success_message') . Helpers::getEmailClientLink(),
+            message: __('ig-feedback::messages.success') . Helpers::getEmailClientLink(),
         );
-        $this->js('feedbackSent', ['internalId' => $this->internalId]);
     }
 
     public function render()
