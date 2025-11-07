@@ -1,89 +1,53 @@
-<div class="feedback-container">
-    <!-- Feedback Link -->
-    <a href="#" data-bs-toggle="modal" data-bs-target="#{{ $internalId }}Modal" class="feedback-link {{ $linkClass ?? '' }}">
-        {!! $linkHtml ?? $title ?? __('ig-feedback::layouts.modal.link_text') !!}
-    </a>
-
-    <!-- Modal -->
-    <div class="modal fade" id="{{ $internalId }}Modal" tabindex="-1" aria-labelledby="{{ $internalId }}ModalLabel" aria-hidden="true" wire:ignore.self>
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="modal-title" id="{{ $internalId }}ModalLabel">{{ $title ?? __('ig-feedback::layouts.modal.link_text') }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    @if ($errors->has('validation'))
-                        <div class="alert alert-danger" role="alert">
-                            {{ $errors->first('validation') }}
+<div>
+    @if($isOpen)
+        <!-- Modal -->
+        <div class="modal fade show" id="{{ $id }}-modal" tabindex="-1" aria-labelledby="{{ $id }}-modal-label" aria-hidden="false" style="display: block;" wire:key="{{ $id }}-modal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h5 class="modal-title" id="{{ $id }}-modal-label">{{ $title }}</h5>
+                            <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
                         </div>
-                    @endif
 
-                    <form wire:submit.prevent="send" id="{{ $internalId }}Form" class="editable-skip">
-                        @if ($nameVisibility !== 'hidden')
-                            <x-ig::input
-                                type="text"
-                                name="name"
-                                wire:model="formName"
-                                :required="$nameVisibility === 'required'"
-                            >
-                                {{ __('ig-feedback::layouts.form.name') }}{{ $nameVisibility === 'optional' ? ' (' . __('ig-feedback::layouts.form.optional') . ')' : '' }}
-                            </x-ig::input>
+                        @if($showSuccess)
+                            <div class="alert alert-success" role="alert">
+                                {{ __('ig-feedback::messages.success') }}
+                            </div>
+                        @else
+                            <form wire:submit.prevent="send" class="editable-skip">
+                                @foreach($fields as $index => $field)
+                                    @php
+                                        $fieldName = $field['name'] ?? '';
+                                        $fieldLabel = $field['label'] ?? '';
+                                        $isRequired = $field['required'] ?? false;
+                                        $config = config("feedback.names.{$fieldName}", []);
+                                        $customView = $config['view'] ?? null;
+                                    @endphp
+
+                                    @if($customView && view()->exists($customView))
+                                        @include($customView, [
+                                            'field' => $field,
+                                            'index' => $index,
+                                            'fieldName' => $fieldName,
+                                            'fieldLabel' => $fieldLabel,
+                                            'isRequired' => $isRequired,
+                                            'config' => $config,
+                                        ])
+                                    @else
+                                        {{-- skipping unknown field name: {{ $fieldName }} --}}
+                                    @endif
+                                @endforeach
+
+                                <x-ig::submit>
+                                    {{ $submit ?? __('ig-feedback::fields.submit') }}
+                                </x-ig::submit>
+                            </form>
                         @endif
-
-                        @if ($emailVisibility !== 'hidden')
-                            <x-ig::input
-                                type="email"
-                                name="email"
-                                wire:model="formEmail"
-                                :required="$emailVisibility === 'required'"
-                            >
-                                {{ __('ig-feedback::layouts.form.email') }}{{ $emailVisibility === 'optional' ? ' (' . __('ig-feedback::layouts.form.optional') . ')' : '' }}
-                            </x-ig::input>
-                        @endif
-
-                        @if ($phoneVisibility !== 'hidden')
-                            <x-ig::input
-                                type="tel"
-                                name="phone"
-                                wire:model="formPhone"
-                                :required="$phoneVisibility === 'required'"
-                            >
-                                {{ __('ig-feedback::layouts.form.phone') }}{{ $phoneVisibility === 'optional' ? ' (' . __('ig-feedback::layouts.form.optional') . ')' : '' }}
-                            </x-ig::input>
-                        @endif
-
-                        @if ($noteVisibility !== 'hidden')
-                            <x-ig::input
-                                type="textarea"
-                                name="note"
-                                rows="10"
-                                wire:model="formNote"
-                                :required="$noteVisibility === 'required'"
-                            >
-                                {{ __('ig-feedback::layouts.form.note') }}{{ $noteVisibility === 'optional' ? ' (' . __('ig-feedback::layouts.form.optional') . ')' : '' }}
-                            </x-ig::input>
-                        @endif
-
-                        <x-ig::submit>
-                            {{ $submit ?? __('ig-feedback::layouts.form.submit') }}
-                        </x-ig::submit>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
+        <div class="modal-backdrop fade show"></div>
+    @endif
 </div>
-
-@script
-<script>
-    $js('feedbackSent', (data) => {
-        let internalId = data.internalId || 'feedback';
-        let close = document.querySelector('#' + internalId + 'Modal .btn-close');
-        if (close) {
-            close.click();
-        }
-    });
-</script>
-@endscript
