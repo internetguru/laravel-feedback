@@ -186,6 +186,9 @@ class Feedback extends Component
             type: 'success',
             message: __('ig-feedback::messages.success') . Helpers::getEmailClientLink(),
         );
+
+        // Close modal after successful send
+        $this->closeModal();
     }
 
     public function render()
