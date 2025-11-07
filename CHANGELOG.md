@@ -4,6 +4,23 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Add a form link template.
+- Add an optional description attribute.
+- Add phone number validation.
+
+### Changed
+
+- Set a specific default label for optional email.
+- Update translations and remove unused.
+
+### Fixed
+
+- Fix value contents in email body.
+
 ## [4.0.2] - 2025-11-07
 
 ### Fixed
@@ -239,6 +256,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
 [4.0.2]: https://https://github.com/internetguru/laravel-feedback/compare/v4.0.1...v4.0.2
 [4.0.1]: https://https://github.com/internetguru/laravel-feedback/compare/v4.0.0...v4.0.1
 [4.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v3.1.3...v4.0.0

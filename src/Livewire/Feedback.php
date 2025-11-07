@@ -24,6 +24,7 @@ class Feedback extends Component
 
     public ?string $subject = null;
     public ?string $title = null;
+    public ?string $description = null;
     public ?string $submit = null;
     public array $fields = [];
 
@@ -39,6 +40,7 @@ class Feedback extends Component
         string $name,
         ?string $subject = null,
         ?string $title = null,
+        ?string $description = null,
         ?string $submit = null,
         ?array $fields = null
     ) {
@@ -48,17 +50,14 @@ class Feedback extends Component
         $this->subject = $subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]);
         $this->title = $title ?? __('ig-feedback::layouts.modal.title');
         $this->submit = $submit;
+        $this->description = $description ?? __('ig-feedback::layouts.modal.description');
 
-        // Default fields if not provided
-        if ($fields === null) {
-            $this->fields = [
-                ['name' => 'message', 'label' => __('ig-feedback::fields.message'), 'required' => true],
-                ['name' => 'email', 'label' => __('ig-feedback::fields.email_contact')],
-            ];
-        } else {
-            $this->fields = $this->normalizeFields($fields);
-        }
+        $defaultFields = [
+            ['name' => 'message', 'required' => true],
+            ['name' => 'email' ],
+        ];
 
+        $this->fields = $this->normalizeFields($fields ?? $defaultFields);
         $this->initializeFormData();
     }
 
@@ -82,6 +81,12 @@ class Feedback extends Component
             if (!isset($field['label'])) {
                 $config = config("feedback.names.{$fieldName}", []);
                 $labelKey = $config['label_translation_key'] ?? "ig-feedback::fields.{$fieldName}";
+
+                // Use email_optional for optional email fields
+                if ($fieldName === 'email' && !($field['required'] ?? false)) {
+                    $labelKey = 'ig-feedback::fields.email_optional';
+                }
+
                 $baseLabel = __($labelKey);
 
                 // Add counter for duplicates
