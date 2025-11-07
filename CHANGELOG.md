@@ -6,6 +6,21 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Add a form link template.
+- Add an optional description attribute.
+- Add phone number validation.
+
+### Changed
+
+- Set a specific default label for optional email.
+- Update translations and remove unused.
+
+### Fixed
+
+- Fix value contents in email body.
+
 ## [4.0.2] - 2025-11-07
 
 ### Fixed
