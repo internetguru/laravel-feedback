@@ -53,7 +53,7 @@ class Feedback extends Component
         if ($fields === null) {
             $this->fields = [
                 ['name' => 'message', 'label' => __('ig-feedback::fields.message'), 'required' => true],
-                ['name' => 'email', 'label' => __('ig-feedback::fields.email_contact')],
+                ['name' => 'email', 'label' => __('ig-feedback::fields.email_optional')],
             ];
         } else {
             $this->fields = $this->normalizeFields($fields);
