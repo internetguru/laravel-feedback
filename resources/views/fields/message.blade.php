@@ -3,7 +3,7 @@
     name="formData.{{ $index }}"
     wire:model="formData.{{ $index }}"
     :required="$isRequired"
-    rows="5"
+    rows="8"
 >
     {{ $fieldLabel }}{{ !$isRequired ? ' (' . __('ig-feedback::fields.optional') . ')' : '' }}
 </x-ig::input>

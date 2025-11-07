@@ -31,7 +31,7 @@ return [
         ],
         'phone' => [
             'type' => 'tel',
-            'validation' => 'string|max:50',
+            'validation' => 'string|regex:/^(?:[0-9\s\-\(\)\.+]*\d){7,15}$/|max:50',
             'label_translation_key' => 'ig-feedback::fields.phone',
             'view' => 'feedback::fields.phone',
         ],
