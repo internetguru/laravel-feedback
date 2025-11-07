@@ -3,13 +3,37 @@
 return [
     /*
     |--------------------------------------------------------------------------
-    | Feedback Email Address
+    | Field Name Definitions
     |--------------------------------------------------------------------------
     |
-    | This value determines the email address where feedback will be sent.
+    | Define custom field types with their validation rules, labels, and views.
+    | Each field name can have: type, validation, label_translation_key, view
     |
     */
-    'email' => env('FEEDBACK_EMAIL', 'info@internetguru.io'),
-    'name' => env('FEEDBACK_NAME', 'Internet Guru'),
-
+    'names' => [
+        'name' => [
+            'type' => 'text',
+            'validation' => 'string|min:2|max:100',
+            'label_translation_key' => 'ig-feedback::fields.name',
+            'view' => 'feedback::fields.name',
+        ],
+        'email' => [
+            'type' => 'email',
+            'validation' => 'email:rfc,dns|max:255',
+            'label_translation_key' => 'ig-feedback::fields.email',
+            'view' => 'feedback::fields.email',
+        ],
+        'message' => [
+            'type' => 'textarea',
+            'validation' => 'string|min:2|max:2000',
+            'label_translation_key' => 'ig-feedback::fields.message',
+            'view' => 'feedback::fields.message',
+        ],
+        'phone' => [
+            'type' => 'tel',
+            'validation' => 'string|max:50',
+            'label_translation_key' => 'ig-feedback::fields.phone',
+            'view' => 'feedback::fields.phone',
+        ],
+    ],
 ];
