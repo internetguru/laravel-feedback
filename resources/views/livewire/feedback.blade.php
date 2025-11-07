@@ -14,6 +14,10 @@
                             <button type="button" class="btn-close" wire:click="closeModal" aria-label="Close"></button>
                         </div>
 
+                        @if($description)
+                            <p class="mb-3">{{ $description }}</p>
+                        @endif
+
                         @if($showSuccess)
                             <div class="alert alert-success" role="alert">
                                 {{ __('ig-feedback::messages.success') }}

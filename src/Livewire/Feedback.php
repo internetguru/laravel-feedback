@@ -24,6 +24,7 @@ class Feedback extends Component
 
     public ?string $subject = null;
     public ?string $title = null;
+    public ?string $description = null;
     public ?string $submit = null;
     public array $fields = [];
 
@@ -39,6 +40,7 @@ class Feedback extends Component
         string $name,
         ?string $subject = null,
         ?string $title = null,
+        ?string $description = null,
         ?string $submit = null,
         ?array $fields = null
     ) {
@@ -47,6 +49,7 @@ class Feedback extends Component
         $this->name = $name;
         $this->subject = $subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]);
         $this->title = $title ?? __('ig-feedback::layouts.modal.title');
+        $this->description = $description;
         $this->submit = $submit;
 
         // Default fields if not provided
