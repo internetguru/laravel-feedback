@@ -3,7 +3,6 @@
 namespace InternetGuru\LaravelFeedback\Livewire;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
 use InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface;
 use InternetGuru\LaravelCommon\Support\Helpers;
 use InternetGuru\LaravelFeedback\Notification\FeedbackNotification;
@@ -31,8 +30,6 @@ class Feedback extends Component
     public array $formData = [];
     public bool $isOpen = false;
     public bool $showSuccess = false;
-
-    protected $listeners = ['openFeedback'];
 
     public function mount(
         string $id,
@@ -118,12 +115,24 @@ class Feedback extends Component
             $this->formData[$index] = '';
         }
 
-        // Pre-fill email if user is authenticated
-        if (auth()->check()) {
+        // Pre-fill name and email if logged user
+        if (auth()->check() && empty(array_filter($this->formData))) {
+            $emailFilled = false;
+            $fullnameFilled = false;
+
             foreach ($this->fields as $index => $field) {
-                if (($field['name'] ?? '') === 'email' && empty($this->formData[$index])) {
+                $fieldName = $field['name'] ?? '';
+
+                // Fill first email field
+                if ($fieldName === 'email' && ! $emailFilled) {
                     $this->formData[$index] = auth()->user()->email ?? '';
-                    break; // Only fill the first email field
+                    $emailFilled = true;
+                }
+
+                // Fill first fullname field
+                if ($fieldName === 'fullname' && ! $fullnameFilled) {
+                    $this->formData[$index] = auth()->user()->name ?? '';
+                    $fullnameFilled = true;
                 }
             }
         }

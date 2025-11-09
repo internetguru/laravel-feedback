@@ -169,13 +169,15 @@ If optional attributes are omitted, the default values are:
 ## Field items
 
 - `name` (required)\
-  Field name. Supported values include: fullname, email, message, phone.
+  Field name. Supported values include: `fullname`, `email`, `message`, `phone`.
 
 - `required` (optional)\
   Whether the field is required (false by default).
 
 - `label` (optional)\
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
+
+**Note:** When an authenticated user opens the form, the first `email` field is automatically prefilled with the user's email address, and the first `fullname` field is automatically prefilled with the user's name.
 
 ## Submission behavior
 
