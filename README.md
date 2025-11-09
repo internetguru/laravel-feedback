@@ -15,13 +15,10 @@ for email logging, footer rendering, and styling.
 ## Installation
 
 1. Install and configure [Livewire](https://livewire.laravel.com/).
-1. Install the package via Composer:
-
-```bash
-composer require internetguru/laravel-feedback
-```
+1. Install the package via Composer:\
+`composer require internetguru/laravel-feedback`
 1. Ensure mail configuration is working.
-1. Optional: configure reCAPTCHA, see [internetguru/laravel-common](https://github.com/internetguru/laravel-common).
+1. Optionally configure reCAPTCHA, see [internetguru/laravel-common](https://github.com/internetguru/laravel-common).
 
 ## Usage
 
@@ -108,7 +105,7 @@ composer require internetguru/laravel-feedback
 
 ## Trigger Components
 
-The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the `id` of your feedback form. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element.
+The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the feedback form component ID. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element.
 
 **Button trigger**
 
@@ -182,11 +179,9 @@ If optional attributes are omitted, the default values are:
 
 ## Submission behavior
 
-By default the component sends the submitted data to the configured email
-with the given subject. You control the payload by defining fields,
-required and patterns. You can listen into Livewire event to extend or
-replace delivery (for example, call an API, enqueue a job). Inline errors
-and a success state are rendered by the component.
+By default, the component sends submitted feedback to the configured email address with the specified subject line. You control the form structure by defining fields with validation rules and required flags.
+
+You can listen to Livewire events to extend or replace the default delivery mechanism (for example, calling an API or enqueueing a job). The component renders inline validation errors and success messages.
 
 ## Customization
 
@@ -200,20 +195,20 @@ The component uses translation keys under the
     them.
 
 **Custom names**\
-You can modify existing fields or register additional field names via your standard config. Define a name key and its renderer and default pattern. Example:
+You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, label translation key, and view path. Example:
 
 ```php
 // config/ig-feedback.php
 return [
     'names' => [
-        // existing modified type
-        'fullname' => [
-            'type' => 'text',
-            'validation' => 'string|email|regex:/@internetguru/',
-            'label_translation_key' => 'ig-feedback::fields.fullname',
-            'view' => 'ig-feedback::fields.fullname',
+        // modify existing field
+        'email' => [
+            'type' => 'email',
+            'validation' => 'email:rfc|regex:/@internetguru\.io$/',
+            'label_translation_key' => 'ig-feedback::fields.email',
+            'view' => 'ig-feedback::fields.email',
         ],
-        // your custom type
+        // add custom field
         'company' => [
             'type' => 'text',
             'validation' => 'string|min:2|max:100',
@@ -224,11 +219,11 @@ return [
 ];
 ```
 
-Then use it like any other name:
+Then use it like any other field:
 
 ```blade
 :fields="[
-    ['name' => 'fullname'],
+    ['name' => 'email'],
     ['name' => 'company'],
 ]"
 ```
