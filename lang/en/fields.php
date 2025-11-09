@@ -1,11 +1,14 @@
 <?php
 
 return [
-    'name' => 'Name',
-    'email' => 'Email',
-    'email_contact' => 'Leave your email for contact',
-    'message' => 'Describe your issue',
-    'phone' => 'Phone',
+
+    'email' => 'Your email address',
+    'email_optional' => 'Leave your email for contact',
+    'fullname' => 'Your full name',
+    'message' => 'Type your message here',
+    'name' => 'Your full name',
     'optional' => 'optional',
+    'phone' => 'Your phone number',
     'submit' => 'Send',
+
 ];

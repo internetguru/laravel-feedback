@@ -26,7 +26,7 @@ class FeedbackNotification extends Notification
     public function toMail(): MailMessage
     {
         $message = (new IgMailMessage())
-            ->subject($this->subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]))
+            ->subject($this->subject ?? __('feedback::layouts.email.subject', ['app_www' => config('app.www')]))
             ->view(
                 [
                     'html' => 'feedback::emails.feedback-html',
@@ -37,7 +37,7 @@ class FeedbackNotification extends Notification
                 ],
             );
         if (isset($this->feedback['email']) && filter_var($this->feedback['email'], FILTER_VALIDATE_EMAIL)) {
-            $message->replyTo($this->feedback['email'], $this->feedback['name'] ?? null);
+            $message->replyTo($this->feedback['email'], $this->feedback['fullname'] ?? null);
         }
 
         return $message;

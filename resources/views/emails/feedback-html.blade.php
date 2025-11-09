@@ -4,13 +4,13 @@
 @foreach($feedback as $field)
 <p>
     <strong>{{ $field['label'] }}:</strong><br/>
-    {{ $field['value'] }}
+    {!! nl2br(e($field['value'])) !!}
 </p>
 @endforeach
 
 <p>
-    <strong>@lang('ig-feedback::layouts.email.send_from')</strong><br/>
-    {{ session('currentPage') ?? '-' }}<br/>
+    <strong>@lang('feedback::layouts.email.sent_from'):</strong><br/>
+    <a href="{{ session('currentPage') ?? '-' }}">{{ session('currentPage') ?? '-' }}</a><br/>
     {{ InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}
 </p>
 @endsection

@@ -3,7 +3,6 @@
 namespace InternetGuru\LaravelFeedback\Livewire;
 
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
 use InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface;
 use InternetGuru\LaravelCommon\Support\Helpers;
 use InternetGuru\LaravelFeedback\Notification\FeedbackNotification;
@@ -24,6 +23,7 @@ class Feedback extends Component
 
     public ?string $subject = null;
     public ?string $title = null;
+    public ?string $description = null;
     public ?string $submit = null;
     public array $fields = [];
 
@@ -31,34 +31,30 @@ class Feedback extends Component
     public bool $isOpen = false;
     public bool $showSuccess = false;
 
-    protected $listeners = ['openFeedback'];
-
     public function mount(
         string $id,
         string $email,
         string $name,
         ?string $subject = null,
         ?string $title = null,
+        ?string $description = null,
         ?string $submit = null,
         ?array $fields = null
     ) {
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
-        $this->subject = $subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]);
-        $this->title = $title ?? __('ig-feedback::layouts.modal.title');
+        $this->subject = $subject ?? __('feedback::layouts.email.subject', ['app_www' => config('app.www')]);
+        $this->title = $title ?? __('feedback::layouts.modal.title');
         $this->submit = $submit;
+        $this->description = $description ?? __('feedback::layouts.modal.description');
 
-        // Default fields if not provided
-        if ($fields === null) {
-            $this->fields = [
-                ['name' => 'message', 'label' => __('ig-feedback::fields.message'), 'required' => true],
-                ['name' => 'email', 'label' => __('ig-feedback::fields.email_contact')],
-            ];
-        } else {
-            $this->fields = $this->normalizeFields($fields);
-        }
+        $defaultFields = [
+            ['name' => 'message', 'required' => true],
+            ['name' => 'email' ],
+        ];
 
+        $this->fields = $this->normalizeFields($fields ?? $defaultFields);
         $this->initializeFormData();
     }
 
@@ -81,7 +77,13 @@ class Feedback extends Component
             // Generate label if not provided
             if (!isset($field['label'])) {
                 $config = config("feedback.names.{$fieldName}", []);
-                $labelKey = $config['label_translation_key'] ?? "ig-feedback::fields.{$fieldName}";
+                $labelKey = $config['label_translation_key'] ?? "feedback::fields.{$fieldName}";
+
+                // Use email_optional for optional email fields
+                if ($fieldName === 'email' && !($field['required'] ?? false)) {
+                    $labelKey = 'feedback::fields.email_optional';
+                }
+
                 $baseLabel = __($labelKey);
 
                 // Add counter for duplicates
@@ -113,12 +115,24 @@ class Feedback extends Component
             $this->formData[$index] = '';
         }
 
-        // Pre-fill email if user is authenticated
-        if (auth()->check()) {
+        // Pre-fill name and email if logged user
+        if (auth()->check() && empty(array_filter($this->formData))) {
+            $emailFilled = false;
+            $fullnameFilled = false;
+
             foreach ($this->fields as $index => $field) {
-                if (($field['name'] ?? '') === 'email' && empty($this->formData[$index])) {
+                $fieldName = $field['name'] ?? '';
+
+                // Fill first email field
+                if ($fieldName === 'email' && ! $emailFilled) {
                     $this->formData[$index] = auth()->user()->email ?? '';
-                    break; // Only fill the first email field
+                    $emailFilled = true;
+                }
+
+                // Fill first fullname field
+                if ($fieldName === 'fullname' && ! $fullnameFilled) {
+                    $this->formData[$index] = auth()->user()->name ?? '';
+                    $fullnameFilled = true;
                 }
             }
         }
@@ -145,6 +159,7 @@ class Feedback extends Component
 
         // Build validation rules dynamically based on fields
         $rules = [];
+        $messages = [];
         foreach ($this->fields as $index => $field) {
             $fieldName = $field['name'] ?? '';
             $isRequired = $field['required'] ?? false;
@@ -159,9 +174,14 @@ class Feedback extends Component
             } else {
                 $rules[$fieldKey] = "nullable|{$validation}";
             }
+
+            // Add custom validation message for phone field
+            if ($fieldName === 'phone') {
+                $messages["{$fieldKey}.regex"] = __('feedback::messages.phone_validation');
+            }
         }
 
-        $this->validate($rules);
+        $this->validate($rules, $messages);
 
         // Prepare data for email
         $emailData = [];
@@ -184,7 +204,7 @@ class Feedback extends Component
         $this->initializeFormData();
         $this->dispatch('ig-message',
             type: 'success',
-            message: __('ig-feedback::messages.success') . Helpers::getEmailClientLink(),
+            message: __('feedback::messages.success') . Helpers::getEmailClientLink(),
         );
 
         // Close modal after successful send
