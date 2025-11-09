@@ -8,7 +8,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
-- Add a form link template.
+- Add button and link trigger components.
 - Add an optional description attribute.
 - Add phone number validation.
 
