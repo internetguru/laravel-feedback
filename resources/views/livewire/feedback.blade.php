@@ -20,7 +20,7 @@
 
                         @if($showSuccess)
                             <div class="alert alert-success" role="alert">
-                                {{ __('ig-feedback::messages.success') }}
+                                {{ __('feedback::messages.success') }}
                             </div>
                         @else
                             <form wire:submit.prevent="send" class="editable-skip">
@@ -48,7 +48,7 @@
                                 @endforeach
 
                                 <x-ig::submit>
-                                    {{ $submit ?? __('ig-feedback::fields.submit') }}
+                                    {{ $submit ?? __('feedback::fields.submit') }}
                                 </x-ig::submit>
                             </form>
                         @endif

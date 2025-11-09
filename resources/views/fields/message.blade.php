@@ -5,5 +5,5 @@
     :required="$isRequired"
     rows="8"
 >
-    {{ $fieldLabel }}{{ !$isRequired ? ' (' . __('ig-feedback::fields.optional') . ')' : '' }}
+    {{ $fieldLabel }}{{ !$isRequired ? ' (' . __('feedback::fields.optional') . ')' : '' }}
 </x-ig::input>

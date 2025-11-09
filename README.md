@@ -27,7 +27,7 @@ for email logging, footer rendering, and styling.
 **Declaration with only required attributes**
 
 ```blade
-<livewire:ig-feedback
+<livewire:feedback
     id="feedback-form"
     email="support@example.com"
     name="Support Team"
@@ -47,7 +47,7 @@ for email logging, footer rendering, and styling.
 **Declaration with custom subject, title, description, and fields**
 
 ```blade
-<livewire:ig-feedback
+<livewire:feedback
     id="contact-us-form"
     email="helpdesk@example.com"
     name="Helpdesk"
@@ -76,7 +76,7 @@ for email logging, footer rendering, and styling.
 **Declaration with duplicate email field and custom labels**
 
 ```blade
-<livewire:ig-feedback
+<livewire:feedback
     id="detailed-feedback-form"
     email="info@example.com"
     name="Info Center"
@@ -191,29 +191,29 @@ The component ships pre-styled. You can override classes by
 
 **Localization**\
 The component uses translation keys under the
-    `ig-feedback::` namespace. You can publish the language files to override
+    `feedback::` namespace. You can publish the language files to override
     them.
 
 **Custom names**\
 You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, label translation key, and view path. Example:
 
 ```php
-// config/ig-feedback.php
+// config/feedback.php
 return [
     'names' => [
         // modify existing field
         'email' => [
             'type' => 'email',
             'validation' => 'email:rfc|regex:/@internetguru\.io$/',
-            'label_translation_key' => 'ig-feedback::fields.email',
-            'view' => 'ig-feedback::fields.email',
+            'label_translation_key' => 'feedback::fields.email',
+            'view' => 'feedback::fields.email',
         ],
         // add custom field
         'company' => [
             'type' => 'text',
             'validation' => 'string|min:2|max:100',
             'label_translation_key' => 'fields.company',
-            'view' => 'ig-feedback::fields.company',
+            'view' => 'feedback::fields.company',
         ],
     ],
 ];

@@ -47,10 +47,10 @@ class Feedback extends Component
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
-        $this->subject = $subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]);
-        $this->title = $title ?? __('ig-feedback::layouts.modal.title');
+        $this->subject = $subject ?? __('feedback::layouts.email.subject', ['app_www' => config('app.www')]);
+        $this->title = $title ?? __('feedback::layouts.modal.title');
         $this->submit = $submit;
-        $this->description = $description ?? __('ig-feedback::layouts.modal.description');
+        $this->description = $description ?? __('feedback::layouts.modal.description');
 
         $defaultFields = [
             ['name' => 'message', 'required' => true],
@@ -80,11 +80,11 @@ class Feedback extends Component
             // Generate label if not provided
             if (!isset($field['label'])) {
                 $config = config("feedback.names.{$fieldName}", []);
-                $labelKey = $config['label_translation_key'] ?? "ig-feedback::fields.{$fieldName}";
+                $labelKey = $config['label_translation_key'] ?? "feedback::fields.{$fieldName}";
 
                 // Use email_optional for optional email fields
                 if ($fieldName === 'email' && !($field['required'] ?? false)) {
-                    $labelKey = 'ig-feedback::fields.email_optional';
+                    $labelKey = 'feedback::fields.email_optional';
                 }
 
                 $baseLabel = __($labelKey);
@@ -189,7 +189,7 @@ class Feedback extends Component
         $this->initializeFormData();
         $this->dispatch('ig-message',
             type: 'success',
-            message: __('ig-feedback::messages.success') . Helpers::getEmailClientLink(),
+            message: __('feedback::messages.success') . Helpers::getEmailClientLink(),
         );
 
         // Close modal after successful send
