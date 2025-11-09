@@ -37,7 +37,7 @@ class FeedbackNotification extends Notification
                 ],
             );
         if (isset($this->feedback['email']) && filter_var($this->feedback['email'], FILTER_VALIDATE_EMAIL)) {
-            $message->replyTo($this->feedback['email'], $this->feedback['name'] ?? null);
+            $message->replyTo($this->feedback['email'], $this->feedback['fullname'] ?? null);
         }
 
         return $message;
