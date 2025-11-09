@@ -209,11 +209,11 @@ return [
             'view' => 'feedback::fields.email',
         ],
         // add custom field
-        'company' => [
+        'application' => [
             'type' => 'text',
-            'validation' => 'string|min:2|max:100',
-            'label_translation_key' => 'fields.company',
-            'view' => 'feedback::fields.company',
+            'validation' => 'string|min:10|max:30',
+            'label_translation_key' => 'fields.application',
+            'view' => 'feedback::fields.application',
         ],
     ],
 ];
@@ -224,6 +224,6 @@ Then use it like any other field:
 ```blade
 :fields="[
     ['name' => 'email'],
-    ['name' => 'company'],
+    ['name' => 'application'],
 ]"
 ```

@@ -1,10 +1,10 @@
 @props([
-    'form-id',
+    'form-id', // Available as $formId variable (kebab-case converted to camelCase)
 ])
 
 <button
     {{ $attributes }}
     type="button"
     x-data
-    x-on:click.prevent="Livewire.dispatch('openFeedback', {id: '{{ $attributes->get('form-id') }}'})"
->{{ $slot ?? $attributes->get('form-id') }}</button>
+    x-on:click.prevent="Livewire.dispatch('openFeedback', {id: '{{ $formId }}'})"
+>{{ $slot ?? $formId }}</button>
