@@ -11,6 +11,7 @@
     ],
     "require": {
         "php": "^8.1",
+        "livewire/livewire": "^3.0",
         "internetguru/laravel-common": "^2"
     },
     "autoload": {

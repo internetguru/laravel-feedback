@@ -9,7 +9,7 @@
 @endforeach
 
 <p>
-    <strong>@lang('ig-feedback::layouts.email.sent_from'):</strong><br/>
+    <strong>@lang('feedback::layouts.email.sent_from'):</strong><br/>
     <a href="{{ session('currentPage') ?? '-' }}">{{ session('currentPage') ?? '-' }}</a><br/>
     {{ InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}
 </p>

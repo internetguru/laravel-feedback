@@ -2,9 +2,9 @@
     'form-id', // Available as $formId variable (kebab-case converted to camelCase)
 ])
 
-<a
+<button
     {{ $attributes }}
-    href="Javascript:void(0)"
+    type="button"
     x-data
     x-on:click.prevent="Livewire.dispatch('openFeedback', {id: '{{ $formId }}'})"
->{{ $slot ?? $formId }}</a>
+>{{ $slot ?? $formId }}</button>
