@@ -159,6 +159,7 @@ class Feedback extends Component
 
         // Build validation rules dynamically based on fields
         $rules = [];
+        $messages = [];
         foreach ($this->fields as $index => $field) {
             $fieldName = $field['name'] ?? '';
             $isRequired = $field['required'] ?? false;
@@ -173,9 +174,14 @@ class Feedback extends Component
             } else {
                 $rules[$fieldKey] = "nullable|{$validation}";
             }
+
+            // Add custom validation message for phone field
+            if ($fieldName === 'phone') {
+                $messages["{$fieldKey}.regex"] = __('feedback::messages.phone_validation');
+            }
         }
 
-        $this->validate($rules);
+        $this->validate($rules, $messages);
 
         // Prepare data for email
         $emailData = [];
