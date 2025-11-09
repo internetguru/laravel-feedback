@@ -47,12 +47,12 @@ composer require internetguru/laravel-feedback
     name="Helpdesk"
     subject="New Feedback"
     title="Contact Us"
-    description="Share your questions, requirements, or special needs and we will respond shortly."
+    description="Share your needs and we will respond shortly."
     submit="Send Feedback"
     :fields="[
-        ['name'=>'name', 'label'=>'Your Name', 'required' => true],
-        ['name'=>'email', 'label'=>'Your Email', 'required' => true],
-        ['name'=>'message', 'label'=>'Message', 'required' => true]
+        ['name'=>'name', 'required' => true],
+        ['name'=>'email', 'required' => true],
+        ['name'=>'message', 'required' => true],
     ]"
 />
 <x-feedback::button formId="contact-us-form" class="btn btn-primary">
@@ -60,7 +60,7 @@ composer require internetguru/laravel-feedback
 </x-feedback::button>
 ```
 
-### Advanced (duplicate field names and custom validation)
+### Advanced (duplicate field names and custom labels, link trigger)
 
 ```blade
 <livewire:ig-feedback
@@ -122,39 +122,46 @@ fields: [
 ]
 ```
 
-## Props
+## Attributes
 
-id (required)  Unique identifier for the component instance.
-    Used to target the component when opening the form.
+Component attributes sorted alphabetically. Required attributes: `id`, `email`, `name`.
 
-email (required)  Destination address for submitted feedback.
-    Used as the "to" recipient.
+- `description` (optional)
+  Descriptive text displayed below the title to provide context for the form.
 
-name (required)  Display name used for the sender context.
-    Appears in email metadata.
+- `email` (required)
+  Destination email address for submitted feedback.
 
-subject (optional, default "Feedback")  Subject line used for outgoing mail.
+- `fields` (optional)
+  Array defining which fields to render and how to validate them. See "Field items" below.
 
-title (optional, default "Feedback")  Heading shown above the form.
+- `id` (required)
+  Unique identifier for the component instance. Used to target the component when opening the form.
 
-description (optional, default "Your feedback is valuable...")  Descriptive text
-    displayed below the title to provide context for the form.
+- `name` (required)
+  Display name for the email recipient.
 
-submit (optional, default browser value)  Text for the submit button.
+- `subject` (optional)
+  Subject line for the outgoing email.
 
-fields (optional)  Array defining which fields to render and how to validate them.
-    See "Field items" below.
+- `submit` (optional)
+  Text for the submit button.
+
+- `title` (optional)
+  Heading displayed above the form.
 
 ## Field items
 
-name (required)  Field name. Supported values include: name, email, message,
-    phone. No implicit default. You must specify a name.
+Field item attributes sorted alphabetically. Required attribute: `name`.
 
-required (optional, default false)  Whether the field is required.
+- `label` (optional)
+  Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
-label (optional)  Custom label is displayed. If omitted, a reasonable label
-    is generated. For duplicate names, labels will auto-increment when omitted,
-    e.g. Email 1, Email 2.
+- `name` (required)
+  Field name. Supported values include: name, email, message, phone.
+
+- `required` (optional)
+  Whether the field is required.
 
 ## Submission behavior
 
@@ -182,7 +189,7 @@ return [
     'names' => [
         'name' => [
             'type' => 'text',
-            'validation' => 'string|min:2|max:100', // modified validation
+            'validation' => 'string|email|regex:/@internetguru/', // modified validation
             'label_translation_key' => 'ig-feedback::fields.name',
             'view' => 'ig-feedback::fields.name',
         ],
