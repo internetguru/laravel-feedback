@@ -33,7 +33,7 @@ composer require internetguru/laravel-feedback
     email="support@example.com"
     name="Support Team"
 />
-<x-feedback::button formId="feedback-form">
+<x-feedback::button form-id="feedback-form">
     Give Feedback
 </x-feedback::button>
 ```
@@ -55,7 +55,7 @@ composer require internetguru/laravel-feedback
         ['name'=>'message', 'required' => true],
     ]"
 />
-<x-feedback::button formId="contact-us-form" class="btn btn-primary">
+<x-feedback::button form-id="contact-us-form" class="btn btn-primary">
     Contact Us
 </x-feedback::button>
 ```
@@ -79,7 +79,7 @@ composer require internetguru/laravel-feedback
 />
 <p>
     Do you have questions or need assistance?
-    <x-feedback::link formId="detailed-feedback-form">
+    <x-feedback::link form-id="detailed-feedback-form">
         Click here to reach our Helpdesk.
     </x-feedback::link>
 </p>
@@ -87,12 +87,12 @@ composer require internetguru/laravel-feedback
 
 ## Trigger Components
 
-The package provides two components to trigger the feedback form:
+The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the `id` of your feedback form. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element.
 
 **Button component**
 
 ```blade
-<x-feedback::button formId="feedback-form" class="btn btn-primary">
+<x-feedback::button form-id="feedback-form-id">
     Give Feedback
 </x-feedback::button>
 ```
@@ -100,12 +100,10 @@ The package provides two components to trigger the feedback form:
 **Link component**
 
 ```blade
-<x-feedback::link formId="contact-us-form">
-    Click here to contact us
+<x-feedback::link form-id="contact-form-id">
+    Click here to contact us.
 </x-feedback::link>
 ```
-
-Both components accept a `formId` prop that must match the `id` of your feedback form. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element.
 
 ## Default values
 
@@ -124,19 +122,11 @@ fields: [
 
 ## Attributes
 
-Component attributes sorted alphabetically. Required attributes: `id`, `email`, `name`.
-
-- `description` (optional)
-  Descriptive text displayed below the title to provide context for the form.
+- `id` (required)
+  Unique identifier for the component instance. Used to target the component when opening the form.
 
 - `email` (required)
   Destination email address for submitted feedback.
-
-- `fields` (optional)
-  Array defining which fields to render and how to validate them. See "Field items" below.
-
-- `id` (required)
-  Unique identifier for the component instance. Used to target the component when opening the form.
 
 - `name` (required)
   Display name for the email recipient.
@@ -144,24 +134,28 @@ Component attributes sorted alphabetically. Required attributes: `id`, `email`, 
 - `subject` (optional)
   Subject line for the outgoing email.
 
-- `submit` (optional)
-  Text for the submit button.
-
 - `title` (optional)
   Heading displayed above the form.
 
+- `description` (optional)
+  Descriptive text displayed below the title to provide context for the form.
+
+- `submit` (optional)
+  Text for the submit button.
+
+- `fields` (optional)
+  Array defining which fields to render and how to validate them. See "Field items" below.
+
 ## Field items
-
-Field item attributes sorted alphabetically. Required attribute: `name`.
-
-- `label` (optional)
-  Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
 - `name` (required)
   Field name. Supported values include: name, email, message, phone.
 
 - `required` (optional)
-  Whether the field is required.
+  Whether the field is required with php value (false by default).
+
+- `label` (optional)
+  Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
 ## Submission behavior
 
