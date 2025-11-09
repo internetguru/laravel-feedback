@@ -59,7 +59,7 @@ composer require internetguru/laravel-feedback
     description="Share your needs and we will respond shortly."
     submit="Send Feedback"
     :fields="[
-        ['name'=>'name', 'required' => true],
+        ['name'=>'fullname', 'required' => true],
         ['name'=>'email', 'required' => true],
         ['name'=>'message', 'required' => true],
     ]"
@@ -87,7 +87,7 @@ composer require internetguru/laravel-feedback
     title="Feedback Form"
     submit="Submit"
     :fields="[
-        ['name'=>'name', 'label'=>'Full Name', 'required' => true],
+        ['name'=>'fullname', 'label'=>'Full Name', 'required' => true],
         ['name'=>'email', 'label'=>'Work Email', 'required' => true],
         ['name'=>'email', 'label'=>'Personal Email'],
         ['name'=>'message', 'label'=>'Feedback Message', 'required' => true],
@@ -170,7 +170,7 @@ fields: [
 ## Field items
 
 - `name` (required)\
-  Field name. Supported values include: name, email, message, phone.
+  Field name. Supported values include: fullname, email, message, phone.
 
 - `required` (optional)\
   Whether the field is required with php value (false by default).
@@ -205,11 +205,11 @@ You can modify existing fields or register additional field names via your stand
 return [
     'names' => [
         // existing modified type
-        'name' => [
+        'fullname' => [
             'type' => 'text',
             'validation' => 'string|email|regex:/@internetguru/',
-            'label_translation_key' => 'ig-feedback::fields.name',
-            'view' => 'ig-feedback::fields.name',
+            'label_translation_key' => 'ig-feedback::fields.fullname',
+            'view' => 'ig-feedback::fields.fullname',
         ],
         // your custom type
         'company' => [
@@ -226,7 +226,7 @@ Then use it like any other name:
 
 ```blade
 :fields="[
-    ['name'=>'name'],
+    ['name'=>'fullname'],
     ['name'=>'company'],
 ]"
 ```

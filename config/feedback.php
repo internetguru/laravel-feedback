@@ -11,11 +11,11 @@ return [
     |
     */
     'names' => [
-        'name' => [
+        'fullname' => [
             'type' => 'text',
             'validation' => 'string|min:2|max:100',
-            'label_translation_key' => 'ig-feedback::fields.name',
-            'view' => 'feedback::fields.name',
+            'label_translation_key' => 'ig-feedback::fields.fullname',
+            'view' => 'feedback::fields.fullname',
         ],
         'email' => [
             'type' => 'email',

@@ -4,6 +4,7 @@ return [
 
     'email' => 'Vaše e-mailová adresa',
     'email_optional' => 'Zanechte svůj e-mail pro kontakt',
+    'fullname' => 'Vaše celé jméno',
     'message' => 'Sem napište svou zprávu',
     'name' => 'Vaše celé jméno',
     'optional' => 'volitelné',
