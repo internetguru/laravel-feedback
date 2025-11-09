@@ -25,7 +25,9 @@ composer require internetguru/laravel-feedback
 
 ## Usage
 
-### Minimalistic (only required attributes and button)
+### Minimalistic
+
+**Declaration with only required attributes**
 
 ```blade
 <livewire:ig-feedback
@@ -33,12 +35,19 @@ composer require internetguru/laravel-feedback
     email="support@example.com"
     name="Support Team"
 />
+```
+
+**Button trigger**
+
+```blade
 <x-feedback::button form-id="feedback-form">
     Give Feedback
 </x-feedback::button>
 ```
 
-### Basic (custom subject, title, description, and fields, multiple usages)
+### Basic
+
+**Declaration with custom subject, title, description, and fields**
 
 ```blade
 <livewire:ig-feedback
@@ -55,12 +64,19 @@ composer require internetguru/laravel-feedback
         ['name'=>'message', 'required' => true],
     ]"
 />
+```
+
+**Button trigger with custom class**
+
+```blade
 <x-feedback::button form-id="contact-us-form" class="btn btn-primary">
     Contact Us
 </x-feedback::button>
 ```
 
-### Advanced (duplicate field names and custom labels, link trigger)
+### Advanced
+
+**Declaration with duplicate field names and custom labels**
 
 ```blade
 <livewire:ig-feedback
@@ -77,6 +93,11 @@ composer require internetguru/laravel-feedback
         ['name'=>'message', 'label'=>'Feedback Message', 'required' => true],
     ]"
 />
+```
+
+**Link trigger**
+
+```blade
 <p>
     Do you have questions or need assistance?
     <x-feedback::link form-id="detailed-feedback-form">
@@ -122,39 +143,39 @@ fields: [
 
 ## Attributes
 
-- `id` (required)
+- `id` (required)\
   Unique identifier for the component instance. Used to target the component when opening the form.
 
-- `email` (required)
+- `email` (required)\
   Destination email address for submitted feedback.
 
-- `name` (required)
+- `name` (required)\
   Display name for the email recipient.
 
-- `subject` (optional)
+- `subject` (optional)\
   Subject line for the outgoing email.
 
-- `title` (optional)
+- `title` (optional)\
   Heading displayed above the form.
 
-- `description` (optional)
+- `description` (optional)\
   Descriptive text displayed below the title to provide context for the form.
 
-- `submit` (optional)
+- `submit` (optional)\
   Text for the submit button.
 
-- `fields` (optional)
+- `fields` (optional)\
   Array defining which fields to render and how to validate them. See "Field items" below.
 
 ## Field items
 
-- `name` (required)
+- `name` (required)\
   Field name. Supported values include: name, email, message, phone.
 
-- `required` (optional)
+- `required` (optional)\
   Whether the field is required with php value (false by default).
 
-- `label` (optional)
+- `label` (optional)\
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
 ## Submission behavior
@@ -167,23 +188,26 @@ and a success state are rendered by the component.
 
 ## Customization
 
-Styling  The component ships pre-styled. You can override classes by
+**Styling**\
+The component ships pre-styled. You can override classes by
     publishing the Blade view or wrapping the component in your layout.
 
-Localization  The component uses translation keys under the
+**Localization**\
+The component uses translation keys under the
     `ig-feedback::` namespace. You can publish the language files to override
     them.
 
-Custom names  You can register additional field names via your standard
-    config. Define a name key and its renderer and default pattern. Example:
+**Custom names**\
+You can modify existing fields or register additional field names via your standard config. Define a name key and its renderer and default pattern. Example:
 
 ```php
 // config/ig-feedback.php
 return [
     'names' => [
+        // existing modified type
         'name' => [
             'type' => 'text',
-            'validation' => 'string|email|regex:/@internetguru/', // modified validation
+            'validation' => 'string|email|regex:/@internetguru/',
             'label_translation_key' => 'ig-feedback::fields.name',
             'view' => 'ig-feedback::fields.name',
         ],
@@ -202,6 +226,7 @@ Then use it like any other name:
 
 ```blade
 :fields="[
-    ['name'=>'company', 'required' => true],
+    ['name'=>'name'],
+    ['name'=>'company'],
 ]"
 ```
