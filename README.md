@@ -59,9 +59,9 @@ composer require internetguru/laravel-feedback
     description="Share your needs and we will respond shortly."
     submit="Send Feedback"
     :fields="[
-        ['name'=>'fullname', 'required' => true],
-        ['name'=>'email', 'required' => true],
-        ['name'=>'message', 'required' => true],
+        ['name' => 'fullname', 'required' => true],
+        ['name' => 'email', 'required' => true],
+        ['name' => 'message', 'required' => true],
     ]"
 />
 ```
@@ -87,10 +87,10 @@ composer require internetguru/laravel-feedback
     title="Feedback Form"
     submit="Submit"
     :fields="[
-        ['name'=>'fullname', 'label'=>'Full Name', 'required' => true],
-        ['name'=>'email', 'label'=>'Work Email', 'required' => true],
-        ['name'=>'email', 'label'=>'Personal Email'],
-        ['name'=>'message', 'label'=>'Feedback Message', 'required' => true],
+        ['name' => 'fullname', 'label' => 'Full Name', 'required' => true],
+        ['name' => 'email', 'label' => 'Work Email', 'required' => true],
+        ['name' => 'email', 'label' => 'Personal Email'],
+        ['name' => 'message', 'label' => 'Feedback Message', 'required' => true],
     ]"
 />
 ```
@@ -226,7 +226,7 @@ Then use it like any other name:
 
 ```blade
 :fields="[
-    ['name'=>'fullname'],
-    ['name'=>'company'],
+    ['name' => 'fullname'],
+    ['name' => 'company'],
 ]"
 ```
