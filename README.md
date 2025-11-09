@@ -76,7 +76,7 @@ composer require internetguru/laravel-feedback
 
 ### Advanced
 
-**Declaration with duplicate field names and custom labels**
+**Declaration with duplicate email field and custom labels**
 
 ```blade
 <livewire:ig-feedback
@@ -110,7 +110,7 @@ composer require internetguru/laravel-feedback
 
 The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the `id` of your feedback form. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element.
 
-**Button component**
+**Button trigger**
 
 ```blade
 <x-feedback::button form-id="feedback-form-id">
@@ -118,7 +118,7 @@ The package provides two components to trigger the feedback form. Both component
 </x-feedback::button>
 ```
 
-**Link component**
+**Link trigger**
 
 ```blade
 <x-feedback::link form-id="contact-form-id">
@@ -131,13 +131,15 @@ The package provides two components to trigger the feedback form. Both component
 If optional attributes are omitted, the default values are:
 
 ```php
-subject: 'Feedback :app_www'  // Uses app.www config value
-title: 'Send Feedback'
-description: 'Your feedback helps us improve. Please share your thoughts.'
-submit: 'Send'
-fields: [
-    ['name' => 'message', 'required' => true],
-    ['name' => 'email'],
+[
+    'subject' => 'Feedback :app_www',  // Uses app.www config value
+    'title' => 'Send Feedback',
+    'description' => 'Your feedback helps us improve. Please share your thoughts.',
+    'submit' => 'Send',
+    'fields' => [
+        ['name' => 'message', 'required' => true],
+        ['name' => 'email'],
+    ],
 ]
 ```
 
@@ -173,7 +175,7 @@ fields: [
   Field name. Supported values include: fullname, email, message, phone.
 
 - `required` (optional)\
-  Whether the field is required with php value (false by default).
+  Whether the field is required (false by default).
 
 - `label` (optional)\
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
