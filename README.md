@@ -33,12 +33,12 @@ composer require internetguru/laravel-feedback
     email="support@example.com"
     name="Support Team"
 />
-<button class="btn btn-primary" onclick="Livewire.dispatch('openFeedback', {id: 'feedback-form'})">
+<x-feedback::button formId="feedback-form">
     Give Feedback
-</button>
+</x-feedback::button>
 ```
 
-### Basic (custom subject, title, and fields, multiple usages)
+### Basic (custom subject, title, description, and fields, multiple usages)
 
 ```blade
 <livewire:ig-feedback
@@ -47,6 +47,7 @@ composer require internetguru/laravel-feedback
     name="Helpdesk"
     subject="New Feedback"
     title="Contact Us"
+    description="Share your questions, requirements, or special needs and we will respond shortly."
     submit="Send Feedback"
     :fields="[
         ['name'=>'name', 'label'=>'Your Name', 'required' => true],
@@ -54,15 +55,9 @@ composer require internetguru/laravel-feedback
         ['name'=>'message', 'label'=>'Message', 'required' => true]
     ]"
 />
-<button class="btn btn-primary" onclick="Livewire.dispatch('openFeedback', {id: 'contact-us-form'})">
+<x-feedback::button formId="contact-us-form" class="btn btn-primary">
     Contact Us
-</button>
-<p>
-    Do you have questions or need assistance?
-    <a href="#" onclick="Livewire.dispatch('openFeedback', {id: 'contact-us-form'})">
-        Click here to reach our Helpdesk.
-    </a>
-</p>
+</x-feedback::button>
 ```
 
 ### Advanced (duplicate field names and custom validation)
@@ -82,19 +77,48 @@ composer require internetguru/laravel-feedback
         ['name'=>'message', 'label'=>'Feedback Message', 'required' => true],
     ]"
 />
-<button class="btn btn-primary" onclick="Livewire.dispatch('openFeedback', {id: 'detailed-feedback-form'})">
-    Provide Feedback
-</button>
+<p>
+    Do you have questions or need assistance?
+    <x-feedback::link formId="detailed-feedback-form">
+        Click here to reach our Helpdesk.
+    </x-feedback::link>
+</p>
 ```
 
-## Defaults
+## Trigger Components
 
-If `fields` are omitted, the component renders:
+The package provides two components to trigger the feedback form:
+
+**Button component**
+
+```blade
+<x-feedback::button formId="feedback-form" class="btn btn-primary">
+    Give Feedback
+</x-feedback::button>
+```
+
+**Link component**
+
+```blade
+<x-feedback::link formId="contact-us-form">
+    Click here to contact us
+</x-feedback::link>
+```
+
+Both components accept a `formId` prop that must match the `id` of your feedback form. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element.
+
+## Default values
+
+If optional attributes are omitted, the default values are:
 
 ```php
-[
-    ['name' => 'message', 'label' => 'Describe your issue', 'required' => 'true'],
-    ['name' => 'name', 'label' => 'Leave your email for contact'],
+subject: 'Feedback :app_www'  // Uses app.www config value
+title: 'Send Feedback'
+description: 'Your feedback helps us improve. Please share your thoughts.'
+submit: 'Send'
+fields: [
+    ['name' => 'message', 'required' => true],
+    ['name' => 'email'],
 ]
 ```
 
@@ -112,6 +136,9 @@ name (required)  Display name used for the sender context.
 subject (optional, default "Feedback")  Subject line used for outgoing mail.
 
 title (optional, default "Feedback")  Heading shown above the form.
+
+description (optional, default "Your feedback is valuable...")  Descriptive text
+    displayed below the title to provide context for the form.
 
 submit (optional, default browser value)  Text for the submit button.
 
@@ -155,21 +182,9 @@ return [
     'names' => [
         'name' => [
             'type' => 'text',
-            'validation' => 'string|min:2|max:100',
+            'validation' => 'string|min:2|max:100', // modified validation
             'label_translation_key' => 'ig-feedback::fields.name',
             'view' => 'ig-feedback::fields.name',
-        ],
-        'email' => [
-            'type' => 'email',
-            'validation' => 'email:rfc,dns|max:255',
-            'label_translation_key' => 'ig-feedback::fields.email',
-            'view' => 'ig-feedback::fields.email',
-        ],
-        'message' => [
-            'type' => 'textarea',
-            'validation' => 'string|min:1|max:2000',
-            'label_translation_key' => 'ig-feedback::fields.message',
-            'view' => 'ig-feedback::fields.message',
         ],
         // your custom type
         'company' => [
