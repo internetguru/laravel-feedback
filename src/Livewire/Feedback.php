@@ -51,7 +51,7 @@ class Feedback extends Component
 
         $defaultFields = [
             ['name' => 'message', 'required' => true],
-            ['name' => 'email' ],
+            ['name' => 'email', 'label' => __('feedback::fields.email_optional') ],
         ];
 
         $this->fields = $this->normalizeFields($fields ?? $defaultFields);
@@ -79,12 +79,6 @@ class Feedback extends Component
             if (!isset($field['label'])) {
                 $config = config("feedback.names.{$fieldName}", []);
                 $labelKey = $config['label_translation_key'] ?? "feedback::fields.{$fieldName}";
-
-                // Use email_optional for optional email fields
-                if ($fieldName === 'email' && ! $isRequired) {
-                    $labelKey = 'feedback::fields.email_optional';
-                }
-
                 $baseLabel = __($labelKey);
 
                 // Add counter for duplicates

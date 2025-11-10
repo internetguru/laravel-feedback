@@ -177,7 +177,7 @@ If optional attributes are omitted, the default values are:
 - `label` (optional)\
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
-**Note:** When an authenticated user opens the form, the first `email` field is automatically prefilled with the user's email address, and the first `fullname` field is automatically prefilled with the user's name.
+**Note:** When an authenticated user opens the form, any `email` and `fullname` fields are automatically prefilled with the user's email address and name respectively. The same fields are also used as the `reply-to` address in outgoing emails if present and valid.
 
 ## Submission behavior
 
