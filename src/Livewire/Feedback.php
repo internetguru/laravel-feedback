@@ -24,12 +24,12 @@ class Feedback extends Component
     public ?string $subject = null;
     public ?string $title = null;
     public ?string $description = null;
+    public ?string $success = null;
     public ?string $submit = null;
     public array $fields = [];
 
     public array $formData = [];
     public bool $isOpen = false;
-    public bool $showSuccess = false;
 
     public function mount(
         string $id,
@@ -38,6 +38,7 @@ class Feedback extends Component
         ?string $subject = null,
         ?string $title = null,
         ?string $description = null,
+        ?string $success = null,
         ?string $submit = null,
         ?array $fields = null
     ) {
@@ -46,8 +47,9 @@ class Feedback extends Component
         $this->name = $name;
         $this->subject = $subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]);
         $this->title = $title ?? __('ig-feedback::layouts.modal.title');
-        $this->submit = $submit;
+        $this->submit = $submit ?? __('ig-feedback::fields.submit');
         $this->description = $description ?? __('ig-feedback::layouts.modal.description');
+        $this->success = $success ?? __('ig-feedback::layouts.modal.success');
 
         $defaultFields = [
             ['name' => 'message', 'required' => true],
@@ -146,14 +148,12 @@ class Feedback extends Component
     {
         if ($id === $this->id) {
             $this->isOpen = true;
-            $this->showSuccess = false;
         }
     }
 
     public function closeModal()
     {
         $this->isOpen = false;
-        $this->showSuccess = false;
     }
 
     public function send(ReCaptchaInterface $recaptcha)
@@ -199,7 +199,7 @@ class Feedback extends Component
         $this->initializeFormData();
         $this->dispatch('ig-message',
             type: 'success',
-            message: __('ig-feedback::messages.success') . Helpers::getEmailClientLink(),
+            message: $field['success'] . Helpers::getEmailClientLink(),
         );
 
         // Close modal after successful send

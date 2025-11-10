@@ -18,15 +18,10 @@
                             <p class="me-5">{{ $description }}</p>
                         @endif
 
-                        @if($showSuccess)
-                            <div class="alert alert-success" role="alert">
-                                {{ __('ig-feedback::messages.success') }}
-                            </div>
-                        @else
-                            <form wire:submit.prevent="send" class="editable-skip">
+                        <form wire:submit.prevent="send" class="editable-skip">
                                 @foreach($fields as $index => $field)
                                     @php
-                                        $config = config("ig-feedback.names." . $field['name'], []);
+                                        $config = config("ig-feedback.names." . $field['name'] , []);
                                         $attributes = array_diff_key(
                                             array_merge($field, $config),
                                             array_flip(config('ig-feedback.exclude_attributes', []))
@@ -45,10 +40,9 @@
                                 @endforeach
 
                                 <x-ig::submit>
-                                    {{ $submit ?? __('ig-feedback::fields.submit') }}
+                                    {{ $field['submit'] }}
                                 </x-ig::submit>
                             </form>
-                        @endif
                     </div>
                 </div>
             </div>

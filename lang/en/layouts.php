@@ -10,7 +10,7 @@ return [
     'email.subject' => 'Feedback :app_www',
     'modal.description' => 'Your feedback helps us improve. Please share your thoughts.',
     'modal.link_text' => 'Feedback',
-    'modal.success_message' => 'Thank you for your feedback!',
+    'modal.success' => 'Thank you, your message has been sent.',
     'modal.title' => 'Send Feedback',
 
 ];
