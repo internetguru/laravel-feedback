@@ -10,7 +10,7 @@ return [
     'email.subject' => 'Zpětná vazba :app_www',
     'modal.description' => 'Vaše zpětná vazba nám pomáhá se zlepšovat. Podělte se o své dojmy.',
     'modal.link_text' => 'Zpětná vazba',
-    'modal.success_message' => 'Děkujeme za vaši zpětnou vazbu!',
+    'modal.success' => 'Děkujeme, vaše zpráva byla odeslána.',
     'modal.title' => 'Poslat zpětnou vazbu',
 
 ];

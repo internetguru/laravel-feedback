@@ -27,7 +27,7 @@ for email logging, footer rendering, and styling.
 **Declaration with only required attributes**
 
 ```blade
-<livewire:feedback
+<livewire:ig-feedback
     id="feedback-form"
     email="support@example.com"
     name="Support Team"
@@ -37,9 +37,9 @@ for email logging, footer rendering, and styling.
 **Button trigger**
 
 ```blade
-<x-feedback::button form-id="feedback-form">
+<x-ig-feedback::button form-id="feedback-form">
     Give Feedback
-</x-feedback::button>
+</x-ig-feedback::button>
 ```
 
 ### Basic
@@ -47,7 +47,7 @@ for email logging, footer rendering, and styling.
 **Declaration with custom subject, title, description, and fields**
 
 ```blade
-<livewire:feedback
+<livewire:ig-feedback
     id="contact-us-form"
     email="helpdesk@example.com"
     name="Helpdesk"
@@ -66,28 +66,29 @@ for email logging, footer rendering, and styling.
 **Button trigger with custom class**
 
 ```blade
-<x-feedback::button form-id="contact-us-form" class="btn btn-primary">
+<x-ig-feedback::button form-id="contact-us-form" class="btn btn-primary">
     Contact Us
-</x-feedback::button>
+</x-ig-feedback::button>
 ```
 
 ### Advanced
 
-**Declaration with duplicate email field and custom labels**
+**Declaration with duplicate email field and custom attributes**
 
 ```blade
-<livewire:feedback
+<livewire:ig-feedback
     id="detailed-feedback-form"
     email="info@example.com"
     name="Info Center"
     subject="Website Feedback"
     title="Feedback Form"
-    submit="Submit"
+    submit="Submit Feedback"
+    success="Your feedback has been received successfully!"
     :fields="[
         ['name' => 'fullname', 'label' => 'Full Name', 'required' => true],
         ['name' => 'email', 'label' => 'Work Email', 'required' => true],
         ['name' => 'email', 'label' => 'Personal Email'],
-        ['name' => 'message', 'label' => 'Feedback Message', 'required' => true],
+        ['name' => 'message', 'label' => 'Feedback Message', 'rows' => 5],
     ]"
 />
 ```
@@ -97,9 +98,9 @@ for email logging, footer rendering, and styling.
 ```blade
 <p>
     Do you have questions or need assistance?
-    <x-feedback::link form-id="detailed-feedback-form">
+    <x-ig-feedback::link form-id="detailed-feedback-form">
         Click here to reach our Helpdesk.
-    </x-feedback::link>
+    </x-ig-feedback::link>
 </p>
 ```
 
@@ -110,17 +111,17 @@ The package provides two components to trigger the feedback form. Both component
 **Button trigger**
 
 ```blade
-<x-feedback::button form-id="feedback-form-id">
+<x-ig-feedback::button form-id="feedback-form-id">
     Give Feedback
-</x-feedback::button>
+</x-ig-feedback::button>
 ```
 
 **Link trigger**
 
 ```blade
-<x-feedback::link form-id="contact-form-id">
+<x-ig-feedback::link form-id="contact-form-id">
     Click here to contact us.
-</x-feedback::link>
+</x-ig-feedback::link>
 ```
 
 ## Default values
@@ -132,6 +133,7 @@ If optional attributes are omitted, the default values are:
     'subject' => 'Feedback :app_www',  // Uses app.www config value
     'title' => 'Send Feedback',
     'description' => 'Your feedback helps us improve. Please share your thoughts.',
+    'success' => 'Thank you, your message has been sent.',
     'submit' => 'Send',
     'fields' => [
         ['name' => 'message', 'required' => true],
@@ -163,6 +165,9 @@ If optional attributes are omitted, the default values are:
 - `submit` (optional)\
   Text for the submit button.
 
+- `success` (optional)\
+  Custom success message displayed after successful form submission. If omitted, the default translation is used.
+
 - `fields` (optional)\
   Array defining which fields to render and how to validate them. See "Field items" below.
 
@@ -177,7 +182,13 @@ If optional attributes are omitted, the default values are:
 - `label` (optional)\
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
-**Note:** When an authenticated user opens the form, the first `email` field is automatically prefilled with the user's email address, and the first `fullname` field is automatically prefilled with the user's name.
+- `error` (optional)\
+  Custom validation error message displayed when form validation fails. If omitted, the default translation is used.
+
+- Additional attributes (optional)\
+  You can pass any additional HTML attributes dynamically (e.g., `placeholder`, `autocomplete`, `class`, etc.). These will be applied to the field's input element.
+
+**Note:** When an authenticated user opens the form, any `email` and `fullname` fields are automatically prefilled with the user's email address and name respectively. The same fields are also used as the `reply-to` address in outgoing emails if present and valid.
 
 ## Submission behavior
 
@@ -193,29 +204,30 @@ The component ships pre-styled. You can override classes by
 
 **Localization**\
 The component uses translation keys under the
-    `feedback::` namespace. You can publish the language files to override
+    `ig-feedback::` namespace. You can publish the language files to override
     them.
 
 **Custom names**\
-You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, label translation key, and view path. Example:
+You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, and label/error translation keys. You can also specify custom error messages and additional HTML attributes. Example:
 
 ```php
-// config/feedback.php
+// config/ig-feedback.php
 return [
     'names' => [
         // modify existing field
         'email' => [
             'type' => 'email',
             'validation' => 'email:rfc|regex:/@internetguru\.io$/',
-            'label_translation_key' => 'feedback::fields.email',
-            'view' => 'feedback::fields.email',
+            'error_translation_key' => 'form.email.validation',
+            'label_translation_key' => 'ig-feedback::fields.email',
         ],
-        // add custom field
+        // add custom field with error message and attributes
         'application' => [
             'type' => 'text',
             'validation' => 'string|min:10|max:30',
-            'label_translation_key' => 'fields.application',
-            'view' => 'feedback::fields.application',
+            'label_translation_key' => 'form.application.label',
+            'error_translation_key' => 'form.application.validation',
+            'autocomplete' => 'off',
         ],
     ],
 ];
