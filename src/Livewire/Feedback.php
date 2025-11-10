@@ -68,6 +68,7 @@ class Feedback extends Component
 
         foreach ($fields as $field) {
             $fieldName = $field['name'] ?? '';
+            $isRequired = (bool) ($field['required'] ?? false);
 
             if (!isset($nameCounts[$fieldName])) {
                 $nameCounts[$fieldName] = 0;
@@ -80,7 +81,7 @@ class Feedback extends Component
                 $labelKey = $config['label_translation_key'] ?? "feedback::fields.{$fieldName}";
 
                 // Use email_optional for optional email fields
-                if ($fieldName === 'email' && !($field['required'] ?? false)) {
+                if ($fieldName === 'email' && ! $isRequired) {
                     $labelKey = 'feedback::fields.email_optional';
                 }
 
@@ -98,6 +99,10 @@ class Feedback extends Component
                         $field['label'] = $baseLabel;
                     }
                 }
+            }
+
+            if (! $isRequired) {
+                $field['label'] .= ' (' . __('feedback::fields.optional') . ')';
             }
 
             $normalized[] = $field;
@@ -166,14 +171,8 @@ class Feedback extends Component
 
             $config = config("feedback.names.{$fieldName}", []);
             $validation = $config['validation'] ?? 'string|max:255';
-
             $fieldKey = "formData.{$index}";
-
-            if ($isRequired) {
-                $rules[$fieldKey] = "required|{$validation}";
-            } else {
-                $rules[$fieldKey] = "nullable|{$validation}";
-            }
+            $rules[$fieldKey] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
 
             // Add custom validation message for phone field
             if ($fieldName === 'phone') {

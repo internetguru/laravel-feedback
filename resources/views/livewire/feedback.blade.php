@@ -26,25 +26,22 @@
                             <form wire:submit.prevent="send" class="editable-skip">
                                 @foreach($fields as $index => $field)
                                     @php
-                                        $fieldName = $field['name'] ?? '';
-                                        $fieldLabel = $field['label'] ?? '';
-                                        $isRequired = $field['required'] ?? false;
-                                        $config = config("feedback.names.{$fieldName}", []);
-                                        $customView = $config['view'] ?? null;
+                                        $config = config("feedback.names." . $field['name'], []);
+                                        $attributes = array_diff_key(
+                                            array_merge($field, $config),
+                                            array_flip(['name', 'label', 'validation', 'label_translation_key', 'view'])
+                                        );
                                     @endphp
-
-                                    @if($customView && view()->exists($customView))
-                                        @include($customView, [
-                                            'field' => $field,
-                                            'index' => $index,
-                                            'fieldName' => $fieldName,
-                                            'fieldLabel' => $fieldLabel,
-                                            'isRequired' => $isRequired,
-                                            'config' => $config,
-                                        ])
-                                    @else
-                                        {{-- skipping unknown field name: {{ $fieldName }} --}}
+                                    @if(empty($config))
+                                        {!! "<!-- Field config not found for {$field['name']} -->" !!}
+                                        @continue
                                     @endif
+
+                                    <x-ig::input
+                                        name="formData.{{ $index }}"
+                                        wire:model="formData.{{ $index }}"
+                                        :attributes="new Illuminate\View\ComponentAttributeBag($attributes)"
+                                    >{{ $field['label'] }}</x-ig::input>
                                 @endforeach
 
                                 <x-ig::submit>
