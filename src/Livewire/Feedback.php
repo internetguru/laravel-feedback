@@ -199,7 +199,7 @@ class Feedback extends Component
         $this->initializeFormData();
         $this->dispatch('ig-message',
             type: 'success',
-            message: $field['success'] . Helpers::getEmailClientLink(),
+            message: $this->success . Helpers::getEmailClientLink(),
         );
 
         // Close modal after successful send

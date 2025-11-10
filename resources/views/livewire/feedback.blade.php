@@ -19,30 +19,30 @@
                         @endif
 
                         <form wire:submit.prevent="send" class="editable-skip">
-                                @foreach($fields as $index => $field)
-                                    @php
-                                        $config = config("ig-feedback.names." . $field['name'] , []);
-                                        $attributes = array_diff_key(
-                                            array_merge($field, $config),
-                                            array_flip(config('ig-feedback.exclude_attributes', []))
-                                        );
-                                    @endphp
-                                    @if(empty($config))
-                                        {!! "<!-- Field config not found for {$field['name']} -->" !!}
-                                        @continue
-                                    @endif
+                            @foreach($fields as $index => $field)
+                                @php
+                                    $config = config("ig-feedback.names." . $field['name'] , []);
+                                    $attributes = array_diff_key(
+                                        array_merge($field, $config),
+                                        array_flip(config('ig-feedback.exclude_attributes', []))
+                                    );
+                                @endphp
+                                @if(empty($config))
+                                    {!! "<!-- Field config not found for {$field['name']} -->" !!}
+                                    @continue
+                                @endif
 
-                                    <x-ig::input
-                                        name="formData.{{ $index }}"
-                                        wire:model="formData.{{ $index }}"
-                                        :attributes="new Illuminate\View\ComponentAttributeBag($attributes)"
-                                    >{{ $field['label'] }}</x-ig::input>
-                                @endforeach
+                                <x-ig::input
+                                    name="formData.{{ $index }}"
+                                    wire:model="formData.{{ $index }}"
+                                    :attributes="new Illuminate\View\ComponentAttributeBag($attributes)"
+                                >{{ $field['label'] }}</x-ig::input>
+                            @endforeach
 
-                                <x-ig::submit>
-                                    {{ $field['submit'] }}
-                                </x-ig::submit>
-                            </form>
+                            <x-ig::submit>
+                                $submit
+                            </x-ig::submit>
+                        </form>
                     </div>
                 </div>
             </div>
