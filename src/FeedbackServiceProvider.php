@@ -25,7 +25,7 @@ class FeedbackServiceProvider extends ServiceProvider
 
         // Publish assets
         $this->publishes([
-            __DIR__ . '/../config/feedback.php' => config_path('feedback.php'),
+            __DIR__ . '/../config/feedback.php' => config_path('ig-feedback.php'),
         ], 'ig-feedback:config');
         $this->publishes([
             __DIR__ . '/../resources/views' => resource_path('views/vendor/ig-feedback'),

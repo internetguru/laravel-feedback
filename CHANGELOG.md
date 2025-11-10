@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Support custom success message.
+- Support custom validation error messages for fields.
+- Support dynamic attributes for fields.
+
 ## [4.1.0] - 2025-11-09
 
 _Stable release based on [4.1.0-rc.1]._
