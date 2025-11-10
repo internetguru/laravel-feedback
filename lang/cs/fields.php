@@ -11,4 +11,6 @@ return [
     'phone' => 'Vaše telefonní číslo',
     'submit' => 'Odeslat',
 
+    'phone.validation' => 'Zadejte prosím platné telefonní číslo s 7-15 číslicemi.',
+
 ];

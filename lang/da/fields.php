@@ -11,4 +11,6 @@ return [
     'phone' => 'Dit telefonnummer',
     'submit' => 'Send',
 
+    'phone.validation' => 'Indtast venligst et gyldigt telefonnummer med 7-15 cifre.',
+
 ];

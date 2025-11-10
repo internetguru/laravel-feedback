@@ -44,14 +44,14 @@ class Feedback extends Component
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
-        $this->subject = $subject ?? __('feedback::layouts.email.subject', ['app_www' => config('app.www')]);
-        $this->title = $title ?? __('feedback::layouts.modal.title');
+        $this->subject = $subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]);
+        $this->title = $title ?? __('ig-feedback::layouts.modal.title');
         $this->submit = $submit;
-        $this->description = $description ?? __('feedback::layouts.modal.description');
+        $this->description = $description ?? __('ig-feedback::layouts.modal.description');
 
         $defaultFields = [
             ['name' => 'message', 'required' => true],
-            ['name' => 'email', 'label' => __('feedback::fields.email_optional') ],
+            ['name' => 'email', 'label' => __('ig-feedback::fields.email_optional') ],
         ];
 
         $this->fields = $this->normalizeFields($fields ?? $defaultFields);
@@ -69,7 +69,7 @@ class Feedback extends Component
         foreach ($fields as $field) {
             $fieldName = $field['name'] ?? '';
             $isRequired = (bool) ($field['required'] ?? false);
-            $config = config("feedback.names.{$fieldName}", []);
+            $config = config("ig-feedback.names.{$fieldName}", []);
 
             if (!isset($nameCounts[$fieldName])) {
                 $nameCounts[$fieldName] = 0;
@@ -82,7 +82,7 @@ class Feedback extends Component
 
             // Generate label if not provided
             if (!isset($field['label'])) {
-                $labelKey = $config['label_translation_key'] ?? "feedback::fields.{$fieldName}";
+                $labelKey = $config['label_translation_key'] ?? "ig-feedback::fields.{$fieldName}";
                 $baseLabel = __($labelKey);
 
                 // Add counter for duplicates
@@ -100,7 +100,7 @@ class Feedback extends Component
             }
 
             if (! $isRequired) {
-                $field['label'] .= ' (' . __('feedback::fields.optional') . ')';
+                $field['label'] .= ' (' . __('ig-feedback::fields.optional') . ')';
             }
 
             $normalized[] = $field;
@@ -141,7 +141,7 @@ class Feedback extends Component
         }
     }
 
-    #[On('openFeedback')]
+    #[On('openIgFeedback')]
     public function openFeedback($id = null)
     {
         if ($id === $this->id) {
@@ -167,7 +167,7 @@ class Feedback extends Component
             $fieldName = $field['name'] ?? '';
             $isRequired = $field['required'] ?? false;
 
-            $config = config("feedback.names.{$fieldName}", []);
+            $config = config("ig-feedback.names.{$fieldName}", []);
             $validation = $config['validation'] ?? 'string|max:255';
             $fieldKey = "formData.{$index}";
             $rules[$fieldKey] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
@@ -199,7 +199,7 @@ class Feedback extends Component
         $this->initializeFormData();
         $this->dispatch('ig-message',
             type: 'success',
-            message: __('feedback::messages.success') . Helpers::getEmailClientLink(),
+            message: __('ig-feedback::messages.success') . Helpers::getEmailClientLink(),
         );
 
         // Close modal after successful send
@@ -208,6 +208,6 @@ class Feedback extends Component
 
     public function render()
     {
-        return view('feedback::livewire.feedback');
+        return view('ig-feedback::livewire.feedback');
     }
 }

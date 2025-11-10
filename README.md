@@ -27,7 +27,7 @@ for email logging, footer rendering, and styling.
 **Declaration with only required attributes**
 
 ```blade
-<livewire:feedback
+<livewire:ig-feedback
     id="feedback-form"
     email="support@example.com"
     name="Support Team"
@@ -37,9 +37,9 @@ for email logging, footer rendering, and styling.
 **Button trigger**
 
 ```blade
-<x-feedback::button form-id="feedback-form">
+<x-ig-feedback::button form-id="feedback-form">
     Give Feedback
-</x-feedback::button>
+</x-ig-feedback::button>
 ```
 
 ### Basic
@@ -47,7 +47,7 @@ for email logging, footer rendering, and styling.
 **Declaration with custom subject, title, description, and fields**
 
 ```blade
-<livewire:feedback
+<livewire:ig-feedback
     id="contact-us-form"
     email="helpdesk@example.com"
     name="Helpdesk"
@@ -66,9 +66,9 @@ for email logging, footer rendering, and styling.
 **Button trigger with custom class**
 
 ```blade
-<x-feedback::button form-id="contact-us-form" class="btn btn-primary">
+<x-ig-feedback::button form-id="contact-us-form" class="btn btn-primary">
     Contact Us
-</x-feedback::button>
+</x-ig-feedback::button>
 ```
 
 ### Advanced
@@ -76,7 +76,7 @@ for email logging, footer rendering, and styling.
 **Declaration with duplicate email field and custom labels**
 
 ```blade
-<livewire:feedback
+<livewire:ig-feedback
     id="detailed-feedback-form"
     email="info@example.com"
     name="Info Center"
@@ -97,9 +97,9 @@ for email logging, footer rendering, and styling.
 ```blade
 <p>
     Do you have questions or need assistance?
-    <x-feedback::link form-id="detailed-feedback-form">
+    <x-ig-feedback::link form-id="detailed-feedback-form">
         Click here to reach our Helpdesk.
-    </x-feedback::link>
+    </x-ig-feedback::link>
 </p>
 ```
 
@@ -110,17 +110,17 @@ The package provides two components to trigger the feedback form. Both component
 **Button trigger**
 
 ```blade
-<x-feedback::button form-id="feedback-form-id">
+<x-ig-feedback::button form-id="feedback-form-id">
     Give Feedback
-</x-feedback::button>
+</x-ig-feedback::button>
 ```
 
 **Link trigger**
 
 ```blade
-<x-feedback::link form-id="contact-form-id">
+<x-ig-feedback::link form-id="contact-form-id">
     Click here to contact us.
-</x-feedback::link>
+</x-ig-feedback::link>
 ```
 
 ## Default values
@@ -193,7 +193,7 @@ The component ships pre-styled. You can override classes by
 
 **Localization**\
 The component uses translation keys under the
-    `feedback::` namespace. You can publish the language files to override
+    `ig-feedback::` namespace. You can publish the language files to override
     them.
 
 **Custom names**\
@@ -207,15 +207,15 @@ return [
         'email' => [
             'type' => 'email',
             'validation' => 'email:rfc|regex:/@internetguru\.io$/',
-            'label_translation_key' => 'feedback::fields.email',
-            'view' => 'feedback::fields.email',
+            'label_translation_key' => 'ig-feedback::fields.email',
+            'view' => 'ig-feedback::fields.email',
         ],
         // add custom field
         'application' => [
             'type' => 'text',
             'validation' => 'string|min:10|max:30',
             'label_translation_key' => 'fields.application',
-            'view' => 'feedback::fields.application',
+            'view' => 'ig-feedback::fields.application',
         ],
     ],
 ];
