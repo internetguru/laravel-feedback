@@ -30,8 +30,17 @@ return [
         'phone' => [
             'type' => 'tel',
             'validation' => 'string|regex:/^(?:[0-9\s\-\(\)\.+]*\d){7,15}$/|max:50',
+            'error_translation_key' => 'feedback::messages.phone_validation',
             'label_translation_key' => 'feedback::fields.phone',
             'autocomplete' => 'tel',
         ],
+    ],
+    'exclude_attributes' => [
+        'name',
+        'label',
+        'error',
+        'validation',
+        'label_translation_key',
+        'error_translation_key',
     ],
 ];

@@ -69,15 +69,19 @@ class Feedback extends Component
         foreach ($fields as $field) {
             $fieldName = $field['name'] ?? '';
             $isRequired = (bool) ($field['required'] ?? false);
+            $config = config("feedback.names.{$fieldName}", []);
 
             if (!isset($nameCounts[$fieldName])) {
                 $nameCounts[$fieldName] = 0;
             }
             $nameCounts[$fieldName]++;
 
+            if (!isset($field['error']) && isset($config['error_translation_key'])) {
+                $field['error'] = __($config['error_translation_key']);
+            }
+
             // Generate label if not provided
             if (!isset($field['label'])) {
-                $config = config("feedback.names.{$fieldName}", []);
                 $labelKey = $config['label_translation_key'] ?? "feedback::fields.{$fieldName}";
                 $baseLabel = __($labelKey);
 
@@ -167,10 +171,8 @@ class Feedback extends Component
             $validation = $config['validation'] ?? 'string|max:255';
             $fieldKey = "formData.{$index}";
             $rules[$fieldKey] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
-
-            // Add custom validation message for phone field
-            if ($fieldName === 'phone') {
-                $messages["{$fieldKey}.regex"] = __('feedback::messages.phone_validation');
+            if (isset($field['error'])) {
+                $messages[$fieldKey] = $field['error'];
             }
         }
 

@@ -29,7 +29,7 @@
                                         $config = config("feedback.names." . $field['name'], []);
                                         $attributes = array_diff_key(
                                             array_merge($field, $config),
-                                            array_flip(['name', 'label', 'validation', 'label_translation_key', 'view'])
+                                            array_flip(config('feedback.exclude_attributes', []))
                                         );
                                     @endphp
                                     @if(empty($config))
