@@ -15,11 +15,13 @@ return [
             'type' => 'text',
             'validation' => 'string|min:2|max:100',
             'label_translation_key' => 'ig-feedback::fields.fullname',
+            'autocomplete' => 'name',
         ],
         'email' => [
             'type' => 'email',
             'validation' => 'email:rfc,dns|max:255',
             'label_translation_key' => 'ig-feedback::fields.email',
+            'autocomplete' => 'email',
         ],
         'message' => [
             'type' => 'textarea',

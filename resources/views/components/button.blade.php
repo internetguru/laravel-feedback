@@ -7,4 +7,4 @@
     type="button"
     x-data
     x-on:click.prevent="Livewire.dispatch('openIgFeedback', {id: '{{ $formId }}'})"
->{{ $slot->isNotEmpty() ? $slot : $formId }}</a>
+>{{ $slot->isNotEmpty() ? $slot : __('ig-feedback::layouts.modal.link') }}</a>
