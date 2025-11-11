@@ -6,5 +6,5 @@
     {{ $attributes }}
     type="button"
     x-data
-    x-on:click.prevent="Livewire.dispatch('openIgFeedback', {id: '{{ $formId }}'})"
+    x-on:click.prevent="Livewire.dispatch('open-ig-feedback', {id: '{{ $formId }}'})"
 >{{ $slot->isNotEmpty() ? $slot : __('ig-feedback::layouts.modal.link') }}</a>

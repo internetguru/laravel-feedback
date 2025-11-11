@@ -5,6 +5,7 @@
             aria-labelledby="{{ $id }}-modal-label" aria-hidden="false" style="display: block;"
             wire:key="{{ $id }}-modal"
             x-data x-on:keydown.escape.window="$wire.closeModal()"
+            x-init="window.location.hash = '{{ $id }}'"
         >
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -49,4 +50,21 @@
         </div>
         <div class="modal-backdrop fade show"></div>
     @endif
+
+    <script>
+        // Check if URL hash matches this feedback ID on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#{{ $id }}') {
+                Livewire.dispatch('open-ig-feedback', {id: '{{ $id }}'});
+            }
+        });
+        document.addEventListener('livewire:init', () => {
+            // Remove hash when modal closes
+            Livewire.on('ig-feedback-closed', (event) => {
+                if (event.id === '{{ $id }}' && window.location.hash === '#{{ $id }}') {
+                    history.replaceState(null, null, ' ');
+                }
+            });
+        });
+    </script>
 </div>

@@ -158,7 +158,7 @@ class Feedback extends Component
         }
     }
 
-    #[On('openIgFeedback')]
+    #[On('open-ig-feedback')]
     public function openFeedback($id = null)
     {
         if ($id === $this->id) {
@@ -169,6 +169,7 @@ class Feedback extends Component
     public function closeModal()
     {
         $this->isOpen = false;
+        $this->dispatch('ig-feedback-closed', id: $this->id);
     }
 
     public function send(ReCaptchaInterface $recaptcha)
