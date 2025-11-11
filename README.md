@@ -37,9 +37,7 @@ for email logging, footer rendering, and styling.
 **Button trigger**
 
 ```blade
-<x-ig-feedback::button form-id="feedback-form">
-    Give Feedback
-</x-ig-feedback::button>
+<x-ig-feedback::button form-id="feedback-form"/>
 ```
 
 ### Basic
@@ -106,13 +104,13 @@ for email logging, footer rendering, and styling.
 
 ## Trigger Components
 
-The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the feedback form component ID. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element.
+The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the feedback form component ID. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element. The default element content is "Give feedback".
 
 **Button trigger**
 
 ```blade
 <x-ig-feedback::button form-id="feedback-form-id">
-    Give Feedback
+    Feedback
 </x-ig-feedback::button>
 ```
 
@@ -130,7 +128,7 @@ If optional attributes are omitted, the default values are:
 
 ```php
 [
-    'subject' => 'Feedback :app_www',  // Uses app.www config value
+    'subject' => 'APP-NAME FORM-ID',
     'title' => 'Send Feedback',
     'description' => 'Your feedback helps us improve. Please share your thoughts.',
     'success' => 'Thank you, your message has been sent.',
