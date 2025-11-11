@@ -45,7 +45,7 @@ class Feedback extends Component
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
-        $this->subject = $subject ?? __('ig-feedback::layouts.email.subject', ['app_www' => config('app.www')]);
+        $this->subject = $subject ?? config('app.name') . ' ' . $id;
         $this->title = $title ?? __('ig-feedback::layouts.modal.title');
         $this->submit = $submit ?? __('ig-feedback::fields.submit');
         $this->description = $description ?? __('ig-feedback::layouts.modal.description');
