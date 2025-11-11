@@ -3,9 +3,12 @@
 namespace InternetGuru\LaravelFeedback\Livewire;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface;
 use InternetGuru\LaravelCommon\Support\Helpers;
 use InternetGuru\LaravelFeedback\Notification\FeedbackNotification;
+use InvalidArgumentException;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -42,6 +45,18 @@ class Feedback extends Component
         ?string $submit = null,
         ?array $fields = null
     ) {
+        try {
+            Validator::make(
+                data: ['id' => $id, 'email' => $email, 'name' => $name],
+                rules: [
+                    'id' => 'required|string|regex:/^[a-z]+[a-z0-9]*(-[a-z0-9]+)*$/',
+                    'email' => 'required|email',
+                    'name' => 'required|string',
+                ]
+            )->validate();
+        } catch (ValidationException $e) {
+            throw new InvalidArgumentException('Invalid Feedback component parameters: ' . implode(', ', $e->errors()['id'] ?? []));
+        }
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
