@@ -6,7 +6,4 @@
 {!! html_entity_decode($field['value']) !!}
 
 @endforeach
-@lang('ig-feedback::layouts.email.sent_from'):
-{{ session('currentPage') ?? '-' }}
-{{ InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}
 @endsection
