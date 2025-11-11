@@ -40,7 +40,7 @@
                             @endforeach
 
                             <x-ig::submit>
-                                $submit
+                                {{ $submit }}
                             </x-ig::submit>
                         </form>
                     </div>

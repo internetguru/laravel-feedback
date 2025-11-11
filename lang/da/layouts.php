@@ -9,7 +9,6 @@ return [
     'email.sent_from' => 'Sendt fra',
     'email.subject' => 'Feedback :app_www',
     'modal.description' => 'Din feedback hjælper os med at forbedre. Del venligst dine tanker.',
-    'modal.link_text' => 'Feedback',
     'modal.success' => 'Tak, din besked er blevet sendt.',
     'modal.title' => 'Send feedback',
 
