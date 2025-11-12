@@ -7,7 +7,8 @@ for email logging, footer rendering, and styling.
 ## Features
 
 - Pre-styled, responsive form
-- Attribute-based validation (name, mode, validation)
+- Triggederable via #fragment in URL with form ID
+- Attribute-based validation
 - reCAPTCHA support (if configured)
 - Inline errors and success messaging
 - Sends submissions via mail to your target address

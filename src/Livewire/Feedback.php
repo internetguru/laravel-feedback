@@ -49,13 +49,13 @@ class Feedback extends Component
             Validator::make(
                 data: ['id' => $id, 'email' => $email, 'name' => $name],
                 rules: [
-                    'id' => 'required|string|regex:/^[a-z]+[a-z0-9]*(-[a-z0-9]+)*$/',
-                    'email' => 'required|email',
-                    'name' => 'required|string',
+                    'id' => 'required|string|regex:/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/',
+                    'email' => 'required|email:rfc|max:255',
+                    'name' => 'required|string:min:2|max:100',
                 ]
             )->validate();
         } catch (ValidationException $e) {
-            throw new InvalidArgumentException('Invalid Feedback component parameters: ' . implode(', ', $e->errors()['id'] ?? []));
+            throw new InvalidArgumentException('Feedback component error: ' . implode(', ', $e->errors()['id'] ?? []));
         }
         $this->id = $id;
         $this->email = $email;

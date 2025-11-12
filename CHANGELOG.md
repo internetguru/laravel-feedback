@@ -10,6 +10,8 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Added
 
+- Required attributes validation.
+- Support triggering the form via URL fragment (e.g., `#feedback-form-id`).
 - Support custom success message.
 - Support custom validation error messages for fields.
 - Support dynamic attributes for fields.
