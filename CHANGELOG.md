@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Implement laravel-common new notification and mail message base classes.
+
 ## [4.2.0] - 2025-11-12
 
 _Stable release based on [4.2.0-rc.1]._

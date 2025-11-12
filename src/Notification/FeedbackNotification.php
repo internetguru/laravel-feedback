@@ -2,30 +2,21 @@
 
 namespace InternetGuru\LaravelFeedback\Notification;
 
-use Illuminate\Bus\Queueable;
 use Illuminate\Notifications\Messages\MailMessage;
-use Illuminate\Notifications\Notification;
-use Illuminate\Support\Facades\URL;
-use InternetGuru\LaravelCommon\Mail\MailMessage as IgMailMessage;
-use InternetGuru\LaravelUser\Models\TokenAuth;
+use InternetGuru\LaravelCommon\Notifications\BaseNotification;
 
-class FeedbackNotification extends Notification
+class FeedbackNotification extends BaseNotification
 {
-    use Queueable;
-
     public function __construct(
         public array $feedback,
         public ?string $subject,
-    ) {}
-
-    public function via(): array
-    {
-        return ['mail'];
+    ) {
+        parent::__construct();
     }
 
-    public function toMail(): MailMessage
+    public function toMail(object $notifiable): MailMessage
     {
-        $message = (new IgMailMessage())
+        $message = $this->getMailMessage()
             ->subject($this->subject)
             ->view(
                 [

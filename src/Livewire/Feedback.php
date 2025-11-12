@@ -3,6 +3,7 @@
 namespace InternetGuru\LaravelFeedback\Livewire;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface;
@@ -25,13 +26,19 @@ class Feedback extends Component
     public string $name;
 
     public ?string $subject = null;
+
     public ?string $title = null;
+
     public ?string $description = null;
+
     public ?string $success = null;
+
     public ?string $submit = null;
+
     public array $fields = [];
 
     public array $formData = [];
+
     public bool $isOpen = false;
 
     public function mount(
@@ -55,12 +62,12 @@ class Feedback extends Component
                 ]
             )->validate();
         } catch (ValidationException $e) {
-            throw new InvalidArgumentException('Feedback component error: ' . implode(', ', $e->errors()['id'] ?? []));
+            throw new InvalidArgumentException('Feedback component error: '.implode(', ', $e->errors()['id'] ?? []));
         }
         $this->id = $id;
         $this->email = $email;
         $this->name = $name;
-        $this->subject = $subject ?? config('app.name') . ' ' . $id;
+        $this->subject = $subject ?? config('app.name').' '.$id;
         $this->title = $title ?? __('ig-feedback::layouts.modal.title');
         $this->submit = $submit ?? __('ig-feedback::fields.submit');
         $this->description = $description ?? __('ig-feedback::layouts.modal.description');
@@ -68,7 +75,7 @@ class Feedback extends Component
 
         $defaultFields = [
             ['name' => 'message', 'required' => true],
-            ['name' => 'email', 'label' => __('ig-feedback::fields.email_optional') ],
+            ['name' => 'email', 'label' => __('ig-feedback::fields.email_optional')],
         ];
 
         $this->fields = $this->normalizeFields($fields ?? $defaultFields);
@@ -88,17 +95,17 @@ class Feedback extends Component
             $isRequired = (bool) ($field['required'] ?? false);
             $config = config("ig-feedback.names.{$fieldName}", []);
 
-            if (!isset($nameCounts[$fieldName])) {
+            if (! isset($nameCounts[$fieldName])) {
                 $nameCounts[$fieldName] = 0;
             }
             $nameCounts[$fieldName]++;
 
-            if (!isset($field['error']) && isset($config['error_translation_key'])) {
+            if (! isset($field['error']) && isset($config['error_translation_key'])) {
                 $field['error'] = __($config['error_translation_key']);
             }
 
             // Generate label if not provided
-            if (!isset($field['label'])) {
+            if (! isset($field['label'])) {
                 $labelKey = $config['label_translation_key'] ?? "ig-feedback::fields.{$fieldName}";
                 $baseLabel = __($labelKey);
 
@@ -107,7 +114,7 @@ class Feedback extends Component
                     $field['label'] = "{$baseLabel} {$nameCounts[$fieldName]}";
                 } else {
                     // Check if there will be duplicates
-                    $totalCount = count(array_filter($fields, fn($f) => ($f['name'] ?? '') === $fieldName));
+                    $totalCount = count(array_filter($fields, fn ($f) => ($f['name'] ?? '') === $fieldName));
                     if ($totalCount > 1) {
                         $field['label'] = "{$baseLabel} 1";
                     } else {
@@ -117,7 +124,7 @@ class Feedback extends Component
             }
 
             if (! $isRequired) {
-                $field['label'] .= ' (' . __('ig-feedback::fields.optional') . ')';
+                $field['label'] .= ' ('.__('ig-feedback::fields.optional').')';
             }
 
             $normalized[] = $field;
@@ -204,10 +211,7 @@ class Feedback extends Component
             ];
         }
 
-        User::make([
-            'email' => $this->email,
-            'name' => $this->name
-        ])->notify(
+        Notification::route('mail', [$this->email => $this->name])->notify(
             (new FeedbackNotification($emailData, $this->subject))->locale(app()->getLocale())
         );
 
@@ -215,7 +219,7 @@ class Feedback extends Component
         $this->initializeFormData();
         $this->dispatch('ig-message',
             type: 'success',
-            message: $this->success . Helpers::getEmailClientLink(),
+            message: $this->success.Helpers::getEmailClientLink(),
         );
 
         // Close modal after successful send
