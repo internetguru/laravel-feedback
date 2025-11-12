@@ -15,7 +15,7 @@ class FeedbackNotification extends Notification
 
     public function __construct(
         public array $feedback,
-        public ?string $subject = null,
+        public ?string $subject,
     ) {}
 
     public function via(): array
@@ -26,11 +26,11 @@ class FeedbackNotification extends Notification
     public function toMail(): MailMessage
     {
         $message = (new IgMailMessage())
-            ->subject($this->subject ?? __('feedback::layouts.email.subject', ['app_www' => config('app.www')]))
+            ->subject($this->subject)
             ->view(
                 [
-                    'html' => 'feedback::emails.feedback-html',
-                    'text' => 'feedback::emails.feedback-plain',
+                    'html' => 'ig-feedback::emails.feedback-html',
+                    'text' => 'ig-feedback::emails.feedback-plain',
                 ],
                 [
                     'feedback' => $this->feedback,

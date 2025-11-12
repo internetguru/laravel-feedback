@@ -7,10 +7,4 @@
     {!! nl2br(e($field['value'])) !!}
 </p>
 @endforeach
-
-<p>
-    <strong>@lang('feedback::layouts.email.sent_from'):</strong><br/>
-    <a href="{{ session('currentPage') ?? '-' }}">{{ session('currentPage') ?? '-' }}</a><br/>
-    {{ InternetGuru\LaravelCommon\Support\Helpers::getAppInfo() }}
-</p>
 @endsection

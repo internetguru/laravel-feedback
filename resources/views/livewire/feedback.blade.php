@@ -5,6 +5,7 @@
             aria-labelledby="{{ $id }}-modal-label" aria-hidden="false" style="display: block;"
             wire:key="{{ $id }}-modal"
             x-data x-on:keydown.escape.window="$wire.closeModal()"
+            x-init="window.location.hash = '{{ $id }}'"
         >
             <div class="modal-dialog">
                 <div class="modal-content">
@@ -18,44 +19,52 @@
                             <p class="me-5">{{ $description }}</p>
                         @endif
 
-                        @if($showSuccess)
-                            <div class="alert alert-success" role="alert">
-                                {{ __('feedback::messages.success') }}
-                            </div>
-                        @else
-                            <form wire:submit.prevent="send" class="editable-skip">
-                                @foreach($fields as $index => $field)
-                                    @php
-                                        $fieldName = $field['name'] ?? '';
-                                        $fieldLabel = $field['label'] ?? '';
-                                        $isRequired = $field['required'] ?? false;
-                                        $config = config("feedback.names.{$fieldName}", []);
-                                        $customView = $config['view'] ?? null;
-                                    @endphp
+                        <form wire:submit.prevent="send" class="editable-skip">
+                            @foreach($fields as $index => $field)
+                                @php
+                                    $config = config("ig-feedback.names." . $field['name'] , []);
+                                    $attributes = array_diff_key(
+                                        array_merge($field, $config),
+                                        array_flip(config('ig-feedback.exclude_attributes', []))
+                                    );
+                                @endphp
+                                @if(empty($config))
+                                    {!! "<!-- Field config not found for {$field['name']} -->" !!}
+                                    @continue
+                                @endif
 
-                                    @if($customView && view()->exists($customView))
-                                        @include($customView, [
-                                            'field' => $field,
-                                            'index' => $index,
-                                            'fieldName' => $fieldName,
-                                            'fieldLabel' => $fieldLabel,
-                                            'isRequired' => $isRequired,
-                                            'config' => $config,
-                                        ])
-                                    @else
-                                        {{-- skipping unknown field name: {{ $fieldName }} --}}
-                                    @endif
-                                @endforeach
+                                <x-ig::input
+                                    name="formData.{{ $index }}"
+                                    wire:model="formData.{{ $index }}"
+                                    :attributes="new Illuminate\View\ComponentAttributeBag($attributes)"
+                                >{{ $field['label'] }}</x-ig::input>
+                            @endforeach
 
-                                <x-ig::submit>
-                                    {{ $submit ?? __('feedback::fields.submit') }}
-                                </x-ig::submit>
-                            </form>
-                        @endif
+                            <x-ig::submit>
+                                {{ $submit }}
+                            </x-ig::submit>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="modal-backdrop fade show"></div>
     @endif
+
+    <script>
+        // Check if URL hash matches this feedback ID on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.location.hash === '#{{ $id }}') {
+                Livewire.dispatch('open-ig-feedback', {id: '{{ $id }}'});
+            }
+        });
+        document.addEventListener('livewire:init', () => {
+            // Remove hash when modal closes
+            Livewire.on('ig-feedback-closed', (event) => {
+                if (event.id === '{{ $id }}' && window.location.hash === '#{{ $id }}') {
+                    history.replaceState(null, null, ' ');
+                }
+            });
+        });
+    </script>
 </div>

@@ -11,4 +11,6 @@ return [
     'phone' => 'Your phone number',
     'submit' => 'Send',
 
+    'phone.validation' => 'Please enter a valid phone number with 7-15 digits.',
+
 ];
