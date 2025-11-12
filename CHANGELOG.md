@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Allow to configure custom feedback input view.
+
 ### Changed
 
 - Implement laravel-common new notification and mail message base classes.
