@@ -44,5 +44,6 @@ return [
         'validation',
         'label_translation_key',
         'error_translation_key',
+        'input_view',
     ],
 ];

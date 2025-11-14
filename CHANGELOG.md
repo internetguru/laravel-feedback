@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.0] - 2025-11-14
+
+_Stable release based on [5.0.0-rc.1]._
+
+## [5.0.0-rc.1] - 2025-11-14
+
+### Added
+
+- Allow to configure custom feedback input view.
+
+### Changed
+
+- Implement laravel-common new notification and mail message base classes.
+
 ## [4.2.0] - 2025-11-12
 
 _Stable release based on [4.2.0-rc.1]._
@@ -274,6 +288,8 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[5.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v4.2.0...v5.0.0
+[5.0.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v4.2.0
 [4.2.0]: https://https://github.com/internetguru/laravel-feedback/compare/v4.1.0...v4.2.0
 [4.2.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v4.1.0
 [4.1.0]: https://https://github.com/internetguru/laravel-feedback/compare/v4.0.2...v4.1.0
