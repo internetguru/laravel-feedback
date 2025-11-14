@@ -27,17 +27,19 @@
                                         array_merge($field, $config),
                                         array_flip(config('ig-feedback.exclude_attributes', []))
                                     );
+                                    $inputView = $config['input_view'] ?? 'ig-feedback::field';
                                 @endphp
                                 @if(empty($config))
                                     {!! "<!-- Field config not found for {$field['name']} -->" !!}
                                     @continue
                                 @endif
 
-                                <x-ig::input
-                                    name="formData.{{ $index }}"
-                                    wire:model="formData.{{ $index }}"
-                                    :attributes="new Illuminate\View\ComponentAttributeBag($attributes)"
-                                >{{ $field['label'] }}</x-ig::input>
+                                <x-dynamic-component
+                                    :component="$inputView"
+                                    :index="$index"
+                                    :field="$field"
+                                    :inputAttributes="$attributes"
+                                />
                             @endforeach
 
                             <x-ig::submit>
