@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [5.0.6] - 2025-11-14
+
+### Fixed
+
+- Disable recaptcha for now.
+
 ## [5.0.5] - 2025-11-14
 
 ### Fixed
@@ -323,6 +329,7 @@ _Stable release based on [0.1.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
+[5.0.6]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.5...v5.0.6
 [5.0.5]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.4...v5.0.5
 [5.0.4]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.3...v5.0.4
 [5.0.3]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.2...v5.0.3
