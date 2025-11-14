@@ -20,11 +20,15 @@
                         @endif
 
                         <x-ig::form
-                            x-init=""
+                            {{--
                             data-livewire-id="{{ $this->getId() }}"
                             x-on:submit.prevent="if({{ app(\InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface::class)->isEnabled() ? '1' : '0' }} == 0) { $wire.send() }"
                             x-on:submitready="$wire.send()"
+                            x-init=""
+                            --}}
+                            wire:submit.prevent="send"
                             class="editable-skip"
+                            :recaptcha="false"
                         >
                             @foreach($fields as $index => $field)
                                 @php
