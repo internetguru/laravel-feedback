@@ -182,7 +182,15 @@ If optional attributes are omitted, the default values are:
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
 - `error` (optional)\
-  Custom validation error message displayed when form validation fails. If omitted, the default translation is used.
+  You can pass an array of rule => message pairs to define custom error messages for specific validation rules, e.g.:
+  ```php
+  'error' => [
+      'required' => 'This field is required.',
+      'regex' => 'Invalid phone format.',
+      '*' => 'Invalid value.',
+  ]
+  ```
+  If omitted, the default translation is used.
 
 - Additional attributes (optional)\
   You can pass any additional HTML attributes dynamically (e.g., `placeholder`, `autocomplete`, `class`, etc.). These will be applied to the field's input element.
@@ -207,7 +215,7 @@ The component uses translation keys under the
     them.
 
 **Custom names**\
-You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, and label/error translation keys. You can also specify custom error messages and additional HTML attributes. Example:
+You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, and label/error translation keys. You can also specify custom error messages and additional HTML attributes. You can now define error messages for specific rules using arrays. Example:
 
 ```php
 // config/ig-feedback.php
@@ -225,7 +233,10 @@ return [
             'type' => 'text',
             'validation' => 'string|min:10|max:30',
             'label_translation_key' => 'form.application.label',
-            'error_translation_key' => 'form.application.validation',
+            'error_translation_key' => [
+                'min' => 'form.application.validation.min',
+                'max' => 'form.application.validation.max',
+            ],
             'autocomplete' => 'off',
         ],
     ],
