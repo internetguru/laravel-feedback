@@ -195,22 +195,24 @@ class Feedback extends Component
 
     public function send()
     {
-        $recaptcha = app(ReCaptchaInterface::class);
-        if ($recaptcha->isEnabled()) {
-            try {
-                $this->validate([
-                    'gRecaptchaResponse' => 'required|recaptchav3:store,'.$recaptcha::RECAPTCHA_SCORE_THRESHOLD,
-                ], [
-                    'gRecaptchaResponse.required' => __('ig-common::messages.recaptcha'),
-                    'gRecaptchaResponse.recaptchav3' => __('ig-common::messages.recaptcha'),
-                ]);
-            } catch (\Illuminate\Validation\ValidationException $e) {
-                report($e);
-                $this->dispatch('ig-message', type: 'error', message: $e->getMessage());
+        // Disable recaptcha for now
 
-                return false;
-            }
-        }
+        // $recaptcha = app(ReCaptchaInterface::class);
+        // if ($recaptcha->isEnabled()) {
+        //     try {
+        //         $this->validate([
+        //             'gRecaptchaResponse' => 'required|recaptchav3:store,'.$recaptcha::RECAPTCHA_SCORE_THRESHOLD,
+        //         ], [
+        //             'gRecaptchaResponse.required' => __('ig-common::messages.recaptcha'),
+        //             'gRecaptchaResponse.recaptchav3' => __('ig-common::messages.recaptcha'),
+        //         ]);
+        //     } catch (\Illuminate\Validation\ValidationException $e) {
+        //         report($e);
+        //         $this->dispatch('ig-message', type: 'error', message: $e->getMessage());
+
+        //         return false;
+        //     }
+        // }
 
         // Build validation rules and messages dynamically based on fields
         $rules = [];
