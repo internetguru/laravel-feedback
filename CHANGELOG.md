@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [5.0.4] - 2025-11-14
+
+### Fixed
+
+- Fix recaptcha validation.
+
 ## [5.0.3] - 2025-11-14
 
 ### Fixed
@@ -308,6 +314,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[5.0.4]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.3...v5.0.4
 [5.0.3]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.2...v5.0.3
 [5.0.2]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.1...v5.0.2
 [5.0.1]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.0...v5.0.1
