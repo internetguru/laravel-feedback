@@ -41,6 +41,8 @@ class Feedback extends Component
 
     public bool $isOpen = false;
 
+    public string $gRecaptchaResponse = '';
+
     public function mount(
         string $id,
         string $email,
@@ -191,9 +193,24 @@ class Feedback extends Component
         $this->dispatch('ig-feedback-closed', id: $this->id);
     }
 
-    public function send(ReCaptchaInterface $recaptcha)
+    public function send()
     {
-        $recaptcha->validate(request());
+        $recaptcha = app(ReCaptchaInterface::class);
+        if ($recaptcha->isEnabled()) {
+            try {
+                $this->validate([
+                    'gRecaptchaResponse' => 'required|recaptchav3:store,'.$recaptcha::RECAPTCHA_SCORE_THRESHOLD,
+                ], [
+                    'gRecaptchaResponse.required' => __('ig-common::messages.recaptcha'),
+                    'gRecaptchaResponse.recaptchav3' => __('ig-common::messages.recaptcha'),
+                ]);
+            } catch (\Illuminate\Validation\ValidationException $e) {
+                report($e);
+                $this->dispatch('ig-message', type: 'error', message: $e->getMessage());
+
+                return false;
+            }
+        }
 
         // Build validation rules and messages dynamically based on fields
         $rules = [];
