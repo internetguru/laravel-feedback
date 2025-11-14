@@ -19,7 +19,13 @@
                             <p class="me-5">{{ $description }}</p>
                         @endif
 
-                        <x-ig::form wire:submit.prevent="send" class="editable-skip">
+                        <x-ig::form
+                            x-init=""
+                            data-livewire-id="{{ $this->getId() }}"
+                            x-on:submit.prevent="if({{ app(\InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface::class)->isEnabled() ? '1' : '0' }} == 0) { $wire.send() }"
+                            x-on:submitready="$wire.send()"
+                            class="editable-skip"
+                        >
                             @foreach($fields as $index => $field)
                                 @php
                                     $config = config("ig-feedback.names." . $field['name'] , []);
