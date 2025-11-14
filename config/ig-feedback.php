@@ -33,8 +33,7 @@ return [
             'type' => 'tel',
             'validation' => 'string|regex:/^(?:[0-9\s\-\(\)\.+]*\d){7,15}$/|max:50',
             'error_translation_key' => [
-                'regex' => 'ig-feedback::fields.phone.validation',
-                'max' => 'ig-feedback::fields.phone.max',
+                '*' => 'ig-feedback::fields.phone.validation',
             ],
             'label_translation_key' => 'ig-feedback::fields.phone',
             'autocomplete' => 'tel',
