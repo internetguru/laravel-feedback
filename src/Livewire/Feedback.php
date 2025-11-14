@@ -222,6 +222,8 @@ class Feedback extends Component
             message: $this->success.Helpers::getEmailClientLink(),
         );
 
+        $this->dispatch('ig-feedback-sent', id: $this->id, fields: $emailData);
+
         // Close modal after successful send
         $this->closeModal();
     }

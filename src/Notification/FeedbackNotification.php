@@ -9,14 +9,14 @@ class FeedbackNotification extends BaseNotification
 {
     public function __construct(
         public array $feedback,
-        public ?string $subject,
+        public string $subject,
     ) {
         parent::__construct();
     }
 
     public function toMail(object $notifiable): MailMessage
     {
-        $message = $this->getMailMessage()
+        $message = parent::toMail($notifiable)
             ->subject($this->subject)
             ->view(
                 [
