@@ -20,6 +20,7 @@
                         @endif
 
                         <form wire:submit.prevent="send" class="editable-skip">
+                            @csrf
                             @foreach($fields as $index => $field)
                                 @php
                                     $config = config("ig-feedback.names." . $field['name'] , []);
