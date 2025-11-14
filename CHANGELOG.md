@@ -13,10 +13,12 @@ _Stable release based on [5.0.0-rc.1]._
 ### Added
 
 - Allow to configure custom feedback input view.
+- Dispatch `ig-feedback-sent` event with feedback data after feedback is sent.
 
 ### Changed
 
 - Implement laravel-common new notification and mail message base classes.
+- Merge feedback config recursively.
 
 ## [4.2.0] - 2025-11-12
 
