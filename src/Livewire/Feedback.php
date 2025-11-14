@@ -100,8 +100,20 @@ class Feedback extends Component
             }
             $nameCounts[$fieldName]++;
 
-            if (! isset($field['error']) && isset($config['error_translation_key'])) {
-                $field['error'] = __($config['error_translation_key']);
+            // Fail if error is set and not array
+            if (isset($field['error']) && ! is_array($field['error'])) {
+                throw new InvalidArgumentException("Field 'error' must be an array for field '{$fieldName}'.");
+            }
+            if (isset($config['error_translation_key']) && ! is_array($config['error_translation_key'])) {
+                throw new InvalidArgumentException("Config 'error_translation_key' must be an array for field '{$fieldName}'.");
+            }
+
+            foreach ($field['error'] ?? [] as $rule => $key) {
+                $field['error'][$rule] = __($key);
+            }
+
+            foreach ($config['error_translation_key'] ?? [] as $rule => $key) {
+                $field['error'][$rule] = __($key);
             }
 
             // Generate label if not provided
@@ -193,36 +205,8 @@ class Feedback extends Component
             $validation = $config['validation'] ?? 'string|max:255';
             $fieldKey = "formData.{$index}";
             $rules[$fieldKey] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
-
-            // Fail if error is set and not array
-            if (isset($field['error']) && ! is_array($field['error'])) {
-                throw new InvalidArgumentException("Field 'error' must be an array for field '{$fieldName}'.");
-            }
-            if (isset($config['error_translation_key']) && ! is_array($config['error_translation_key'])) {
-                throw new InvalidArgumentException("Config 'error_translation_key' must be an array for field '{$fieldName}'.");
-            }
-
-            // Support '*' wildcard for error messages
-            if (isset($field['error']) && is_array($field['error'])) {
-                foreach ($field['error'] as $rule => $message) {
-                    if ($rule === '*') {
-                        // Apply to all rules for this field
-                        $messages[$fieldKey] = $message;
-                    } else {
-                        $messages[$fieldKey.'.'.$rule] = $message;
-                    }
-                }
-            }
-
-            // Support '*' wildcard for error_translation_key
-            if (isset($config['error_translation_key']) && is_array($config['error_translation_key'])) {
-                foreach ($config['error_translation_key'] as $rule => $key) {
-                    if ($rule === '*') {
-                        $messages[$fieldKey] = __($key);
-                    } else {
-                        $messages[$fieldKey.'.'.$rule] = __($key);
-                    }
-                }
+            foreach ($field['error'] ?? [] as $rule => $message) {
+                $messages["{$fieldKey}.{$rule}"] = $message;
             }
         }
 
