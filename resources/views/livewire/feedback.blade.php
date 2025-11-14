@@ -19,8 +19,7 @@
                             <p class="me-5">{{ $description }}</p>
                         @endif
 
-                        <form wire:submit.prevent="send" class="editable-skip">
-                            @csrf
+                        <x-ig::form wire:submit.prevent="send" class="editable-skip">
                             @foreach($fields as $index => $field)
                                 @php
                                     $config = config("ig-feedback.names." . $field['name'] , []);
@@ -46,7 +45,7 @@
                             <x-ig::submit>
                                 {{ $submit }}
                             </x-ig::submit>
-                        </form>
+                        </x-ig::form>
                     </div>
                 </div>
             </div>
