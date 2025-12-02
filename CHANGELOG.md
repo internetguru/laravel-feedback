@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Use new internetguru/laravel-recaptchav3 v1.0.0 package.
+- Require PHP 8.4.
+
 ## [5.0.6] - 2025-11-14
 
 ### Fixed
