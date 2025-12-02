@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.1] - 2025-12-02
+
+### Fixed
+
+- Strip tags from headers in email and remove colon.
+
 ## [6.0.0] - 2025-12-02
 
 _Stable release based on [6.0.0-rc.1]._
@@ -337,6 +343,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[6.0.1]: https://https://github.com/internetguru/laravel-feedback/compare/v6.0.0...v6.0.1
 [6.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.6...v6.0.0
 [6.0.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v5.0.6
 [5.0.6]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.5...v5.0.6
