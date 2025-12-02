@@ -2,7 +2,7 @@
 
 @section('content')
 @foreach($feedback as $field)
-{{ $field['label'] }}:
+{{ strip_tags($field['label']) }}
 {!! html_entity_decode($field['value']) !!}
 
 @endforeach
