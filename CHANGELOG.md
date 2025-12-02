@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.0.0] - 2025-12-02
+
+_Stable release based on [6.0.0-rc.1]._
+
+## [6.0.0-rc.1] - 2025-12-02
+
+### Changed
+
+- Use new internetguru/laravel-recaptchav3 v1.0.0 package.
+- Require PHP 8.4.
+
 ## [5.0.6] - 2025-11-14
 
 ### Fixed
@@ -326,6 +337,8 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[6.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.6...v6.0.0
+[6.0.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v5.0.6
 [5.0.6]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.5...v5.0.6
 [5.0.5]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.4...v5.0.5
 [5.0.4]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.3...v5.0.4
