@@ -6,9 +6,9 @@ use App\Models\User;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-use InternetGuru\LaravelCommon\Contracts\ReCaptchaInterface;
 use InternetGuru\LaravelCommon\Support\Helpers;
 use InternetGuru\LaravelFeedback\Notification\FeedbackNotification;
+use InternetGuru\LaravelRecaptchaV3\Traits\WithRecaptcha;
 use InvalidArgumentException;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
@@ -16,6 +16,8 @@ use Livewire\Component;
 
 class Feedback extends Component
 {
+    use WithRecaptcha;
+
     #[Locked]
     public string $id;
 
@@ -40,8 +42,6 @@ class Feedback extends Component
     public array $formData = [];
 
     public bool $isOpen = false;
-
-    public string $gRecaptchaResponse = '';
 
     public function mount(
         string $id,
@@ -195,24 +195,15 @@ class Feedback extends Component
 
     public function send()
     {
-        // Disable recaptcha for now
-
-        // $recaptcha = app(ReCaptchaInterface::class);
-        // if ($recaptcha->isEnabled()) {
-        //     try {
-        //         $this->validate([
-        //             'gRecaptchaResponse' => 'required|recaptchav3:store,'.$recaptcha::RECAPTCHA_SCORE_THRESHOLD,
-        //         ], [
-        //             'gRecaptchaResponse.required' => __('ig-common::messages.recaptcha'),
-        //             'gRecaptchaResponse.recaptchav3' => __('ig-common::messages.recaptcha'),
-        //         ]);
-        //     } catch (\Illuminate\Validation\ValidationException $e) {
-        //         report($e);
-        //         $this->dispatch('ig-message', type: 'error', message: $e->getMessage());
-
-        //         return false;
-        //     }
-        // }
+        try {
+            $this->verifyRecaptcha();
+        } catch (ValidationException $e) {
+            $this->dispatch('ig-message',
+                type: 'error',
+                message: __('recaptchav3::messages.failed'),
+            );
+            return;
+        }
 
         // Build validation rules and messages dynamically based on fields
         $rules = [];
