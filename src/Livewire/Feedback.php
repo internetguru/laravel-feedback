@@ -141,6 +141,11 @@ class Feedback extends Component
                 $field['label'] .= ' ('.__('ig-feedback::fields.optional').')';
             }
 
+            // Set default fallback if not provided
+            if (! isset($field['fallback'])) {
+                $field['fallback'] = 'n/a';
+            }
+
             $normalized[] = $field;
         }
 
@@ -232,9 +237,15 @@ class Feedback extends Component
             ],
         ];
         foreach ($this->fields as $index => $field) {
+            $value = $this->formData[$index] ?? null;
+
+            if (empty($value) && $value !== '0' && $value !== 0) {
+                $value = $field['fallback'] ?? 'n/a';
+            }
+
             $emailData[] = [
                 'label' => $field['label'] ?? '',
-                'value' => $this->formData[$index] ?? '-',
+                'value' => $value,
                 'name' => $field['name'] ?? '',
                 'key' => $field['key'] ?? '',
             ];

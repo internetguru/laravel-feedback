@@ -86,7 +86,7 @@ for email logging, footer rendering, and styling.
     :fields="[
         ['name' => 'fullname', 'label' => 'Full Name', 'required' => true],
         ['name' => 'email', 'label' => 'Work Email', 'required' => true],
-        ['name' => 'email', 'label' => 'Personal Email'],
+        ['name' => 'email', 'label' => 'Personal Email', fallback' => 'Not provided'],
         ['name' => 'message', 'label' => 'Feedback Message', 'rows' => 5],
     ]"
 />
@@ -180,6 +180,9 @@ If optional attributes are omitted, the default values are:
 
 - `label` (optional)\
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
+
+- `fallback` (optional)\
+  Fallback value for empty or unchecked optional fields. Defaults to `n/a`.
 
 - `error` (optional)\
   You can pass an array of rule => message pairs to define custom error messages for specific validation rules, e.g.:

@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 - Prepend a section to email body with form name and description.
 - Expose field key in public fields.
 - Add subscribe checkbox field type.
+- Support custom fallback value for fields, default is `n/a`.
 
 ## [6.0.2] - 2025-12-02
 
