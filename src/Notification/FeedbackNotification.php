@@ -27,8 +27,12 @@ class FeedbackNotification extends BaseNotification
                     'feedback' => $this->feedback,
                 ],
             );
-        if (isset($this->feedback['email']) && filter_var($this->feedback['email'], FILTER_VALIDATE_EMAIL)) {
-            $message = $message->replyTo($this->feedback['email'], $this->feedback['fullname'] ?? null);
+
+        $email = collect($this->feedback)->firstWhere('name', 'email')['value'] ?? null;
+        $fullname = collect($this->feedback)->firstWhere('name', 'fullname')['value'] ?? null;
+
+        if (! empty($email)) {
+            $message = $message->replyTo($email, $fullname);
         }
 
         return $message;
