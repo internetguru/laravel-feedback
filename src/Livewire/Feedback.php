@@ -110,6 +110,14 @@ class Feedback extends Component
                 throw new InvalidArgumentException("Config 'error_translation_key' must be an array for field '{$fieldName}'.");
             }
 
+            // Handle value translations
+            if (isset($config['value_translation_key']) && is_array($config['value_translation_key'])) {
+                $field['values'] = [];
+                foreach ($config['value_translation_key'] as $val => $key) {
+                    $field['values'][$val] = __($key);
+                }
+            }
+
             foreach ($field['error'] ?? [] as $rule => $key) {
                 $field['error'][$rule] = __($key);
             }
@@ -141,6 +149,11 @@ class Feedback extends Component
                 $field['label'] .= ' ('.__('ig-feedback::fields.optional').')';
             }
 
+            // Set default fallback if not provided
+            if (! isset($field['fallback'])) {
+                $field['fallback'] = 'n/a';
+            }
+
             $normalized[] = $field;
         }
 
@@ -154,6 +167,8 @@ class Feedback extends Component
     {
         foreach ($this->fields as $index => $field) {
             $this->formData[$index] = '';
+            $fieldKey = "formData.{$index}";
+            $this->fields[$index]['key'] = $fieldKey;
         }
 
         // Pre-fill name and email if logged user
@@ -213,22 +228,44 @@ class Feedback extends Component
             $isRequired = $field['required'] ?? false;
             $config = config("ig-feedback.names.{$fieldName}", []);
             $validation = $config['validation'] ?? 'string|max:255';
-            $fieldKey = "formData.{$index}";
-            $rules[$fieldKey] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
+            $rules[$field['key']] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
             foreach ($field['error'] ?? [] as $rule => $message) {
-                $messages["{$fieldKey}.{$rule}"] = $message;
+                $messages["{$field['key']}.{$rule}"] = $message;
             }
         }
 
         $this->validate($rules, $messages);
 
         // Prepare data for email
-        $emailData = [];
+        $emailData = [
+            [
+                'label' => $this->title . ' (' . $this->id . ')',
+                'value' => $this->description,
+                'name' => 'description',
+            ],
+        ];
         foreach ($this->fields as $index => $field) {
+            $value = $this->formData[$index] ?? null;
+
+            // Handle mapped values (e.g. boolean to string)
+            if (isset($field['values'])) {
+                // Normalize boolean-like values to 1 or 0
+                $normalizedKey = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
+
+                if (isset($field['values'][$normalizedKey])) {
+                    $value = $field['values'][$normalizedKey];
+                }
+            }
+
+            if (empty($value) && $value !== '0' && $value !== 0) {
+                $value = $field['fallback'] ?? 'n/a';
+            }
+
             $emailData[] = [
                 'label' => $field['label'] ?? '',
-                'value' => $this->formData[$index] ?? '-',
+                'value' => $value,
                 'name' => $field['name'] ?? '',
+                'key' => $field['key'] ?? '',
             ];
         }
 

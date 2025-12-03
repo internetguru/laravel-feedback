@@ -4,6 +4,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.0] - 2025-12-03
+
+_Stable release based on [6.1.0-rc.1]._
+
+## [6.1.0-rc.1] - 2025-12-03
+
+### Added
+
+- Prepend a section to email body with form name and description.
+- Expose field key in public fields.
+- Add subscribe checkbox field type.
+- Support custom fallback value for fields, default is `n/a`.
+- Support value translation for fields (e.g. boolean to string).
+
 ## [6.0.2] - 2025-12-02
 
 ### Fixed
@@ -349,6 +363,8 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[6.1.0]: https://https://github.com/internetguru/laravel-feedback/compare/v6.0.2...v6.1.0
+[6.1.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v6.0.2
 [6.0.2]: https://https://github.com/internetguru/laravel-feedback/compare/v6.0.1...v6.0.2
 [6.0.1]: https://https://github.com/internetguru/laravel-feedback/compare/v6.0.0...v6.0.1
 [6.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v5.0.6...v6.0.0
