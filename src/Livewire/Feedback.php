@@ -154,6 +154,8 @@ class Feedback extends Component
     {
         foreach ($this->fields as $index => $field) {
             $this->formData[$index] = '';
+            $fieldKey = "formData.{$index}";
+            $this->fields[$index]['key'] = $fieldKey;
         }
 
         // Pre-fill name and email if logged user
@@ -213,10 +215,9 @@ class Feedback extends Component
             $isRequired = $field['required'] ?? false;
             $config = config("ig-feedback.names.{$fieldName}", []);
             $validation = $config['validation'] ?? 'string|max:255';
-            $fieldKey = "formData.{$index}";
-            $rules[$fieldKey] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
+            $rules[$field['key']] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
             foreach ($field['error'] ?? [] as $rule => $message) {
-                $messages["{$fieldKey}.{$rule}"] = $message;
+                $messages["{$field['key']}.{$rule}"] = $message;
             }
         }
 
@@ -235,6 +236,7 @@ class Feedback extends Component
                 'label' => $field['label'] ?? '',
                 'value' => $this->formData[$index] ?? '-',
                 'name' => $field['name'] ?? '',
+                'key' => $field['key'] ?? '',
             ];
         }
 
