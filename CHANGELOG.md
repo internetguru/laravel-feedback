@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 
 - Prepend a section to email body with form name and description.
+- Expose field key in public fields.
 
 ## [6.0.2] - 2025-12-02
 
