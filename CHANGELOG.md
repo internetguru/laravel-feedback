@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Prepend a section to email body with form name and description.
+
 ## [6.0.2] - 2025-12-02
 
 ### Fixed
