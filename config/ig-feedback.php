@@ -42,6 +42,10 @@ return [
             'type' => 'checkbox',
             'validation' => 'boolean',
             'label_translation_key' => 'ig-feedback::fields.subscribe',
+            'value_translation_key' => [
+                1 => 'ig-feedback::fields.subscribe_interested',
+                0 => 'ig-feedback::fields.subscribe_not_interested',
+            ],
         ],
     ],
     'exclude_attributes' => [
@@ -51,6 +55,8 @@ return [
         'validation',
         'label_translation_key',
         'error_translation_key',
+        'value_translation_key',
         'input_view',
+        'values',
     ],
 ];

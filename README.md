@@ -218,7 +218,7 @@ The component uses translation keys under the
     them.
 
 **Custom names**\
-You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, and label/error translation keys. You can also specify custom error messages and additional HTML attributes. You can now define error messages for specific rules using arrays. Example:
+You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, and label/error translation keys. You can also specify custom error messages, value translations, and additional HTML attributes. You can now define error messages for specific rules using arrays. Example:
 
 ```php
 // config/ig-feedback.php
@@ -241,6 +241,16 @@ return [
                 'max' => 'form.application.validation.max',
             ],
             'autocomplete' => 'off',
+        ],
+        // add custom field with value translation
+        'subscribe' => [
+            'type' => 'checkbox',
+            'validation' => 'boolean',
+            'label_translation_key' => 'ig-feedback::fields.subscribe',
+            'value_translation_key' => [
+                1 => 'ig-feedback::fields.subscribe_interested',
+                0 => 'ig-feedback::fields.subscribe_not_interested',
+            ],
         ],
     ],
 ];

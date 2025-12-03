@@ -11,6 +11,8 @@ return [
     'phone' => 'Vaše telefonní číslo',
     'submit' => 'Odeslat',
     'subscribe' => 'Připojte se k našemu newsletteru a získávejte aktualizace a nabídky!',
+    'subscribe_interested' => 'Mám zájem',
+    'subscribe_not_interested' => 'Nemám zájem',
 
     'phone.validation' => 'Zadejte prosím platné telefonní číslo s 7-15 číslicemi.',
 

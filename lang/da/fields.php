@@ -11,6 +11,8 @@ return [
     'phone' => 'Dit telefonnummer',
     'submit' => 'Send',
     'subscribe' => 'Tilmeld dig vores nyhedsbrev og modtag opdateringer og tilbud!',
+    'subscribe_interested' => 'Interesseret',
+    'subscribe_not_interested' => 'Ikke interesseret',
 
     'phone.validation' => 'Indtast venligst et gyldigt telefonnummer med 7-15 cifre.',
 

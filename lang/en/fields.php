@@ -11,6 +11,8 @@ return [
     'phone' => 'Your phone number',
     'submit' => 'Send',
     'subscribe' => 'Join our newslist and receive updates and offers!',
+    'subscribe_interested' => 'Interested',
+    'subscribe_not_interested' => 'Not interested',
 
     'phone.validation' => 'Please enter a valid phone number with 7-15 digits.',
 

@@ -110,6 +110,14 @@ class Feedback extends Component
                 throw new InvalidArgumentException("Config 'error_translation_key' must be an array for field '{$fieldName}'.");
             }
 
+            // Handle value translations
+            if (isset($config['value_translation_key']) && is_array($config['value_translation_key'])) {
+                $field['values'] = [];
+                foreach ($config['value_translation_key'] as $val => $key) {
+                    $field['values'][$val] = __($key);
+                }
+            }
+
             foreach ($field['error'] ?? [] as $rule => $key) {
                 $field['error'][$rule] = __($key);
             }
@@ -238,6 +246,16 @@ class Feedback extends Component
         ];
         foreach ($this->fields as $index => $field) {
             $value = $this->formData[$index] ?? null;
+
+            // Handle mapped values (e.g. boolean to string)
+            if (isset($field['values'])) {
+                // Normalize boolean-like values to 1 or 0
+                $normalizedKey = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
+
+                if (isset($field['values'][$normalizedKey])) {
+                    $value = $field['values'][$normalizedKey];
+                }
+            }
 
             if (empty($value) && $value !== '0' && $value !== 0) {
                 $value = $field['fallback'] ?? 'n/a';
