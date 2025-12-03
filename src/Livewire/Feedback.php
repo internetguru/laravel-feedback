@@ -223,7 +223,13 @@ class Feedback extends Component
         $this->validate($rules, $messages);
 
         // Prepare data for email
-        $emailData = [];
+        $emailData = [
+            [
+                'label' => $this->title . ' (' . $this->id . ')',
+                'value' => $this->description,
+                'name' => 'description',
+            ],
+        ];
         foreach ($this->fields as $index => $field) {
             $emailData[] = [
                 'label' => $field['label'] ?? '',
