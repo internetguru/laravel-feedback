@@ -86,7 +86,7 @@ for email logging, footer rendering, and styling.
     :fields="[
         ['name' => 'fullname', 'label' => 'Full Name', 'required' => true],
         ['name' => 'email', 'label' => 'Work Email', 'required' => true],
-        ['name' => 'email', 'label' => 'Personal Email'],
+        ['name' => 'email', 'label' => 'Personal Email', fallback' => 'Not provided'],
         ['name' => 'message', 'label' => 'Feedback Message', 'rows' => 5],
     ]"
 />
@@ -173,13 +173,16 @@ If optional attributes are omitted, the default values are:
 ## Field items
 
 - `name` (required)\
-  Field name. Supported values include: `fullname`, `email`, `message`, `phone`.
+  Field name. Supported values include: `fullname`, `email`, `message`, `phone`, `subscribe`.
 
 - `required` (optional)\
   Whether the field is required (false by default).
 
 - `label` (optional)\
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
+
+- `fallback` (optional)\
+  Fallback value for empty or unchecked optional fields. Defaults to `n/a`.
 
 - `error` (optional)\
   You can pass an array of rule => message pairs to define custom error messages for specific validation rules, e.g.:
@@ -215,7 +218,7 @@ The component uses translation keys under the
     them.
 
 **Custom names**\
-You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, and label/error translation keys. You can also specify custom error messages and additional HTML attributes. You can now define error messages for specific rules using arrays. Example:
+You can customize existing fields or add new ones through the configuration file. Each field requires a type, validation rules, and label/error translation keys. You can also specify custom error messages, value translations, and additional HTML attributes. You can now define error messages for specific rules using arrays. Example:
 
 ```php
 // config/ig-feedback.php
@@ -238,6 +241,16 @@ return [
                 'max' => 'form.application.validation.max',
             ],
             'autocomplete' => 'off',
+        ],
+        // add custom field with value translation
+        'subscribe' => [
+            'type' => 'checkbox',
+            'validation' => 'boolean',
+            'label_translation_key' => 'ig-feedback::fields.subscribe',
+            'value_translation_key' => [
+                1 => 'ig-feedback::fields.subscribe_interested',
+                0 => 'ig-feedback::fields.subscribe_not_interested',
+            ],
         ],
     ],
 ];
