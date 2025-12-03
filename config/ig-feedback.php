@@ -38,6 +38,11 @@ return [
             'label_translation_key' => 'ig-feedback::fields.phone',
             'autocomplete' => 'tel',
         ],
+        'subscribe' => [
+            'type' => 'checkbox',
+            'validation' => 'boolean',
+            'label_translation_key' => 'ig-feedback::fields.subscribe',
+        ],
     ],
     'exclude_attributes' => [
         'name',

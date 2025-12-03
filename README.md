@@ -173,7 +173,7 @@ If optional attributes are omitted, the default values are:
 ## Field items
 
 - `name` (required)\
-  Field name. Supported values include: `fullname`, `email`, `message`, `phone`.
+  Field name. Supported values include: `fullname`, `email`, `message`, `phone`, `subscribe`.
 
 - `required` (optional)\
   Whether the field is required (false by default).

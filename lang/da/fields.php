@@ -10,6 +10,7 @@ return [
     'optional' => 'valgfrit',
     'phone' => 'Dit telefonnummer',
     'submit' => 'Send',
+    'subscribe' => 'Tilmeld dig vores nyhedsbrev og modtag opdateringer og tilbud!',
 
     'phone.validation' => 'Indtast venligst et gyldigt telefonnummer med 7-15 cifre.',
 
