@@ -254,6 +254,7 @@ class Feedback extends Component
         ];
         foreach ($this->fields as $index => $field) {
             $value = $this->formData[$index] ?? null;
+            $originalValue = $value;
 
             if (isset($field['values'])) {
                 $normalizedKey = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
@@ -270,6 +271,7 @@ class Feedback extends Component
             $emailData[] = [
                 'label' => $field['label'] ?? '',
                 'value' => $value,
+                'original_value' => $originalValue,
                 'name' => $field['name'] ?? '',
                 'key' => $field['key'] ?? '',
             ];
