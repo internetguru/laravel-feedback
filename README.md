@@ -182,7 +182,7 @@ If optional attributes are omitted, the default values are:
   Custom label displayed for the field. If omitted, a reasonable label is generated. For duplicate names, labels will auto-increment when omitted, e.g. Email 1, Email 2.
 
 - `fallback` (optional)\
-  Fallback value for empty or unchecked optional fields. Defaults to `n/a`.
+  Fallback value for empty or unchecked optional fields. Defaults to `empty`.
 
 - `error` (optional)\
   You can pass an array of rule => message pairs to define custom error messages for specific validation rules, e.g.:
