@@ -151,7 +151,7 @@ class Feedback extends Component
 
             // Set default fallback if not provided
             if (! isset($field['fallback'])) {
-                $field['fallback'] = 'n/a';
+                $field['fallback'] = __('ig-feedback::fields.not_provided');
             }
 
             $normalized[] = $field;
@@ -258,7 +258,7 @@ class Feedback extends Component
             }
 
             if (empty($value) && $value !== '0' && $value !== 0) {
-                $value = $field['fallback'] ?? 'n/a';
+                $value = $field['fallback'];
             }
 
             $emailData[] = [
