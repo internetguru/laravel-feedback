@@ -193,7 +193,10 @@ If optional attributes are omitted, the default values are:
       '*' => 'Invalid value.',
   ]
   ```
-  If omitted, the default translation is used.
+  If omitted, the default translation is used. Note, a single general error message can be specified as a string:
+  ```php
+  'error' => 'Invalid value.'
+  ```
 
 - Additional attributes (optional)\
   You can pass any additional HTML attributes dynamically (e.g., `placeholder`, `autocomplete`, `class`, etc.). These will be applied to the field's input element.
@@ -224,12 +227,10 @@ You can customize existing fields or add new ones through the configuration file
 // config/ig-feedback.php
 return [
     'names' => [
-        // modify existing field
+        // modify existing field validation and error message
         'email' => [
-            'type' => 'email',
             'validation' => 'email:rfc|regex:/@internetguru\.io$/',
-            'error_translation_key' => 'form.email.validation',
-            'label_translation_key' => 'ig-feedback::fields.email',
+            'error_translation_key' => 'form.email.domain_restriction',
         ],
         // add custom field with error message and attributes
         'application' => [
@@ -240,7 +241,6 @@ return [
                 'min' => 'form.application.validation.min',
                 'max' => 'form.application.validation.max',
             ],
-            'autocomplete' => 'off',
         ],
         // add custom field with value translation
         'subscribe' => [

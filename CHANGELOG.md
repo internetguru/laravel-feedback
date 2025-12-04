@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [6.1.6] - 2025-12-04
+
+### Added
+
+- Accept general error as string.
+- Default autocomplete attribute = off.
+
+### Fixed
+
+- Default checklist values might overwrite field delcaration.
+- Config error overwrites field declaration.
+
 ## [6.1.5] - 2025-12-04
 
 ### Fixed
@@ -396,6 +408,7 @@ _Stable release based on [0.1.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
+[6.1.6]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.5...v6.1.6
 [6.1.5]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.4...v6.1.5
 [6.1.4]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.3...v6.1.4
 [6.1.3]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.2...v6.1.3
