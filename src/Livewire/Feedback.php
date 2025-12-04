@@ -118,6 +118,14 @@ class Feedback extends Component
                 }
             }
 
+            // If field is checkbox or radio, ensure value translations are set
+            if (in_array($config['type'] ?? '', ['checkbox', 'radio']) && ! isset($field['values'])) {
+                $field['values'] = [
+                    1 => __('ig-feedback::fields.yes'),
+                    0 => __('ig-feedback::fields.no'),
+                ];
+            }
+
             foreach ($field['error'] ?? [] as $rule => $key) {
                 $field['error'][$rule] = __($key);
             }
@@ -247,9 +255,7 @@ class Feedback extends Component
         foreach ($this->fields as $index => $field) {
             $value = $this->formData[$index] ?? null;
 
-            // Handle mapped values (e.g. boolean to string)
             if (isset($field['values'])) {
-                // Normalize boolean-like values to 1 or 0
                 $normalizedKey = filter_var($value, FILTER_VALIDATE_BOOLEAN) ? 1 : 0;
 
                 if (isset($field['values'][$normalizedKey])) {

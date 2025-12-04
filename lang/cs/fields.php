@@ -15,6 +15,9 @@ return [
     'subscribe_interested' => 'Mám zájem',
     'subscribe_not_interested' => 'Nemám zájem',
 
+    'yes' => 'Ano',
+    'no' => 'Ne',
+
     'phone.validation' => 'Zadejte prosím platné telefonní číslo s 7-15 číslicemi.',
 
 ];
