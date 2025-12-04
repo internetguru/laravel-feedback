@@ -96,18 +96,26 @@ class Feedback extends Component
             $fieldName = $field['name'] ?? '';
             $isRequired = (bool) ($field['required'] ?? false);
             $config = config("ig-feedback.names.{$fieldName}", []);
+            $field['autocomplete'] = $field['autocompolete'] ?? 'off';
 
             if (! isset($nameCounts[$fieldName])) {
                 $nameCounts[$fieldName] = 0;
             }
             $nameCounts[$fieldName]++;
 
-            // Fail if error is set and not array
+
+            // convert to array if error messages are not array
             if (isset($field['error']) && ! is_array($field['error'])) {
-                throw new InvalidArgumentException("Field 'error' must be an array for field '{$fieldName}'.");
+                $field['error'] = ['*' => $field['error']];
             }
             if (isset($config['error_translation_key']) && ! is_array($config['error_translation_key'])) {
-                throw new InvalidArgumentException("Config 'error_translation_key' must be an array for field '{$fieldName}'.");
+                $config['error_translation_key'] = ['*' => $config['error_translation_key']];
+            }
+            // update field error messages from config
+            foreach ($config['error_translation_key'] ?? [] as $rule => $key) {
+                if (! isset($field['error'][$rule])) {
+                    $field['error'][$rule] = __($key);
+                }
             }
 
             // Handle value translations
@@ -118,21 +126,17 @@ class Feedback extends Component
                 }
             }
 
-            // If field is checkbox or radio, ensure value translations are set
-            if (in_array($config['type'] ?? '', ['checkbox', 'radio']) && ! isset($field['values'])) {
-                $field['values'] = [
-                    1 => __('ig-feedback::fields.yes'),
-                    0 => __('ig-feedback::fields.no'),
-                ];
+            // Make sure checkbox / radio default values are translated
+            if (in_array($config['type'] ?? '', ['checkbox', 'radio'])) {
+                if (! isset($field['values'][0])) {
+                    $field['values'][0] = __('ig-feedback::fields.no');
+                }
+                if (! isset($field['values'][1])) {
+                    $field['values'][1] = __('ig-feedback::fields.yes');
+                }
             }
 
-            foreach ($field['error'] ?? [] as $rule => $key) {
-                $field['error'][$rule] = __($key);
-            }
 
-            foreach ($config['error_translation_key'] ?? [] as $rule => $key) {
-                $field['error'][$rule] = __($key);
-            }
 
             // Generate label if not provided
             if (! isset($field['label'])) {
