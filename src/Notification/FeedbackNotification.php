@@ -28,8 +28,8 @@ class FeedbackNotification extends BaseNotification
                 ],
             );
 
-        $email = collect($this->feedback)->firstWhere('name', 'email')['value'] ?? null;
-        $fullname = collect($this->feedback)->firstWhere('name', 'fullname')['value'] ?? null;
+        $email = collect($this->feedback)->firstWhere('name', 'email')['original_value'] ?? null;
+        $fullname = collect($this->feedback)->firstWhere('name', 'fullname')['original_value'] ?? null;
 
         if (! empty($email)) {
             $message = $message->replyTo($email, $fullname);
