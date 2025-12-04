@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.4] - 2025-12-04
+
+### Changed
+
+- Change default radio and checkbox fallback from 1/0 to Yes/No.
+
 ## [6.1.3] - 2025-12-04
 
 ### Changed
@@ -381,6 +387,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[6.1.4]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.3...v6.1.4
 [6.1.3]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.2...v6.1.3
 [6.1.2]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.1...v6.1.2
 [6.1.1]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.0...v6.1.1
