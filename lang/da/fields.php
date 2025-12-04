@@ -15,6 +15,9 @@ return [
     'subscribe_interested' => 'Interesseret',
     'subscribe_not_interested' => 'Ikke interesseret',
 
+    'yes' => 'Ja',
+    'no' => 'Nej',
+
     'phone.validation' => 'Indtast venligst et gyldigt telefonnummer med 7-15 cifre.',
 
 ];

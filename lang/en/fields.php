@@ -15,6 +15,9 @@ return [
     'subscribe_interested' => 'Interested',
     'subscribe_not_interested' => 'Not interested',
 
+    'yes' => 'Yes',
+    'no' => 'No',
+
     'phone.validation' => 'Please enter a valid phone number with 7-15 digits.',
 
 ];
