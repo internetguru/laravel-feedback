@@ -58,5 +58,6 @@ return [
         'value_translation_key',
         'input_view',
         'values',
+        'autocomplete',
     ],
 ];
