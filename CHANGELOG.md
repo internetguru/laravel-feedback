@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.7] - 2026-01-25
+
+### Fixed
+
+- Add license.
+
 ## [6.1.6] - 2025-12-04
 
 ### Added
@@ -405,6 +411,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[6.1.7]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.6...v6.1.7
 [6.1.6]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.5...v6.1.6
 [6.1.5]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.4...v6.1.5
 [6.1.4]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.3...v6.1.4
