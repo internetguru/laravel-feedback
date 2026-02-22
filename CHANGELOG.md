@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [6.1.8] - 2026-02-22
+
+### Fixed
+
+- Fix using custom autocomplete.
+
 ## [6.1.7] - 2026-01-25
 
 ### Fixed
@@ -414,6 +420,7 @@ _Stable release based on [0.1.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
+[6.1.8]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.7...v6.1.8
 [6.1.7]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.6...v6.1.7
 [6.1.6]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.5...v6.1.6
 [6.1.5]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.4...v6.1.5
