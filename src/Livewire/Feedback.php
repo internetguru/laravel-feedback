@@ -96,7 +96,7 @@ class Feedback extends Component
             $fieldName = $field['name'] ?? '';
             $isRequired = (bool) ($field['required'] ?? false);
             $config = config("ig-feedback.names.{$fieldName}", []);
-            $field['autocomplete'] = $field['autocompolete'] ?? 'off';
+            $field['autocomplete'] = $field['autocomplete'] ?? $config['autocomplete'] ?? 'off';
 
             if (! isset($nameCounts[$fieldName])) {
                 $nameCounts[$fieldName] = 0;
