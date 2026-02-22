@@ -28,7 +28,7 @@
                                 @php
                                     $config = config("ig-feedback.names." . $field['name'] , []);
                                     $attributes = array_diff_key(
-                                        array_merge($field, $config),
+                                        array_merge($config, $field),
                                         array_flip(config('ig-feedback.exclude_attributes', []))
                                     );
                                     $inputView = $config['input_view'] ?? 'ig-feedback::field';
