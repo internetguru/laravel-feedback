@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.0.0] - 2026-02-25
+
+_Stable release based on [7.0.0-rc.1]._
+
 ## [7.0.0-rc.1] - 2026-02-25
 
 ### Changed
@@ -435,6 +439,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[7.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.10...v7.0.0
 [7.0.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v6.1.10
 [6.1.10]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.9...v6.1.10
 [6.1.9]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.8...v6.1.9
