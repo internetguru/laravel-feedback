@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [6.1.10] - 2026-02-25
+
+### Fixed
+
+- Fix readme.
+
 ## [6.1.9] - 2026-02-22
 
 ### Fixed
@@ -423,6 +429,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[6.1.10]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.9...v6.1.10
 [6.1.9]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.8...v6.1.9
 [6.1.8]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.7...v6.1.8
 [6.1.7]: https://https://github.com/internetguru/laravel-feedback/compare/v6.1.6...v6.1.7
