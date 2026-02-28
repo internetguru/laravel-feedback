@@ -7,7 +7,7 @@ return [
     'fullname' => 'Your full name',
     'message' => 'Type your message here',
     'name' => 'Your full name',
-    'not_provided' => 'empty',
+    'not_provided' => '[not provided]',
     'optional' => 'optional',
     'phone' => 'Your phone number',
     'submit' => 'Send',
