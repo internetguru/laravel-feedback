@@ -178,7 +178,12 @@ class Feedback extends Component
     protected function initializeFormData(): void
     {
         foreach ($this->fields as $index => $field) {
-            $this->formData[$index] = '';
+            $fieldName = $field['name'] ?? '';
+            $config = config("ig-feedback.names.{$fieldName}", []);
+            $options = $field['options'] ?? $config['options'] ?? [];
+            $useOptionKeys = $field['useoptionkeys'] ?? $config['useoptionkeys'] ?? false;
+
+            $this->formData[$index] = $this->getFirstOptionValue($options, $useOptionKeys);
             $fieldKey = "formData.{$index}";
             $this->fields[$index]['key'] = $fieldKey;
         }
@@ -204,6 +209,29 @@ class Feedback extends Component
                 }
             }
         }
+    }
+
+    /**
+     * Get the value of the first option
+     */
+    protected function getFirstOptionValue(array $options, bool $useOptionKeys = false): string
+    {
+        if (empty($options)) {
+            return '';
+        }
+
+        $firstKey = array_key_first($options);
+        $firstOption = $options[$firstKey];
+
+        if (is_array($firstOption)) {
+            return (string) ($firstOption['id'] ?? '');
+        }
+
+        if ($useOptionKeys) {
+            return (string) $firstKey;
+        }
+
+        return (string) $firstOption;
     }
 
     #[On('open-ig-feedback')]
