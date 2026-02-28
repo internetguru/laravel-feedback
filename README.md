@@ -105,7 +105,7 @@ for email logging, footer rendering, and styling.
 
 ## Trigger Components
 
-The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the feedback form component ID. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element. The default element content is "Give feedback".
+The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the feedback form component ID. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element. The default element content is "Send Feedback" (translated).
 
 **Button trigger**
 

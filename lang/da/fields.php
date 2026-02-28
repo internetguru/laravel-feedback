@@ -7,7 +7,7 @@ return [
     'fullname' => 'Dit fulde navn',
     'message' => 'Skriv din besked her',
     'name' => 'Dit fulde navn',
-    'not_provided' => 'tom',
+    'not_provided' => '[ikke angivet]',
     'optional' => 'valgfrit',
     'phone' => 'Dit telefonnummer',
     'submit' => 'Send',

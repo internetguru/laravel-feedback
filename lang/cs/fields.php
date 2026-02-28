@@ -7,7 +7,7 @@ return [
     'fullname' => 'Vaše celé jméno',
     'message' => 'Sem napište svou zprávu',
     'name' => 'Vaše celé jméno',
-    'not_provided' => 'prázdné',
+    'not_provided' => '[neuvedeno]',
     'optional' => 'volitelné',
     'phone' => 'Vaše telefonní číslo',
     'submit' => 'Odeslat',
