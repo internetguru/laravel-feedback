@@ -103,7 +103,6 @@ class Feedback extends Component
             }
             $nameCounts[$fieldName]++;
 
-
             // convert to array if error messages are not array
             if (isset($field['error']) && ! is_array($field['error'])) {
                 $field['error'] = ['*' => $field['error']];
@@ -135,8 +134,6 @@ class Feedback extends Component
                     $field['values'][1] = __('ig-feedback::fields.yes');
                 }
             }
-
-
 
             // Generate label if not provided
             if (! isset($field['label'])) {
@@ -257,6 +254,7 @@ class Feedback extends Component
                 type: 'error',
                 message: __('recaptchav3::messages.failed'),
             );
+
             return;
         }
 
@@ -279,7 +277,7 @@ class Feedback extends Component
         // Prepare data for email
         $emailData = [
             [
-                'label' => $this->title . ' (' . $this->id . ')',
+                'label' => $this->title.' ('.$this->id.')',
                 'value' => $this->description,
                 'name' => 'description',
             ],
@@ -294,6 +292,10 @@ class Feedback extends Component
                 if (isset($field['values'][$normalizedKey])) {
                     $value = $field['values'][$normalizedKey];
                 }
+            }
+
+            if (! empty($value) && isset($field['value_suffix'])) {
+                $value .= $field['value_suffix'];
             }
 
             if (empty($value) && $value !== '0' && $value !== 0) {
