@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [7.2.0-rc.1] - 2026-04-03
 
+### Added
+
+- Automatically include page URL in feedback.
+- Support multiple recipient emails.
+
 ## [7.1.2] - 2026-03-25
 
 ### Fixed
