@@ -19,5 +19,6 @@ return [
     'no' => 'Ne',
 
     'phone.validation' => 'Zadejte prosím platné telefonní číslo s 7-15 číslicemi.',
+    'url' => 'URL stránky',
 
 ];
