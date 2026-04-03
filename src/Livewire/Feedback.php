@@ -22,10 +22,16 @@ class Feedback extends Component
     public string $id;
 
     #[Locked]
-    public string $email;
+    public string|array $email;
 
     #[Locked]
     public string $name;
+
+    #[Locked]
+    public array $recipients = [];
+
+    #[Locked]
+    public string $pageUrl = '';
 
     public ?string $subject = null;
 
@@ -45,7 +51,7 @@ class Feedback extends Component
 
     public function mount(
         string $id,
-        string $email,
+        string|array $email,
         string $name,
         ?string $subject = null,
         ?string $title = null,
@@ -54,21 +60,29 @@ class Feedback extends Component
         ?string $submit = null,
         ?array $fields = null
     ) {
+        $this->recipients = $this->parseRecipients($email, $name);
+        $this->email = array_key_first($this->recipients);
+        $this->name = $this->recipients[$this->email];
+
         try {
             Validator::make(
-                data: ['id' => $id, 'email' => $email, 'name' => $name],
+                data: ['id' => $id, 'recipients' => $this->recipients],
                 rules: [
                     'id' => 'required|string|regex:/^[a-z][a-z0-9]*(-[a-z0-9]+)*$/',
-                    'email' => 'required|email:rfc|max:255',
-                    'name' => 'required|string:min:2|max:100',
+                    'recipients' => 'required|array|min:1',
+                    'recipients.*' => 'required|string|min:2|max:100',
                 ]
             )->validate();
+            Validator::make(
+                data: ['emails' => array_keys($this->recipients)],
+                rules: ['emails.*' => 'required|email:rfc|max:255'],
+            )->validate();
         } catch (ValidationException $e) {
-            throw new InvalidArgumentException('Feedback component error: '.implode(', ', $e->errors()['id'] ?? []));
+            $errors = collect($e->errors())->flatten()->implode(', ');
+            throw new InvalidArgumentException('Feedback component error: '.$errors);
         }
         $this->id = $id;
-        $this->email = $email;
-        $this->name = $name;
+        $this->pageUrl = url()->full();
         $this->subject = $subject ?? config('app.name').' '.$id;
         $this->title = $title ?? __('ig-feedback::layouts.modal.title');
         $this->submit = $submit ?? __('ig-feedback::fields.submit');
@@ -82,6 +96,34 @@ class Feedback extends Component
 
         $this->fields = $this->normalizeFields($fields ?? $defaultFields);
         $this->initializeFormData();
+    }
+
+    /**
+     * Parse email recipients from string or array input.
+     */
+    protected function parseRecipients(string|array $email, string $name): array
+    {
+        if (is_array($email)) {
+            $recipients = [];
+            foreach ($email as $key => $value) {
+                if (is_string($key) && filter_var($key, FILTER_VALIDATE_EMAIL)) {
+                    $recipients[$key] = $value;
+                } else {
+                    $recipients[$value] = $name;
+                }
+            }
+
+            return $recipients;
+        }
+
+        $emails = array_map('trim', explode(',', $email));
+
+        $recipients = [];
+        foreach ($emails as $e) {
+            $recipients[$e] = $name;
+        }
+
+        return $recipients;
     }
 
     /**
@@ -281,6 +323,11 @@ class Feedback extends Component
                 'value' => $this->description,
                 'name' => 'description',
             ],
+            [
+                'label' => __('ig-feedback::fields.url'),
+                'value' => $this->pageUrl,
+                'name' => 'url',
+            ],
         ];
         foreach ($this->fields as $index => $field) {
             $value = $this->formData[$index] ?? null;
@@ -311,7 +358,7 @@ class Feedback extends Component
             ];
         }
 
-        Notification::route('mail', [$this->email => $this->name])->notify(
+        Notification::route('mail', $this->recipients)->notify(
             (new FeedbackNotification($emailData, $this->subject))->locale(app()->getLocale())
         );
 

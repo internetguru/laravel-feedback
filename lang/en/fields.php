@@ -19,5 +19,6 @@ return [
     'no' => 'No',
 
     'phone.validation' => 'Please enter a valid phone number with 7-15 digits.',
+    'url' => 'Page URL',
 
 ];
