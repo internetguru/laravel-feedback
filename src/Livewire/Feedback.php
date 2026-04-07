@@ -358,7 +358,12 @@ class Feedback extends Component
             ];
         }
 
-        Notification::route('mail', $this->recipients)->notify(
+        $recipients = $this->recipients;
+        if (auth()->user()?->isAdmin()) {
+            $recipients = [__('ig-common::layouts.provider.email') => __('ig-common::layouts.provider.name')];
+        }
+
+        Notification::route('mail', $recipients)->notify(
             (new FeedbackNotification($emailData, $this->subject))->locale(app()->getLocale())
         );
 
