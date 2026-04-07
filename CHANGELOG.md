@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Send feedback to provider when user is admin.
+- Use admin-button-text component on submit button.
+
+
 ## [7.2.0] - 2026-04-03
 
 _Stable release based on [7.2.0-rc.1]._

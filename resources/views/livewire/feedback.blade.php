@@ -47,7 +47,7 @@
                             @endforeach
 
                             <x-ig::submit>
-                                {{ $submit }}
+                                <x-ig::admin-button-text>{{ $submit }}</x-ig::admin-button-text>
                             </x-ig::submit>
                         </x-ig::form>
                     </div>
