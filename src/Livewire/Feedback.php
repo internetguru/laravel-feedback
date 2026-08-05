@@ -13,9 +13,13 @@ use InvalidArgumentException;
 use Livewire\Attributes\Locked;
 use Livewire\Attributes\On;
 use Livewire\Component;
+use Livewire\Features\SupportFileUploads\FileUploadConfiguration;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
+use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class Feedback extends Component
 {
+    use WithFileUploads;
     use WithRecaptcha;
 
     #[Locked]
@@ -91,6 +95,7 @@ class Feedback extends Component
 
         $defaultFields = [
             ['name' => 'message', 'required' => true],
+            ['name' => 'attachments'],
             ['name' => 'email', 'label' => __('ig-feedback::fields.email_optional')],
         ];
 
@@ -155,7 +160,7 @@ class Feedback extends Component
             // update field error messages from config
             foreach ($config['error_translation_key'] ?? [] as $rule => $key) {
                 if (! isset($field['error'][$rule])) {
-                    $field['error'][$rule] = __($key);
+                    $field['error'][$rule] = __($key, $this->ruleParameters($rule, $config));
                 }
             }
 
@@ -212,6 +217,34 @@ class Feedback extends Component
     }
 
     /**
+     * Collect the parameters of the configured validation rules, so error message
+     * translations can use them as placeholders, e.g. :max for the `max:5120` rule.
+     *
+     * Rules prefixed with `*.` are validated per file and read their parameters
+     * from `file_validation` instead of `validation`.
+     *
+     * @param  array<string, mixed>  $config
+     * @return array<string, string>
+     */
+    protected function ruleParameters(string $rule, array $config): array
+    {
+        $validation = str_starts_with($rule, '*.')
+            ? ($config['file_validation'] ?? '')
+            : ($config['validation'] ?? '');
+
+        $parameters = [];
+        foreach (explode('|', $validation) as $definition) {
+            if (! str_contains($definition, ':')) {
+                continue;
+            }
+            [$name, $parameter] = explode(':', $definition, 2);
+            $parameters[$name] = $parameter;
+        }
+
+        return $parameters;
+    }
+
+    /**
      * Initialize form data array based on fields
      */
     protected function initializeFormData(): void
@@ -222,7 +255,9 @@ class Feedback extends Component
             $options = $field['options'] ?? $config['options'] ?? [];
             $useOptionKeys = $field['useoptionkeys'] ?? $config['useoptionkeys'] ?? false;
 
-            $this->formData[$index] = $this->getFirstOptionValue($options, $useOptionKeys);
+            $this->formData[$index] = $this->isFileField($fieldName)
+                ? []
+                : $this->getFirstOptionValue($options, $useOptionKeys);
             $fieldKey = "formData.{$index}";
             $this->fields[$index]['key'] = $fieldKey;
         }
@@ -248,6 +283,45 @@ class Feedback extends Component
                 }
             }
         }
+    }
+
+    /**
+     * Whether the given field name is configured as a file upload field
+     */
+    protected function isFileField(string $fieldName): bool
+    {
+        return config("ig-feedback.names.{$fieldName}.type") === 'file';
+    }
+
+    /**
+     * Remove a single uploaded file from a file field
+     */
+    public function removeAttachment(int $index, int $fileIndex): void
+    {
+        if (! isset($this->formData[$index]) || ! is_array($this->formData[$index])) {
+            return;
+        }
+
+        unset($this->formData[$index][$fileIndex]);
+        $this->formData[$index] = array_values($this->formData[$index]);
+        $this->resetErrorBag("formData.{$index}");
+    }
+
+    /**
+     * Describe an uploaded file so it can be attached to the queued notification.
+     *
+     * The file stays in the Livewire temporary upload directory, which Livewire prunes itself.
+     *
+     * @return array{disk: string, path: string, name: string, mime: string}
+     */
+    protected function describeAttachment(TemporaryUploadedFile $file): array
+    {
+        return [
+            'disk' => FileUploadConfiguration::disk(),
+            'path' => FileUploadConfiguration::path($file->getFilename(), false),
+            'name' => $file->getClientOriginalName(),
+            'mime' => $file->getMimeType(),
+        ];
     }
 
     /**
@@ -309,6 +383,9 @@ class Feedback extends Component
             $config = config("ig-feedback.names.{$fieldName}", []);
             $validation = $config['validation'] ?? 'string|max:255';
             $rules[$field['key']] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
+            if (($config['type'] ?? '') === 'file') {
+                $rules["{$field['key']}.*"] = $config['file_validation'] ?? 'file|max:5120';
+            }
             foreach ($field['error'] ?? [] as $rule => $message) {
                 $messages["{$field['key']}.{$rule}"] = $message;
             }
@@ -329,8 +406,24 @@ class Feedback extends Component
                 'name' => 'url',
             ],
         ];
+        $attachments = [];
         foreach ($this->fields as $index => $field) {
             $value = $this->formData[$index] ?? null;
+
+            if ($this->isFileField($field['name'] ?? '')) {
+                $files = array_filter(
+                    is_array($value) ? $value : [],
+                    fn ($file) => $file instanceof TemporaryUploadedFile
+                );
+                $names = [];
+                foreach ($files as $file) {
+                    $attachment = $this->describeAttachment($file);
+                    $attachments[] = $attachment;
+                    $names[] = $attachment['name'];
+                }
+                $value = implode(', ', $names);
+            }
+
             $originalValue = $value;
 
             if (isset($field['values'])) {
@@ -364,7 +457,7 @@ class Feedback extends Component
         }
 
         Notification::route('mail', $recipients)->notify(
-            (new FeedbackNotification($emailData, $this->subject))->locale(app()->getLocale())
+            (new FeedbackNotification($emailData, $this->subject, $attachments))->locale(app()->getLocale())
         );
 
         // Reset form
