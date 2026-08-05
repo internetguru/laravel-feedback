@@ -11,7 +11,12 @@ for email logging, footer rendering, and styling.
 - Attribute-based validation
 - reCAPTCHA support (if configured)
 - Inline errors and success messaging
+- Optional file attachments (screenshots, PDFs) sent along with the email
 - Sends submissions via mail to your target address
+
+## Requirements
+
+PHP 8.4+, Laravel 12 or 13, Livewire 3 or 4.
 
 ## Installation
 
@@ -136,6 +141,7 @@ If optional attributes are omitted, the default values are:
     'submit' => 'Send',
     'fields' => [
         ['name' => 'message', 'required' => true],
+        ['name' => 'attachments'],
         ['name' => 'email'],
     ],
 ]
@@ -173,7 +179,7 @@ If optional attributes are omitted, the default values are:
 ## Field items
 
 - `name` (required)\
-  Field name. Supported values include: `fullname`, `email`, `message`, `phone`, `subscribe`.
+  Field name. Supported values include: `fullname`, `email`, `message`, `attachments`, `phone`, `subscribe`.
 
 - `required` (optional)\
   Whether the field is required (false by default).
@@ -202,6 +208,32 @@ If optional attributes are omitted, the default values are:
   You can pass any additional HTML attributes dynamically (e.g., `placeholder`, `autocomplete`, `class`, etc.). These will be applied to the field's input element.
 
 **Note:** When an authenticated user opens the form, any `email` and `fullname` fields are automatically prefilled with the user's email address and name respectively. The same fields are also used as the `reply-to` address in outgoing emails if present and valid.
+
+## Attachments
+
+The `attachments` field renders a multiple file input and is part of the default
+field set, so the technical support form accepts screenshots out of the box. Uploaded
+files are attached to the outgoing email and their names are listed in the message body.
+
+Defaults (configurable under `names.attachments` in `config/ig-feedback.php`):
+
+- at most 3 files (`validation` => `array|max:3`)
+- at most 5 MB per file, JPG, PNG, GIF, WEBP, HEIC or PDF (`file_validation`)
+
+```php
+// config/ig-feedback.php
+'attachments' => [
+    'validation' => 'array|max:5',
+    'file_validation' => 'file|mimes:jpg,png,pdf|max:10240',
+],
+```
+
+Any field with `'type' => 'file'` behaves the same way: `validation` applies to the
+list of files, `file_validation` to each individual file. Selecting files replaces the
+current selection; individual files can be removed with the button next to their name.
+
+Files stay in the Livewire temporary upload directory until the queued mail is sent;
+Livewire prunes that directory on its own.
 
 ## Submission behavior
 

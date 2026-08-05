@@ -2,6 +2,7 @@
 
 return [
 
+    'attachments' => 'Přílohy (snímky obrazovky)',
     'email' => 'Vaše e-mailová adresa',
     'email_optional' => 'Zanechte svůj e-mail pro kontakt',
     'fullname' => 'Vaše celé jméno',
@@ -18,6 +19,12 @@ return [
     'yes' => 'Ano',
     'no' => 'Ne',
 
+    'attachments.hint' => 'Nejvýše :count soubory, každý do :size MB. Obrázky nebo PDF.',
+    'attachments.max_files' => 'Můžete přiložit nejvýše :max souborů.',
+    'attachments.max_size' => 'Každá příloha může mít nejvýše :max kB.',
+    'attachments.mimes' => 'Přílohy musí být obrázky (JPG, PNG, GIF, WEBP, HEIC) nebo soubory PDF.',
+    'attachments.remove' => 'Odebrat přílohu',
+    'attachments.uploading' => 'Nahrávání…',
     'phone.validation' => 'Zadejte prosím platné telefonní číslo s 7-15 číslicemi.',
     'url' => 'URL stránky',
 

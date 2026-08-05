@@ -4,6 +4,19 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [Unreleased]
+
+### Added
+
+- Attachments (screenshots, PDFs) support via the new `attachments` field, included in the default field set.
+- Support for `file` field types with per-file validation (`file_validation`).
+- PHPUnit test suite based on Orchestra Testbench.
+
+### Changed
+
+- Require Laravel 12 or 13, support for Laravel 10 and 11 has been dropped.
+- Error message translations are resolved with the parameters of the configured rule, so `:max` and friends can be used in them.
+
 ## [7.3.1] - 2026-06-15
 
 ### Fixed
@@ -490,6 +503,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
 [7.3.1]: https://https://github.com/internetguru/laravel-feedback/compare/v7.3.0...v7.3.1
 [7.3.0]: https://https://github.com/internetguru/laravel-feedback/compare/v7.2.0...v7.3.0
 [7.3.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v7.2.0
