@@ -38,6 +38,21 @@ return [
             'label_translation_key' => 'ig-feedback::fields.phone',
             'autocomplete' => 'tel',
         ],
+        'attachments' => [
+            'type' => 'file',
+            'multiple' => true,
+            'accept' => 'image/jpeg,image/png,image/gif,image/webp,image/heic,application/pdf',
+            'validation' => 'array|max:3',
+            'file_validation' => 'file|mimes:jpg,jpeg,png,gif,webp,heic,pdf|max:5120',
+            'label_translation_key' => 'ig-feedback::fields.attachments',
+            'error_translation_key' => [
+                'max' => 'ig-feedback::fields.attachments.max_files',
+                '*.mimes' => 'ig-feedback::fields.attachments.mimes',
+                '*.max' => 'ig-feedback::fields.attachments.max_size',
+                '*.uploaded' => 'ig-feedback::fields.attachments.max_size',
+            ],
+            'input_view' => 'ig-feedback::attachments',
+        ],
         'subscribe' => [
             'type' => 'checkbox',
             'validation' => 'boolean',
@@ -58,5 +73,6 @@ return [
         'value_translation_key',
         'input_view',
         'values',
+        'file_validation',
     ],
 ];

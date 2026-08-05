@@ -6,6 +6,17 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Attachments (screenshots, PDFs) support via the new `attachments` field, included in the default field set.
+- Support for `file` field types with per-file validation (`file_validation`).
+- PHPUnit test suite based on Orchestra Testbench.
+
+### Changed
+
+- Require Laravel 12 or 13, support for Laravel 10 and 11 has been dropped.
+- Error message translations are resolved with the parameters of the configured rule, so `:max` and friends can be used in them.
+
 ## [7.3.1] - 2026-06-15
 
 ### Fixed

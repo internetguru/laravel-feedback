@@ -11,12 +11,14 @@
     ],
     "require": {
         "php": "^8.4",
+        "laravel/framework": "^12.0 || ^13.0",
         "livewire/livewire": "^3.0 || ^4.0",
         "internetguru/laravel-common": "^5"
     },
     "autoload": {
         "psr-4": {
-            "InternetGuru\\LaravelFeedback\\": "src/"
+            "InternetGuru\\LaravelFeedback\\": "src/",
+            "Tests\\": "tests/"
         }
     },
     "extra": {
@@ -32,6 +34,15 @@
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require-dev": {
-        "laravel/pint": "^1.25"
+        "laravel/pint": "^1.25",
+        "orchestra/testbench": "^10.0 || ^11.0",
+        "phpunit/php-code-coverage": "^12.0 || ^13.0",
+        "internetguru/laravel-common": "^5",
+        "livewire/livewire": "^3.6 || ^4.0"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
     }
 }

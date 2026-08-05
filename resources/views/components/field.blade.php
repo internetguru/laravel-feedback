@@ -1,6 +1,7 @@
 @props([
     'index',
     'field',
+    'value' => null,
     'inputAttributes' => [],
 ])
 

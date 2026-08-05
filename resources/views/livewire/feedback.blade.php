@@ -42,6 +42,7 @@
                                     :component="$inputView"
                                     :index="$index"
                                     :field="$field"
+                                    :value="$formData[$index] ?? null"
                                     :inputAttributes="$attributes"
                                 />
                             @endforeach
