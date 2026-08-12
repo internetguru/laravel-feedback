@@ -110,7 +110,7 @@ PHP 8.4+, Laravel 12 or 13, Livewire 3 or 4.
 
 ## Trigger Components
 
-The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the feedback form component ID. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element. The default element content is "Send Feedback" (translated).
+The package provides two components to trigger the feedback form. Both components accept a `form-id` prop that must match the feedback form component ID. The form uses the `x-ig::modal` component from `internetguru/laravel-common`, so its markup is on the page from the start and only hidden: a trigger opens it with plain JavaScript (`window.igModal`) without waiting for Livewire; the open state is synced to the server afterwards. Linking to `#form-id` opens the form on page load, and the `open-ig-feedback` / `close-ig-feedback` Livewire events open and close it from anywhere. You can add any additional HTML attributes (classes, styles, etc.) and they will be passed through to the rendered element. The default element content is "Send Feedback" (translated).
 
 **Button trigger**
 
@@ -141,7 +141,6 @@ If optional attributes are omitted, the default values are:
     'submit' => 'Send',
     'fields' => [
         ['name' => 'message', 'required' => true],
-        ['name' => 'attachments'],
         ['name' => 'email'],
     ],
 ]
@@ -211,9 +210,10 @@ If optional attributes are omitted, the default values are:
 
 ## Attachments
 
-The `attachments` field renders a multiple file input and is part of the default
-field set, so the technical support form accepts screenshots out of the box. Uploaded
-files are attached to the outgoing email and their names are listed in the message body.
+The `attachments` field renders a multiple file input. Uploaded files are attached to the
+outgoing email and their names are listed in the message body. Add it to `fields` where
+users should be able to send screenshots; the laravel-common footer does this for its
+technical feedback form.
 
 Defaults (configurable under `names.attachments` in `config/ig-feedback.php`):
 

@@ -15,9 +15,13 @@ class FeedbackAttachmentsTest extends TestCase
         'id' => 'support-form',
         'email' => 'support@example.com',
         'name' => 'Support Team',
+        'fields' => [
+            ['name' => 'message', 'required' => true],
+            ['name' => 'attachments'],
+        ],
     ];
 
-    public function test_attachments_field_is_part_of_the_default_form()
+    public function test_attachments_field_renders_a_multiple_file_input()
     {
         Livewire::test(Feedback::class, self::PARAMS)
             ->assertSet('fields.1.name', 'attachments')
@@ -45,12 +49,15 @@ class FeedbackAttachmentsTest extends TestCase
         }
     }
 
-    public function test_explicit_fields_do_not_include_attachments()
+    public function test_attachments_are_not_part_of_the_default_fields()
     {
         Livewire::test(Feedback::class, [
-            ...self::PARAMS,
-            'fields' => [['name' => 'message', 'required' => true]],
-        ])->assertCount('fields', 1);
+            'id' => 'support-form',
+            'email' => 'support@example.com',
+            'name' => 'Support Team',
+        ])->assertSet('fields.0.name', 'message')
+            ->assertSet('fields.1.name', 'email')
+            ->assertCount('fields', 2);
     }
 
     public function test_uploaded_files_are_attached_to_the_notification()
