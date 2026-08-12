@@ -6,6 +6,15 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- `close-ig-feedback` Livewire event, closing the form with the given id.
+
+### Changed
+
+- The form is rendered with `x-ig::modal`, so a trigger opens it on the first click instead of waiting for a Livewire round trip.
+- Bump `internetguru/laravel-common` to ^5.24.
+
 ## [7.4.0] - 2026-08-05
 
 _Stable release based on [7.4.0-rc.1]._
@@ -14,7 +23,7 @@ _Stable release based on [7.4.0-rc.1]._
 
 ### Added
 
-- Attachments (screenshots, PDFs) support via the new `attachments` field, included in the default field set.
+- Attachments (screenshots, PDFs) support via the new `attachments` field.
 - Support for `file` field types with per-file validation (`file_validation`).
 - PHPUnit test suite based on Orchestra Testbench.
 
