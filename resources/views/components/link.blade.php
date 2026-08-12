@@ -5,6 +5,5 @@
 <a
     {{ $attributes }}
     href="Javascript:void(0)"
-    x-data
-    x-on:click.prevent="Livewire.dispatch('open-ig-feedback', {id: '{{ $formId }}'})"
+    onclick="window.igModal.open('{{ $formId }}-modal'); return false;"
 >{{ $slot->isNotEmpty() ? $slot : __('ig-feedback::layouts.modal.link') }}</a>

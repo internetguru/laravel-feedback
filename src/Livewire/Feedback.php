@@ -95,7 +95,6 @@ class Feedback extends Component
 
         $defaultFields = [
             ['name' => 'message', 'required' => true],
-            ['name' => 'attachments'],
             ['name' => 'email', 'label' => __('ig-feedback::fields.email_optional')],
         ];
 
@@ -352,6 +351,17 @@ class Feedback extends Component
     {
         if ($id === $this->id) {
             $this->isOpen = true;
+        }
+    }
+
+    /**
+     * Client-side close, the modal is already hidden in the browser.
+     */
+    #[On('close-ig-feedback')]
+    public function closeFeedback($id = null)
+    {
+        if ($id === $this->id) {
+            $this->isOpen = false;
         }
     }
 
