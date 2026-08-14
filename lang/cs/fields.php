@@ -2,7 +2,7 @@
 
 return [
 
-    'attachments' => 'Přílohy (snímky obrazovky)',
+    'attachments' => 'Přílohy',
     'email' => 'Vaše e-mailová adresa',
     'email_optional' => 'Zanechte svůj e-mail pro kontakt',
     'fullname' => 'Vaše celé jméno',

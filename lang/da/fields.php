@@ -2,7 +2,7 @@
 
 return [
 
-    'attachments' => 'Vedhæftede filer (skærmbilleder)',
+    'attachments' => 'Vedhæftede filer',
     'email' => 'Din e-mailadresse',
     'email_optional' => 'Efterlad din e-mail for kontakt',
     'fullname' => 'Dit fulde navn',
