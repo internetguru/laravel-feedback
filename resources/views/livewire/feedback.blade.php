@@ -19,10 +19,13 @@
             wire:submit.prevent="send"
             class="editable-skip"
         >
-            {{-- Only while open, so a closed form does not spend a reCAPTCHA token on every page load. --}}
-            @if($isOpen)
-                @recaptchaLivewire('feedback_send')
-            @endif
+            {{--
+                Always rendered: the modal is opened client-side, so gating this on `$isOpen`
+                would only add the token after the first submit had already been rejected.
+                The snippet itself fetches the token lazily, on the first interaction with
+                the form, so a closed modal still costs no token on page load.
+            --}}
+            @recaptchaLivewire('feedback_send')
             @foreach($fields as $index => $field)
                 @php
                     $config = config("ig-feedback.names." . $field['name'] , []);
