@@ -2,7 +2,10 @@
 
 namespace Tests\Feature;
 
+use Illuminate\Http\Client\Factory as HttpFactory;
+use Illuminate\Http\Request;
 use InternetGuru\LaravelFeedback\Livewire\Feedback;
+use InternetGuru\LaravelRecaptchaV3\RecaptchaV3;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -57,5 +60,27 @@ class FeedbackModalTest extends TestCase
         $button = $this->blade('<x-ig-feedback::button form-id="support-form" />');
         $button->assertSee("window.igModal.open('support-form-modal')", false);
         $button->assertDontSee('Livewire.dispatch', false);
+    }
+
+    public function test_recaptcha_is_rendered_while_the_modal_is_still_closed()
+    {
+        // The modal is opened client-side, so the token snippet has to be in the markup
+        // from the start; otherwise the first submit is rejected for a missing token.
+        $this->enableRecaptcha();
+
+        Livewire::test(Feedback::class, self::PARAMS)
+            ->assertSet('isOpen', false)
+            ->assertSeeHtml("grecaptcha.execute('sitekey', {action: 'feedback_send'})");
+    }
+
+    private function enableRecaptcha(): void
+    {
+        $this->app->instance(RecaptchaV3::class, new class('https://www.google.com/recaptcha', 'sitekey', 'secret', null, 0.7, app(HttpFactory::class), app(Request::class)) extends RecaptchaV3
+        {
+            public function isEnabled(): bool
+            {
+                return true;
+            }
+        });
     }
 }
