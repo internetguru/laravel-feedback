@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+## [7.5.3] - 2026-08-31
+
+### Fixed
+
+- Update composer packages and add support for laravel-common v6.
+
 ## [7.5.2] - 2026-08-18
 
 ### Fixed
@@ -537,6 +543,7 @@ _Stable release based on [0.1.0-rc.1]._
 - New changelog file.
 
 [Unreleased]: https://https://github.com/internetguru/laravel-feedback/compare/staging...dev
+[7.5.3]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.2...v7.5.3
 [7.5.2]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.1...v7.5.2
 [7.5.1]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.0...v7.5.1
 [7.5.0]: https://https://github.com/internetguru/laravel-feedback/compare/v7.4.0...v7.5.0
