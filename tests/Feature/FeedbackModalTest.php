@@ -6,6 +6,7 @@ use Illuminate\Http\Client\Factory as HttpFactory;
 use Illuminate\Http\Request;
 use InternetGuru\LaravelFeedback\Livewire\Feedback;
 use InternetGuru\LaravelRecaptchaV3\RecaptchaV3;
+use Livewire\Features\SupportLockedProperties\CannotUpdateLockedPropertyException;
 use Livewire\Livewire;
 use Tests\TestCase;
 
@@ -71,6 +72,15 @@ class FeedbackModalTest extends TestCase
         Livewire::test(Feedback::class, self::PARAMS)
             ->assertSet('isOpen', false)
             ->assertSeeHtml("grecaptcha.execute('sitekey', {action: 'feedback_send'})");
+    }
+
+    public function test_the_field_definitions_cannot_be_replaced_by_the_client()
+    {
+        // Scanners replay the snapshot with fuzzed values; the definitions are built
+        // in mount() and drive both the rendered inputs and the validation rules.
+        $this->expectException(CannotUpdateLockedPropertyException::class);
+
+        Livewire::test(Feedback::class, self::PARAMS)->set('fields', [1]);
     }
 
     private function enableRecaptcha(): void

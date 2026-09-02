@@ -47,6 +47,12 @@ class Feedback extends Component
 
     public ?string $submit = null;
 
+    /**
+     * Field definitions, built in mount() from the component's arguments and the
+     * `ig-feedback.names` config. The view iterates them and send() derives the
+     * validation rules from them, so nothing the client sends belongs here.
+     */
+    #[Locked]
     public array $fields = [];
 
     public array $formData = [];
