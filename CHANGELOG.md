@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [7.5.4] - 2026-09-02
+
+### Fixed
+
+- Lock the field definitions, so a tampered Livewire payload can no longer replace them and fail in the render pass.
+
 ## [7.5.3] - 2026-08-31
 
 ### Fixed
@@ -540,6 +546,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[7.5.4]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.3...v7.5.4
 [7.5.3]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.2...v7.5.3
 [7.5.2]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.1...v7.5.2
 [7.5.1]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.0...v7.5.1
