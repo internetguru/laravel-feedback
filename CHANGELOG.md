@@ -6,6 +6,18 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- Clean up submitted values before validating them, using each field's input type to decide how — an e-mail field is treated as an e-mail, a message field as free text.
+
+### Changed
+
+- **Breaking.** Require Laravel 13, Livewire 4 and internetguru/laravel-common 7. Support for Laravel 12, Livewire 3 and earlier laravel-common releases is dropped.
+
+### Fixed
+
+- Lock the modal's title, description, success message and submit label. They come from the server, and the e-mail subject is built from them.
+
 ## [7.5.4] - 2026-09-02
 
 ### Fixed

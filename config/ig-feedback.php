@@ -75,4 +75,30 @@ return [
         'values',
         'file_validation',
     ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Sanitization
+    |--------------------------------------------------------------------------
+    |
+    | Maps a field's input type to a pipeline from internetguru/laravel-common.
+    | The form is dynamic - its properties are formData.0 … formData.N - so
+    | neither the property name nor the generic validation rules say what a
+    | field holds. The input type does, and it is always present.
+    |
+    | Ignored when laravel-common's sanitization is not in use.
+    |
+    */
+
+    'sanitize_pipelines' => [
+        'text' => 'name',
+        'email' => 'email',
+        'tel' => 'phone',
+        'url' => 'url',
+        'number' => 'number',
+        'textarea' => 'text',
+        'select' => 'name',
+        'checkbox' => 'flag',
+        'datetime-local' => 'datetime',
+    ],
 ];
