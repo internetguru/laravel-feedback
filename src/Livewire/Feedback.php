@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
 use InternetGuru\LaravelCommon\Support\Helpers;
+use InternetGuru\LaravelCommon\Traits\SanitizesInput;
 use InternetGuru\LaravelFeedback\Notification\FeedbackNotification;
 use InternetGuru\LaravelRecaptchaV3\Traits\WithRecaptcha;
 use InvalidArgumentException;
@@ -19,6 +20,7 @@ use Livewire\Features\SupportFileUploads\WithFileUploads;
 
 class Feedback extends Component
 {
+    use SanitizesInput;
     use WithFileUploads;
     use WithRecaptcha;
 
@@ -37,14 +39,25 @@ class Feedback extends Component
     #[Locked]
     public string $pageUrl = '';
 
+    /**
+     * Presentation text, resolved in mount() from the component's arguments and
+     * the package translations. The client never sets these - $subject in
+     * particular becomes the notification's e-mail subject - so they are locked
+     * against the update payload like the rest of the component's configuration.
+     */
+    #[Locked]
     public ?string $subject = null;
 
+    #[Locked]
     public ?string $title = null;
 
+    #[Locked]
     public ?string $description = null;
 
+    #[Locked]
     public ?string $success = null;
 
+    #[Locked]
     public ?string $submit = null;
 
     /**
@@ -293,6 +306,36 @@ class Feedback extends Component
     /**
      * Whether the given field name is configured as a file upload field
      */
+    /**
+     * The sanitization pipeline for each form field, keyed by its property path.
+     *
+     * The form is built at runtime, so its properties are formData.0 …
+     * formData.N: the name carries no meaning and the rules are generic, which
+     * leaves the field's input type as the only thing that says what the value
+     * is. File fields are left out - their values are arrays of uploads, not
+     * strings.
+     *
+     * Read by the SanitizesInput trait on the way into validation, so send()
+     * gets its values from validate() rather than cleaning anything itself.
+     *
+     * @return array<string, string>
+     */
+    protected function sanitizeTypes(): array
+    {
+        $pipelines = config('ig-feedback.sanitize_pipelines', []);
+        $map = [];
+
+        foreach ($this->fields as $field) {
+            $type = config("ig-feedback.names.{$field['name']}.type", 'text');
+
+            if (isset($pipelines[$type], $field['key'])) {
+                $map[$field['key']] = $pipelines[$type];
+            }
+        }
+
+        return $map;
+    }
+
     protected function isFileField(string $fieldName): bool
     {
         return config("ig-feedback.names.{$fieldName}.type") === 'file';
@@ -407,7 +450,7 @@ class Feedback extends Component
             }
         }
 
-        $this->validate($rules, $messages);
+        $data = $this->validate($rules, $messages);
 
         // Prepare data for email
         $emailData = [
@@ -424,7 +467,10 @@ class Feedback extends Component
         ];
         $attachments = [];
         foreach ($this->fields as $index => $field) {
-            $value = $this->formData[$index] ?? null;
+            // The validated values, not the properties: prepareForValidation()
+            // cleans them on the way in and deliberately leaves the form
+            // holding what the person typed.
+            $value = $data['formData'][$index] ?? null;
 
             if ($this->isFileField($field['name'] ?? '')) {
                 $files = array_filter(

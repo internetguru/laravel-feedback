@@ -4,6 +4,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.0.0] - 2026-09-08
+
+_Stable release based on [8.0.0-rc.1]._
+
+## [8.0.0-rc.1] - 2026-09-08
+
+### Added
+
+- Clean up submitted values before validating them, using each field's input type to decide how — an e-mail field is treated as an e-mail, a message field as free text.
+
+### Changed
+
+- **Breaking.** Require Laravel 13, Livewire 4 and internetguru/laravel-common 7. Support for Laravel 12, Livewire 3 and earlier laravel-common releases is dropped.
+
+### Fixed
+
+- Lock the modal's title, description, success message and submit label. They come from the server, and the e-mail subject is built from them.
+
 ## [7.5.4] - 2026-09-02
 
 ### Fixed
@@ -546,6 +564,8 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[8.0.0]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.4...v8.0.0
+[8.0.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v7.5.4
 [7.5.4]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.3...v7.5.4
 [7.5.3]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.2...v7.5.3
 [7.5.2]: https://https://github.com/internetguru/laravel-feedback/compare/v7.5.1...v7.5.2
