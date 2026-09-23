@@ -4,6 +4,10 @@ A configurable Livewire component for collecting feedback through a customizable
 form. Built on Internet Guru Laravel Common Component, inheriting its conventions
 for email logging, footer rendering, and styling.
 
+| Branch  | Status | Code Coverage |
+| :------------- | :------------- | :------------- |
+| Main | ![tests](https://github.com/internetguru/laravel-feedback/actions/workflows/test.yml/badge.svg?branch=main) | ![coverage](https://raw.githubusercontent.com/internetguru/laravel-feedback/refs/heads/badges/main-coverage.svg) |
+
 ## Features
 
 - Pre-styled, responsive form
