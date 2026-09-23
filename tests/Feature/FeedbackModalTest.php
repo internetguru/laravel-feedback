@@ -76,11 +76,11 @@ class FeedbackModalTest extends TestCase
 
     public function test_the_field_definitions_cannot_be_replaced_by_the_client()
     {
-        // Scanners replay the snapshot with fuzzed values; the definitions are built
-        // in mount() and drive both the rendered inputs and the validation rules.
+        // The definitions are built in mount() and drive both the rendered inputs and
+        // the validation rules, so even a well-formed replacement is refused.
         $this->expectException(CannotUpdateLockedPropertyException::class);
 
-        Livewire::test(Feedback::class, self::PARAMS)->set('fields', [1]);
+        Livewire::test(Feedback::class, self::PARAMS)->set('fields', [['name' => 'email']]);
     }
 
     private function enableRecaptcha(): void
