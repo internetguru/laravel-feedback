@@ -13,6 +13,7 @@ for email logging, footer rendering, and styling.
 - Pre-styled, responsive form
 - Triggederable via #fragment in URL with form ID
 - Attribute-based validation
+- The e-mail field looks its domain up in DNS, except while running tests, so tests do not need the network
 - reCAPTCHA support (if configured)
 - Inline errors and success messaging
 - Optional file attachments (screenshots, PDFs) sent along with the email
@@ -202,7 +203,7 @@ If optional attributes are omitted, the default values are:
       '*' => 'Invalid value.',
   ]
   ```
-  If omitted, the default translation is used. Note, a single general error message can be specified as a string:
+  If omitted, the default translation is used, naming the field by its label. Note, a single general error message can be specified as a string:
   ```php
   'error' => 'Invalid value.'
   ```
