@@ -4,6 +4,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/)
 and this project adheres to [Semantic Versioning](http://semver.org/).
 
+## [8.2.1] - 2026-10-08
+
+### Fixed
+
+- The e-mail field does not look its domain up in DNS while tests run, so they do not need the network.
+- A validation error names the field by its label, such as "E-mail", instead of its key "form data.1".
+
 ## [8.2.0] - 2026-09-28
 
 _Stable release based on [8.2.0-rc.1]._
@@ -584,6 +591,7 @@ _Stable release based on [0.1.0-rc.1]._
 
 - New changelog file.
 
+[8.2.1]: https://github.com/internetguru/laravel-feedback/compare/v8.2.0...v8.2.1
 [8.2.0]: https://https://github.com/internetguru/laravel-feedback/compare/v8.1.0...v8.2.0
 [8.2.0-rc.1]: https://github.com/internetguru/laravel-feedback/releases/tag/v8.1.0
 [8.1.0]: https://https://github.com/internetguru/laravel-feedback/compare/v8.0.0...v8.1.0
