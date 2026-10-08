@@ -219,6 +219,9 @@ class Feedback extends Component
                 }
             }
 
+            // Validation messages name the field by its label, without the optional mark
+            $field['attribute'] = $field['label'];
+
             if (! $isRequired) {
                 $field['label'] .= ' ('.__('ig-feedback::fields.optional').')';
             }
@@ -436,11 +439,16 @@ class Feedback extends Component
         // Build validation rules and messages dynamically based on fields
         $rules = [];
         $messages = [];
+        $attributes = [];
         foreach ($this->fields as $index => $field) {
             $fieldName = $field['name'] ?? '';
             $isRequired = $field['required'] ?? false;
             $config = config("ig-feedback.names.{$fieldName}", []);
             $validation = $config['validation'] ?? 'string|max:255';
+            if (app()->runningUnitTests()) {
+                $validation = $this->withoutDnsCheck($validation);
+            }
+            $attributes[$field['key']] = $field['attribute'] ?? $field['label'] ?? $fieldName;
             $rules[$field['key']] = $isRequired ? "required|{$validation}" : "nullable|{$validation}";
             if (($config['type'] ?? '') === 'file') {
                 $rules["{$field['key']}.*"] = $config['file_validation'] ?? 'file|max:5120';
@@ -450,7 +458,7 @@ class Feedback extends Component
             }
         }
 
-        $data = $this->validate($rules, $messages);
+        $data = $this->validate($rules, $messages, $attributes);
 
         // Prepare data for email
         $emailData = [
@@ -538,5 +546,20 @@ class Feedback extends Component
     public function render()
     {
         return view('ig-feedback::livewire.feedback');
+    }
+
+    /**
+     * The rules with the e-mail domain lookup left out, so tests do not depend on the network.
+     */
+    private function withoutDnsCheck(string $rules): string
+    {
+        return implode('|', array_map(function (string $rule): string {
+            if (! str_starts_with($rule, 'email:')) {
+                return $rule;
+            }
+            $options = array_diff(explode(',', substr($rule, strlen('email:'))), ['dns']);
+
+            return $options === [] ? 'email' : 'email:'.implode(',', $options);
+        }, explode('|', $rules)));
     }
 }
