@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- CI installs the GD extension, so the attachment tests run there.
+
 ## [8.3.0] - 2026-11-10
 
 _Stable release based on [8.3.0-rc.1]._
