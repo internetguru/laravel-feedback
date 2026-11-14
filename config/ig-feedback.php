@@ -74,6 +74,7 @@ return [
         'input_view',
         'values',
         'file_validation',
+        'default_now',
     ],
 
     /*

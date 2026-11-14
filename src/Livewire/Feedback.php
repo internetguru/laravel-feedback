@@ -304,6 +304,34 @@ class Feedback extends Component
                 }
             }
         }
+
+        // After the sign-in prefill, which only runs on an otherwise empty form
+        foreach ($this->fields as $index => $field) {
+            $this->formData[$index] = $this->currentDateValue($field) ?? $this->formData[$index];
+        }
+    }
+
+    /**
+     * The current date or time in the field's input format, for a date, time or
+     * datetime-local field that opts in with `default_now`.
+     *
+     * @param  array<string, mixed>  $field
+     */
+    protected function currentDateValue(array $field): ?string
+    {
+        $config = config("ig-feedback.names.{$field['name']}", []);
+        if (! ($field['default_now'] ?? $config['default_now'] ?? false)) {
+            return null;
+        }
+
+        $format = match ($field['type'] ?? $config['type'] ?? '') {
+            'date' => 'Y-m-d',
+            'datetime-local' => 'Y-m-d\\TH:i',
+            'time' => 'H:i',
+            default => null,
+        };
+
+        return $format === null ? null : now()->toDisplayTimezone()->format($format);
     }
 
     /**
