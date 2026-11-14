@@ -208,6 +208,9 @@ If optional attributes are omitted, the default values are:
   'error' => 'Invalid value.'
   ```
 
+- `default_now` (optional)\
+  On a `date`, `datetime-local` or `time` field, fills in the current date or time (in the display timezone) whenever the form is opened or reset. Off by default; can also be set on the field's definition under `names`.
+
 - Additional attributes (optional)\
   You can pass any additional HTML attributes dynamically (e.g., `placeholder`, `autocomplete`, `class`, etc.). These will be applied to the field's input element.
 
