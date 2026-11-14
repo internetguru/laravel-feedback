@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Added
+
+- A `date`, `datetime-local` or `time` field with `default_now` starts filled with the current date or time.
+
 ## [8.4.0] - 2026-11-10
 
 _Stable release based on [8.4.0-rc.1]._
