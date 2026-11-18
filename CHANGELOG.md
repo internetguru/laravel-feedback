@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- Feedback is sent in applications whose user model has no `isAdmin()` method instead of failing.
+
 ## [8.5.0] - 2026-11-14
 
 _Stable release based on [8.5.0-rc.1]._

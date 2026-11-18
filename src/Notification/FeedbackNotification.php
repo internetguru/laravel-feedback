@@ -9,6 +9,7 @@ use InternetGuru\LaravelCommon\Notifications\BaseNotification;
 class FeedbackNotification extends BaseNotification
 {
     /**
+     * @param  array<int, array<string, mixed>>  $feedback
      * @param  array<int, array{disk: string, path: string, name: string, mime: string}>  $attachments
      */
     public function __construct(

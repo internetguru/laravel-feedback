@@ -3,6 +3,7 @@
 namespace InternetGuru\LaravelFeedback\Livewire;
 
 use App\Models\User;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
@@ -27,12 +28,14 @@ class Feedback extends Component
     #[Locked]
     public string $id;
 
+    /** @var string|array<int|string, string> */
     #[Locked]
     public string|array $email;
 
     #[Locked]
     public string $name;
 
+    /** @var array<string, string> */
     #[Locked]
     public array $recipients = [];
 
@@ -64,14 +67,22 @@ class Feedback extends Component
      * Field definitions, built in mount() from the component's arguments and the
      * `ig-feedback.names` config. The view iterates them and send() derives the
      * validation rules from them, so nothing the client sends belongs here.
+     *
+     * @var array<int, array<string, mixed>>
      */
     #[Locked]
     public array $fields = [];
 
+    /** @var array<int|string, mixed> */
     public array $formData = [];
 
     public bool $isOpen = false;
 
+    /**
+     * @param  string|array<int|string, string>  $email
+     * @param  array<int, array<string, mixed>>|null  $fields
+     * @return void
+     */
     public function mount(
         string $id,
         string|array $email,
@@ -84,8 +95,6 @@ class Feedback extends Component
         ?array $fields = null
     ) {
         $this->recipients = $this->parseRecipients($email, $name);
-        $this->email = array_key_first($this->recipients);
-        $this->name = $this->recipients[$this->email];
 
         try {
             Validator::make(
@@ -104,6 +113,8 @@ class Feedback extends Component
             $errors = collect($e->errors())->flatten()->implode(', ');
             throw new InvalidArgumentException('Feedback component error: '.$errors);
         }
+        $this->email = (string) array_key_first($this->recipients);
+        $this->name = $this->recipients[$this->email];
         $this->id = $id;
         $this->pageUrl = url()->full();
         $this->subject = $subject ?? config('app.name').' '.$id;
@@ -123,6 +134,9 @@ class Feedback extends Component
 
     /**
      * Parse email recipients from string or array input.
+     *
+     * @param  string|array<int|string, string>  $email
+     * @return array<string, string>
      */
     protected function parseRecipients(string|array $email, string $name): array
     {
@@ -151,6 +165,9 @@ class Feedback extends Component
 
     /**
      * Normalize fields by generating labels for duplicate names
+     *
+     * @param  array<int, array<string, mixed>>  $fields
+     * @return array<int, array<string, mixed>>
      */
     protected function normalizeFields(array $fields): array
     {
@@ -405,6 +422,8 @@ class Feedback extends Component
 
     /**
      * Get the value of the first option
+     *
+     * @param  array<int|string, mixed>  $options
      */
     protected function getFirstOptionValue(array $options, bool $useOptionKeys = false): string
     {
@@ -426,6 +445,10 @@ class Feedback extends Component
         return (string) $firstOption;
     }
 
+    /**
+     * @param  string|null  $id
+     * @return void
+     */
     #[On('open-ig-feedback')]
     public function openFeedback($id = null)
     {
@@ -436,6 +459,9 @@ class Feedback extends Component
 
     /**
      * Client-side close, the modal is already hidden in the browser.
+     *
+     * @param  string|null  $id
+     * @return void
      */
     #[On('close-ig-feedback')]
     public function closeFeedback($id = null)
@@ -445,12 +471,14 @@ class Feedback extends Component
         }
     }
 
+    /** @return void */
     public function closeModal()
     {
         $this->isOpen = false;
         $this->dispatch('ig-feedback-closed', id: $this->id);
     }
 
+    /** @return void */
     public function send()
     {
         try {
@@ -550,12 +578,13 @@ class Feedback extends Component
         }
 
         $recipients = $this->recipients;
-        if (auth()->user()?->isAdmin()) {
+        $user = auth()->user();
+        if ($user !== null && method_exists($user, 'isAdmin') && $user->isAdmin()) {
             $recipients = [__('ig-common::layouts.provider.email') => __('ig-common::layouts.provider.name')];
         }
 
         Notification::route('mail', $recipients)->notify(
-            (new FeedbackNotification($emailData, $this->subject, $attachments))->locale(app()->getLocale())
+            (new FeedbackNotification($emailData, (string) $this->subject, $attachments))->locale(app()->getLocale())
         );
 
         // Reset form
@@ -571,6 +600,7 @@ class Feedback extends Component
         $this->closeModal();
     }
 
+    /** @return View */
     public function render()
     {
         return view('ig-feedback::livewire.feedback');
