@@ -1,7 +1,2 @@
 parameters:
-	ignoreErrors:
-		-
-			message: '#^Call to an undefined method Illuminate\\Support\\Carbon\:\:toDisplayTimezone\(\)\.$#'
-			identifier: method.notFound
-			count: 1
-			path: src/Livewire/Feedback.php
+    ignoreErrors: []
