@@ -7,18 +7,18 @@ use Livewire\Livewire;
 
 class FeedbackServiceProvider extends ServiceProvider
 {
-    public function register()
+    public function register(): void
     {
         $this->mergeConfigFrom(__DIR__.'/../config/ig-feedback.php', 'ig-feedback');
 
         // Apply recursive merge for published config
-        $publishedConfig = $this->app['config']->get('ig-feedback', []);
+        $publishedConfig = config('ig-feedback', []);
         $defaultConfig = require __DIR__.'/../config/ig-feedback.php';
 
-        $this->app['config']->set('ig-feedback', array_replace_recursive($defaultConfig, $publishedConfig));
+        config(['ig-feedback' => array_replace_recursive($defaultConfig, $publishedConfig)]);
     }
 
-    public function boot()
+    public function boot(): void
     {
         // Load translations
         $this->loadTranslationsFrom(__DIR__.'/../lang', 'ig-feedback');
