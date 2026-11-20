@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Changed
+
+- Works with laravel-common 10.
+
 ### Fixed
 
 - Feedback is sent in applications whose user model has no `isAdmin()` method instead of failing.
