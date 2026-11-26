@@ -28,7 +28,7 @@ class FeedbackAttachmentsTest extends TestCase
             ->assertSet('formData.1', [])
             ->set('isOpen', true)
             ->assertSee(__('ig-feedback::fields.attachments'))
-            ->assertSeeHtml('data-testid="input-formData.1"')
+            ->assertSeeHtml('data-testid="input-support-form-1"')
             ->assertSeeHtml('accept="image/jpeg,image/png,image/gif,image/webp,image/heic,application/pdf"')
             ->assertSeeHtml('multiple');
     }

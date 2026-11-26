@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+
+- The fields of each form have ids of their own, prefixed with the form's `id` (`contact-form-0` instead of `formData.0`), so a label on a page with several forms focuses its own field; a test selecting `@input-formData.N` selects `@input-{id}-N` now.
+
 ## [8.6.0] - 2026-11-20
 
 _Stable release based on [8.6.0-rc.1]._
