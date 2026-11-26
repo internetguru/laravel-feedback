@@ -43,6 +43,7 @@
                 <x-dynamic-component
                     :component="$inputView"
                     :index="$index"
+                    :form-id="$id"
                     :field="$field"
                     :value="$formData[$index] ?? null"
                     :inputAttributes="$attributes"

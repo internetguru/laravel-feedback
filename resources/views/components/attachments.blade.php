@@ -1,5 +1,7 @@
 @props([
     'index',
+    /** The form's id, so the fields of several forms on one page keep ids of their own. */
+    'formId' => null,
     'field',
     'value' => null,
     'inputAttributes' => [],
@@ -7,6 +9,7 @@
 
 @php
     $key = "formData.{$index}";
+    $inputId = $formId ? "{$formId}-{$index}" : $key;
     $config = config("ig-feedback.names." . ($field['name'] ?? ''), []);
     $files = array_filter(
         is_array($value) ? $value : [],
@@ -19,13 +22,13 @@
 @endphp
 
 <div class="mt-3" wire:key="{{ $key }}-attachments">
-    <label for="{{ $key }}" class="form-label">{{ $field['label'] }}</label>
+    <label for="{{ $inputId }}" class="form-label">{{ $field['label'] }}</label>
 
     <input
         type="file"
-        id="{{ $key }}"
+        id="{{ $inputId }}"
         name="{{ $key }}"
-        data-testid="input-{{ $key }}"
+        data-testid="input-{{ $inputId }}"
         wire:model="{{ $key }}"
         {{ $attributes->merge($fileAttributes)->merge(['class' => 'form-control' . ($messages ? ' is-invalid' : '')]) }}
     />
