@@ -28,7 +28,7 @@ class FeedbackAttachmentsTest extends TestCase
             ->assertSet('formData.1', [])
             ->set('isOpen', true)
             ->assertSee(__('ig-feedback::fields.attachments'))
-            ->assertSeeHtml('data-testid="input-formData.1"')
+            ->assertSeeHtml('data-testid="input-support-form-1"')
             ->assertSeeHtml('accept="image/jpeg,image/png,image/gif,image/webp,image/heic,application/pdf"')
             ->assertSeeHtml('multiple');
     }
@@ -67,7 +67,7 @@ class FeedbackAttachmentsTest extends TestCase
         Livewire::test(Feedback::class, self::PARAMS)
             ->set('formData.0', 'Something is broken.')
             ->set('formData.1', [
-                UploadedFile::fake()->image('screenshot.png'),
+                UploadedFile::fake()->create('screenshot.png', 10, 'image/png'),
                 UploadedFile::fake()->create('report.pdf', 100, 'application/pdf'),
             ])
             ->call('send')
@@ -119,10 +119,10 @@ class FeedbackAttachmentsTest extends TestCase
             ->set('isOpen', true)
             ->set('formData.0', 'Something is broken.')
             ->set('formData.1', [
-                UploadedFile::fake()->image('one.png'),
-                UploadedFile::fake()->image('two.png'),
-                UploadedFile::fake()->image('three.png'),
-                UploadedFile::fake()->image('four.png'),
+                UploadedFile::fake()->create('one.png', 10, 'image/png'),
+                UploadedFile::fake()->create('two.png', 10, 'image/png'),
+                UploadedFile::fake()->create('three.png', 10, 'image/png'),
+                UploadedFile::fake()->create('four.png', 10, 'image/png'),
             ])
             ->call('send')
             ->assertHasErrors('formData.1')
@@ -153,7 +153,7 @@ class FeedbackAttachmentsTest extends TestCase
         Livewire::test(Feedback::class, self::PARAMS)
             ->set('isOpen', true)
             ->set('formData.0', 'Something is broken.')
-            ->set('formData.1', [UploadedFile::fake()->image('huge.png')->size(6000)])
+            ->set('formData.1', [UploadedFile::fake()->create('huge.png', 6000, 'image/png')])
             ->call('send')
             ->assertHasErrors('formData.1.0')
             ->assertSee(__('ig-feedback::fields.attachments.max_size', ['max' => 5120]));
@@ -165,8 +165,8 @@ class FeedbackAttachmentsTest extends TestCase
     {
         Livewire::test(Feedback::class, self::PARAMS)
             ->set('formData.1', [
-                UploadedFile::fake()->image('one.png'),
-                UploadedFile::fake()->image('two.png'),
+                UploadedFile::fake()->create('one.png', 10, 'image/png'),
+                UploadedFile::fake()->create('two.png', 10, 'image/png'),
             ])
             ->call('removeAttachment', 1, 0)
             ->assertCount('formData.1', 1)

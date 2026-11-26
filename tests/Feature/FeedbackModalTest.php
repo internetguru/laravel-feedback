@@ -93,4 +93,13 @@ class FeedbackModalTest extends TestCase
             }
         });
     }
+
+    public function test_the_fields_of_each_form_keep_ids_of_their_own()
+    {
+        foreach (['contact-form', 'inquiry-form'] as $id) {
+            Livewire::test(Feedback::class, ['id' => $id, 'email' => 'support@example.com', 'name' => 'Support', 'fields' => [['name' => 'email']]])
+                ->assertSeeHtml('id="' . $id . '-0"')
+                ->assertDontSeeHtml('id="formData.0"');
+        }
+    }
 }
